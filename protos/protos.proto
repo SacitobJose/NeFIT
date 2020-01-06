@@ -9,8 +9,9 @@ message Authentication {
   }
 
   required AuthType type = 1;
-  required string username = 2;
-  required string password = 3;
+  required string kind = 2;
+  required string username = 3;
+  required string password = 4;
 }
 
 message ServerResponse {
