@@ -1,9 +1,7 @@
-package aula2;
+package client;
 
-import aula2.Protos.Authentication;
-import aula2.Protos.AuthenticationVal;
-import aula2.Protos.Message;
-import aula2.Protos.Authentication.Builder;
+import client.Auth.*;
+import client.Auth.Authentication.Builder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,8 +37,15 @@ class ClientToSocket extends Thread {
             OutputStream os = this.socket.getOutputStream();
             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-            boolean ok = false;
-            while (!ok) {
+            while (true) {
+                // Verificar o papel do utilizador
+                System.out.print("É um (f)abricante ou um (i)mportador? ");
+                String role = stdin.readLine();
+                if (!role.equals("f") && !role.equals("i")) {
+                    System.out.println("Não é nenhum dos papéis válidos");
+                    continue;
+                }
+
                 // Verificar credenciais do utilizador
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 String method = stdin.readLine();
@@ -77,7 +82,8 @@ class ClientToSocket extends Thread {
                 System.out.println("Authentication successful");
 
                 this.username = username;
-                ok = true;
+
+                break;
             }
 
             // Iniciar thread para ler do socket para o terminal

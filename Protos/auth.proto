@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package aula2;
+package client;
 
 message Message {
   required string username = 1;
