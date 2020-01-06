@@ -1,0 +1,57 @@
+syntax = "proto2";
+
+package client;
+
+message Authentication {
+  enum AuthType {
+    REGISTAR = 0;
+    LOGIN = 1;
+  }
+
+  required AuthType type = 1;
+  required string username = 2;
+  required string password = 3;
+}
+
+message ServerResponse {
+  required bool success = 1;
+}
+
+message Produce {
+  required string productName = 1;
+  required int64 minimumAmount = 2;
+  required int64 maximumAmount = 3;
+  required int64 minimumUnitaryPrice = 4;
+  required int64 negotiationPeriod = 5;
+}
+
+message Import {
+  required string productName = 1;
+  required string producerName = 2;
+  required int64 quantity = 3;
+  required int64 unitaryPrice = 4;
+}
+
+message SubscribeProducer {
+  required string username = 1;
+  required string producerName = 2;
+}
+
+message UnsubscribeProducer {
+  required string username = 1;
+  required string producerName = 2;
+}
+
+message SaleInfo {
+  required string username = 1;
+  required int64 quantity = 2;
+  required int64 price = 3;
+}
+
+message DealerTimeout {
+  required bool success = 1;
+  required string producerName = 2;
+  required string productName = 3;
+  repeated SaleInfo sales = 4;
+}
+
