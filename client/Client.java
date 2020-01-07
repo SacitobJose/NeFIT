@@ -1,7 +1,7 @@
 package client;
 
-import client.Auth.*;
-import client.Auth.Authentication.Builder;
+import client.Protos.*;
+import client.Protos.Authentication.Builder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,8 +70,8 @@ class ClientToSocket extends Thread {
                 auth.build().writeDelimitedTo(os);
 
                 // Receive authentication confirmation
-                AuthenticationVal aVal = AuthenticationVal.parseDelimitedFrom(is);
-                if (!aVal.getValid()) {
+                ServerResponse aVal = ServerResponse.parseDelimitedFrom(is);
+                if (!aVal.getSuccess()) {
                     if (method.equals("l"))
                         System.out.println("Username does not exist or password incorrect");
                     else

@@ -8,8 +8,13 @@ message Authentication {
     LOGIN = 1;
   }
 
+  enum UserType {
+    PRODUCER = 0;
+    IMPORTER = 1;
+  }
+
   required AuthType type = 1;
-  required string kind = 2;
+  required UserType userType = 2;
   required string username = 3;
   required string password = 4;
 }
@@ -55,4 +60,3 @@ message DealerTimeout {
   required string productName = 3;
   repeated SaleInfo sales = 4;
 }
-
