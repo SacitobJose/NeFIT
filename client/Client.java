@@ -1,6 +1,7 @@
 package client;
 
-import protos.Protos.*;
+import protos.Protos.Authentication;
+import protos.Protos.ServerResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,23 +25,111 @@ public class Client {
 class ClientToSocket extends Thread {
     Socket socket;
     String username;
+    BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
         this.username = null;
     }
 
+    private void clearTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    private void waitConfirmation() throws IOException {
+        System.out.print("\nClique no ENTER para continuar...");
+        System.out.flush();
+        this.stdin.readLine();
+    }
+
+    private int readInt() throws IOException {
+        while (true) {
+            try {
+                return Integer.parseInt(this.stdin.readLine());
+            } catch (NumberFormatException exc) {
+                System.out.println("Por favor, introduza um número");
+            }
+        }
+    }
+
+    private void importerMenu() throws IOException {
+        while (true) {
+            StringBuilder main = new StringBuilder();
+            main.append("O que queres fazer?\n");
+            main.append("1 - Oferta de encomenda\n");
+            main.append("2 - Subscrever notificações\n");
+            main.append("3 - Cancelar notificações\n");
+            main.append("4 - Exit\n");
+
+            clearTerminal();
+            System.out.println(main);
+
+            int escolha;
+            do {
+                escolha = readInt();
+            } while (escolha < 1 || escolha > 4);
+
+            switch (escolha) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                clearTerminal();
+                System.exit(1);
+                break;
+            }
+            waitConfirmation();
+        }
+    }
+
+    private void producerMenu() throws IOException {
+        while (true) {
+            StringBuilder main = new StringBuilder();
+            main.append("O que queres fazer?\n");
+            main.append("1 - Oferta de produção\n");
+            main.append("2 - Exit\n");
+
+            clearTerminal();
+            System.out.println(main);
+
+            int escolha;
+            do {
+                escolha = readInt();
+            } while (escolha < 1 || escolha > 2);
+
+            switch (escolha) {
+            case 1:
+                break;
+            case 2:
+                clearTerminal();
+                System.exit(1);
+                break;
+            }
+            waitConfirmation();
+        }
+    }
+
     public void run() {
         try {
             InputStream is = this.socket.getInputStream();
             OutputStream os = this.socket.getOutputStream();
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            String role;
 
             while (true) {
+                Authentication.Builder auth = Authentication.newBuilder();
+
                 // Verificar o papel do utilizador
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
-                String role = stdin.readLine();
-                if (!role.equals("f") && !role.equals("i")) {
+                role = stdin.readLine();
+                if (role.equals("f"))
+                    auth.setUserType(Authentication.UserType.PRODUCER);
+                else if (role.equals("i"))
+                    auth.setUserType(Authentication.UserType.IMPORTER);
+                else {
                     System.out.println("Não é nenhum dos papéis válidos.");
                     continue;
                 }
@@ -48,21 +137,20 @@ class ClientToSocket extends Thread {
                 // Verificar credenciais do utilizador
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 String method = stdin.readLine();
-                Authentication.Builder auth = Authentication.newBuilder();
-                if (method.equals("r")) {
-                    auth.setType(Authentication.AuthType.REGISTAR);
-                } else if (method.equals("l")) {
+                if (method.equals("r"))
+                    auth.setType(Authentication.AuthType.REGISTER);
+                else if (method.equals("l"))
                     auth.setType(Authentication.AuthType.LOGIN);
-                } else {
+                else {
                     System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
-                System.out.print("Username: ");
+                System.out.print("Nome de utilizador: ");
                 String username = stdin.readLine();
                 auth.setUsername(username);
 
-                System.out.print("Password: ");
+                System.out.print("Palavra-passe: ");
                 auth.setPassword(stdin.readLine());
 
                 // Try to authenticate
@@ -85,17 +173,16 @@ class ClientToSocket extends Thread {
                 break;
             }
 
+            waitConfirmation();
+
             // Iniciar thread para ler do socket para o terminal
             Thread stc = new SocketToClient(is);
             stc.start();
 
-            // Iniciar diálogo com o utilizador
-            while (true) {
-                String st = stdin.readLine();
-                if (st == null)
-                    return;
-                Message.newBuilder().setUsername(this.username).setContent(st).build().writeDelimitedTo(os);
-            }
+            if (role.equals("f"))
+                producerMenu();
+            else
+                importerMenu();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,8 +199,7 @@ class SocketToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                Message msg = Message.parseDelimitedFrom(is);
-                System.out.println(msg.getUsername() + ": " + msg.getContent());
+                // DO SOMETHING
             }
         } catch (Exception e) {
             e.printStackTrace();

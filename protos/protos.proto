@@ -4,7 +4,7 @@ package protos;
 
 message Authentication {
   enum AuthType {
-    REGISTAR = 0;
+    REGISTER = 0;
     LOGIN = 1;
   }
 

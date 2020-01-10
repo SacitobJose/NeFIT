@@ -181,9 +181,9 @@ public final class Protos {
     public enum AuthType
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>REGISTAR = 0;</code>
+       * <code>REGISTER = 0;</code>
        */
-      REGISTAR(0),
+      REGISTER(0),
       /**
        * <code>LOGIN = 1;</code>
        */
@@ -191,9 +191,9 @@ public final class Protos {
       ;
 
       /**
-       * <code>REGISTAR = 0;</code>
+       * <code>REGISTER = 0;</code>
        */
-      public static final int REGISTAR_VALUE = 0;
+      public static final int REGISTER_VALUE = 0;
       /**
        * <code>LOGIN = 1;</code>
        */
@@ -214,7 +214,7 @@ public final class Protos {
 
       public static AuthType forNumber(int value) {
         switch (value) {
-          case 0: return REGISTAR;
+          case 0: return REGISTER;
           case 1: return LOGIN;
           default: return null;
         }
@@ -370,7 +370,7 @@ public final class Protos {
     public protos.Protos.Authentication.AuthType getType() {
       @SuppressWarnings("deprecation")
       protos.Protos.Authentication.AuthType result = protos.Protos.Authentication.AuthType.valueOf(type_);
-      return result == null ? protos.Protos.Authentication.AuthType.REGISTAR : result;
+      return result == null ? protos.Protos.Authentication.AuthType.REGISTER : result;
     }
 
     public static final int USERTYPE_FIELD_NUMBER = 2;
@@ -905,7 +905,7 @@ public final class Protos {
       public protos.Protos.Authentication.AuthType getType() {
         @SuppressWarnings("deprecation")
         protos.Protos.Authentication.AuthType result = protos.Protos.Authentication.AuthType.valueOf(type_);
-        return result == null ? protos.Protos.Authentication.AuthType.REGISTAR : result;
+        return result == null ? protos.Protos.Authentication.AuthType.REGISTER : result;
       }
       /**
        * <code>required .protos.Authentication.AuthType type = 1;</code>
@@ -7198,7 +7198,7 @@ public final class Protos {
       "cation.AuthType\0221\n\010userType\030\002 \002(\0162\037.prot" +
       "os.Authentication.UserType\022\020\n\010username\030\003" +
       " \002(\t\022\020\n\010password\030\004 \002(\t\"#\n\010AuthType\022\014\n\010RE" +
-      "GISTAR\020\000\022\t\n\005LOGIN\020\001\"&\n\010UserType\022\014\n\010PRODU" +
+      "GISTER\020\000\022\t\n\005LOGIN\020\001\"&\n\010UserType\022\014\n\010PRODU" +
       "CER\020\000\022\014\n\010IMPORTER\020\001\"!\n\016ServerResponse\022\017\n" +
       "\007success\030\001 \002(\010\"\204\001\n\007Produce\022\023\n\013productNam" +
       "e\030\001 \002(\t\022\025\n\rminimumAmount\030\002 \002(\003\022\025\n\rmaximu" +
