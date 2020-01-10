@@ -16,7 +16,7 @@ public class Client {
             Thread cts = new ClientToSocket(s);
             cts.start();
         } catch (Exception e) {
-            System.out.println("Não foi possível conectar ao servidor");
+            System.out.println("Não foi possível conectar ao servidor.");
         }
     }
 }
@@ -41,7 +41,7 @@ class ClientToSocket extends Thread {
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 String role = stdin.readLine();
                 if (!role.equals("f") && !role.equals("i")) {
-                    System.out.println("Não é nenhum dos papéis válidos");
+                    System.out.println("Não é nenhum dos papéis válidos.");
                     continue;
                 }
 
@@ -54,7 +54,7 @@ class ClientToSocket extends Thread {
                 } else if (method.equals("l")) {
                     auth.setType(Authentication.AuthType.LOGIN);
                 } else {
-                    System.out.println("Não é nenhum dos métodos válidos");
+                    System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
@@ -72,13 +72,13 @@ class ClientToSocket extends Thread {
                 ServerResponse aVal = ServerResponse.parseDelimitedFrom(is);
                 if (!aVal.getSuccess()) {
                     if (method.equals("l"))
-                        System.out.println("Username does not exist or password incorrect");
+                        System.out.println("O nome do utilizador não existe ou a palavra passe está incorreta.");
                     else
-                        System.out.println("Username already exists");
+                        System.out.println("O nome do utilizador já existe.");
                     continue;
                 }
 
-                System.out.println("Authentication successful");
+                System.out.println("Autenticação bem sucedida.");
 
                 this.username = username;
 

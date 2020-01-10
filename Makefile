@@ -5,3 +5,6 @@ compileClient:
 
 runClient:
 	java client.Client
+
+runDealer:
+	java dealer.Dealer

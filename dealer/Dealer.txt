@@ -1,0 +1,7 @@
+--> Atender pedidos do servidor (fabricantes e/ou importadores):
+   
+   --> Guardar informação das entidades na catálogo (que é nada mais nada menos que um log);
+   --> Atender os pedidos de forma a obter o maior lucro possível;
+   --> Ter em conta o conteúdo dos pedidos (preço unitário dos items, quantidade, etc) por forma a tomar a decisão correta;
+   --> Nota: Ver o conteúdo do proto-buffers !!!;
+   --> Após tomar a decisão, responder ao servidor com a informação requirida.
