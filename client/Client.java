@@ -1,7 +1,6 @@
 package client;
 
-import client.Protos.*;
-import client.Protos.Authentication.Builder;
+import protos.Protos.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +48,7 @@ class ClientToSocket extends Thread {
                 // Verificar credenciais do utilizador
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 String method = stdin.readLine();
-                Builder auth = Authentication.newBuilder();
+                Authentication.Builder auth = Authentication.newBuilder();
                 if (method.equals("r")) {
                     auth.setType(Authentication.AuthType.REGISTAR);
                 } else if (method.equals("l")) {

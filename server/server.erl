@@ -1,17 +1,17 @@
 -module(server).
--export([server/1]).
+-export([server/0]).
 -import(login, [handler/1]).
 -import(client, [client/1]).
 -import(negotiator, [negotiator/1]).
 
 % Inicialização do servidor
-server(Port) ->
+server() ->
     % Inicia o handler para os users, o loginHandler para controlo de acessos de clientes e o negotiatorsHandler para o tratar dos negociadores
     register(negotiatorsHandler, spawn(fun() -> negotiatorsHandler(#{}, N) end)),
     register(server, self()),
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
-    {ok, LSock} = gen_tcp:listen(Port, [binary, {packet, line}, {reuseaddr, true}]),
+    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
     io:format("Server started~n", []),
     acceptor(LSock).
 
