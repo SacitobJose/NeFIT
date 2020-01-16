@@ -1,0 +1,54 @@
+Resources:
+
+GET /departments
+  lists departments
+
+--
+
+GET /department/<name>
+  info about department given <name>
+
+PUT /department/<name>
+  updates information about department
+  inserts if it does not exist
+
+DELETE /department/<name>
+  removes department
+  not allowed if it contains some employee (409 Conflict)
+
+--
+
+GET /department/<name>/employees
+  lists employees of <name> department
+
+--
+
+PUT /department/<name>/employee/<id>
+  moves <id> employee to <name> department
+  null body
+
+DELETE /department/<name>/employee/<id>
+  removes employee from department
+
+--
+
+GET /employees
+  lists employees
+
+POST /employees/
+  inserts a new employee, assigns id
+  employee representation in body
+  returns employee URI
+
+--
+
+GET /employee/<id>
+  info about employee of given id
+
+PUT /employee/<id>
+  updates information about employee
+
+DELETE /employee/<id>
+  deletes employee of given id
+  not allowed if it belongs to some department (409 Conflict)
+
