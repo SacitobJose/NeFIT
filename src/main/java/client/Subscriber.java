@@ -1,4 +1,5 @@
-package catalog.pubsub;
+package client;
+
 import org.zeromq.ZMQ;
 
 public class Subscriber {
@@ -18,4 +19,3 @@ public class Subscriber {
     //context.term();
   }
 }
-
