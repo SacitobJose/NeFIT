@@ -58,6 +58,12 @@ class ClientToSocket extends Thread {
     private void importerMenu() throws IOException {
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket subSocket = context.socket(ZMQ.SUB);
+        subSocket.connect("tcp://localhost:7777");
+
+        // while (true) {
+        //     byte[] b = socket.recv();
+        //     System.out.println(new String(b));
+        // }
 
         while (true) {
             StringBuilder main = new StringBuilder();
@@ -79,6 +85,7 @@ class ClientToSocket extends Thread {
             case 1:
                 break;
             case 2:
+                // socket.subscribe("lalala".getBytes());
                 break;
             case 3:
                 break;
@@ -94,6 +101,9 @@ class ClientToSocket extends Thread {
     private void producerMenu() throws IOException {
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket pubSocket = context.socket(ZMQ.PUB);
+        pubSocket.connect("tcp://localhost:7777");
+
+        // socket.send("pqpqpq");
 
         while (true) {
             StringBuilder main = new StringBuilder();
