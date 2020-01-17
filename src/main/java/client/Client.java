@@ -1,14 +1,16 @@
 package client;
 
-import protos.Protos.Authentication;
-import protos.Protos.ServerResponse;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+
+import org.zeromq.ZMQ;
+
+import protos.Protos.Authentication;
+import protos.Protos.ServerResponse;
 
 public class Client {
     public static void main(String[] args) {
@@ -54,6 +56,9 @@ class ClientToSocket extends Thread {
     }
 
     private void importerMenu() throws IOException {
+        ZMQ.Context context = ZMQ.context(1);
+        ZMQ.Socket subSocket = context.socket(ZMQ.SUB);
+
         while (true) {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
@@ -87,6 +92,9 @@ class ClientToSocket extends Thread {
     }
 
     private void producerMenu() throws IOException {
+        ZMQ.Context context = ZMQ.context(1);
+        ZMQ.Socket pubSocket = context.socket(ZMQ.PUB);
+
         while (true) {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");

@@ -80,4 +80,12 @@
         }).
 -endif.
 
+-ifndef('RESPONSEIMPORT_PB_H').
+-define('RESPONSEIMPORT_PB_H', true).
+-record('ResponseImport',
+        {producerName           :: iodata(),        % = 1
+         sale                   :: protos:'SaleInfo'() % = 2
+        }).
+-endif.
+
 -endif.
