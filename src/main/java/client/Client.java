@@ -14,6 +14,7 @@ import org.zeromq.SocketType;
 import protos.Protos.Authentication;
 import protos.Protos.Produce;
 import protos.Protos.ServerResponse;
+import protos.Protos.Transaction;
 
 public class Client {
     public static void main(String[] args) {
@@ -141,11 +142,31 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
+                Transaction.Builder txn = Transaction.newBuilder();
                 Produce.Builder prod = Produce.newBuilder();
 
-                
+                System.out.print("Nome do produto: ");
+                System.out.flush();
+                prod.setProductName(this.stdin.readLine());
 
-                prod.build().writeDelimitedTo(os);
+                System.out.print("Quantidade mínima: ");
+                System.out.flush();
+                prod.setMinimumAmount(this.readInt());
+
+                System.out.print("Quantidade máxima: ");
+                System.out.flush();
+                prod.setMaximumAmount(this.readInt());
+
+                System.out.print("Preço mínimo por produto: ");
+                System.out.flush();
+                prod.setMinimumUnitaryPrice(this.readInt());
+
+                System.out.print("Período de negociação (segundos): ");
+                System.out.flush();
+                prod.setNegotiationPeriod(this.readInt());
+
+                txn.setProduce(prod.build());
+                txn.build().writeDelimitedTo(os);
                 break;
             case 2:
                 clearTerminal();
@@ -158,6 +179,7 @@ class ClientToSocket extends Thread {
     }
 
     public void run() {
+
         try {
             String role;
 
@@ -166,6 +188,7 @@ class ClientToSocket extends Thread {
 
                 // Verificar o papel do utilizador
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
+                System.out.flush();
                 role = stdin.readLine();
                 if (role.equals("f"))
                     auth.setUserType(Authentication.UserType.PRODUCER);
@@ -178,6 +201,7 @@ class ClientToSocket extends Thread {
 
                 // Verificar credenciais do utilizador
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
+                System.out.flush();
                 String method = stdin.readLine();
                 if (method.equals("r"))
                     auth.setType(Authentication.AuthType.REGISTER);
@@ -189,10 +213,12 @@ class ClientToSocket extends Thread {
                 }
 
                 System.out.print("Nome de utilizador: ");
+                System.out.flush();
                 String username = stdin.readLine();
                 auth.setUsername(username);
 
                 System.out.print("Palavra-passe: ");
+                System.out.flush();
                 auth.setPassword(stdin.readLine());
 
                 // Try to authenticate
