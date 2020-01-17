@@ -8,3 +8,11 @@
 *.log
 *.synctex.gz
 *.toc
+
+# VS Code
+/target
+/bin
+.project
+.classpath
+.vscode
+.settings
