@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Socket;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
-import org.zeromq.ZMQ.Socket;
 
 import protos.Protos.Authentication;
+import protos.Protos.Produce;
 import protos.Protos.ServerResponse;
 
 public class Client {
@@ -28,11 +29,15 @@ public class Client {
 
 class ClientToSocket extends Thread {
     Socket socket;
+    InputStream is;
+    OutputStream os;
     String username;
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
+        is = cli.getInputStream();
+        os = cli.getOutputStream();
         this.username = null;
     }
 
@@ -136,9 +141,15 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
+                Produce.Builder prod = Produce.newBuilder();
+
+                
+
+                prod.build().writeDelimitedTo(os);
                 break;
             case 2:
                 clearTerminal();
+                context.close();
                 System.exit(1);
                 break;
             }
@@ -148,8 +159,6 @@ class ClientToSocket extends Thread {
 
     public void run() {
         try {
-            InputStream is = this.socket.getInputStream();
-            OutputStream os = this.socket.getOutputStream();
             String role;
 
             while (true) {

@@ -64,6 +64,10 @@
       #{success                 := boolean() | 0 | 1 % = 1
        }.
 
+-type 'Transaction'() ::
+      #{txn                     => {produce, 'Produce'()} | {import, 'Import'()} % oneof
+       }.
+
 -type 'Produce'() ::
       #{productName             := iodata(),        % = 1
         minimumAmount           := integer(),       % = 2, 32 bits
@@ -107,13 +111,13 @@
         sale                    := 'SaleInfo'()     % = 2
        }.
 
--export_type(['Authentication'/0, 'ServerResponse'/0, 'Produce'/0, 'Import'/0, 'SubscribeProducer'/0, 'UnsubscribeProducer'/0, 'SaleInfo'/0, 'DealerTimeout'/0, 'ResponseImport'/0]).
+-export_type(['Authentication'/0, 'ServerResponse'/0, 'Transaction'/0, 'Produce'/0, 'Import'/0, 'SubscribeProducer'/0, 'UnsubscribeProducer'/0, 'SaleInfo'/0, 'DealerTimeout'/0, 'ResponseImport'/0]).
 
--spec encode_msg('Authentication'() | 'ServerResponse'() | 'Produce'() | 'Import'() | 'SubscribeProducer'() | 'UnsubscribeProducer'() | 'SaleInfo'() | 'DealerTimeout'() | 'ResponseImport'(), atom()) -> binary().
+-spec encode_msg('Authentication'() | 'ServerResponse'() | 'Transaction'() | 'Produce'() | 'Import'() | 'SubscribeProducer'() | 'UnsubscribeProducer'() | 'SaleInfo'() | 'DealerTimeout'() | 'ResponseImport'(), atom()) -> binary().
 encode_msg(Msg, MsgName) when is_atom(MsgName) ->
     encode_msg(Msg, MsgName, []).
 
--spec encode_msg('Authentication'() | 'ServerResponse'() | 'Produce'() | 'Import'() | 'SubscribeProducer'() | 'UnsubscribeProducer'() | 'SaleInfo'() | 'DealerTimeout'() | 'ResponseImport'(), atom(), list()) -> binary().
+-spec encode_msg('Authentication'() | 'ServerResponse'() | 'Transaction'() | 'Produce'() | 'Import'() | 'SubscribeProducer'() | 'UnsubscribeProducer'() | 'SaleInfo'() | 'DealerTimeout'() | 'ResponseImport'(), atom(), list()) -> binary().
 encode_msg(Msg, MsgName, Opts) ->
     case proplists:get_bool(verify, Opts) of
       true -> verify_msg(Msg, MsgName, Opts);
@@ -127,6 +131,8 @@ encode_msg(Msg, MsgName, Opts) ->
       'ServerResponse' ->
 	  encode_msg_ServerResponse(id(Msg, TrUserData),
 				    TrUserData);
+      'Transaction' ->
+	  encode_msg_Transaction(id(Msg, TrUserData), TrUserData);
       'Produce' ->
 	  encode_msg_Produce(id(Msg, TrUserData), TrUserData);
       'Import' ->
@@ -183,6 +189,30 @@ encode_msg_ServerResponse(#{success := F1}, Bin,
     begin
       TrF1 = id(F1, TrUserData),
       e_type_bool(TrF1, <<Bin/binary, 8>>, TrUserData)
+    end.
+
+encode_msg_Transaction(Msg, TrUserData) ->
+    encode_msg_Transaction(Msg, <<>>, TrUserData).
+
+
+encode_msg_Transaction(#{} = M, Bin, TrUserData) ->
+    case M of
+      #{txn := F1} ->
+	  case id(F1, TrUserData) of
+	    {produce, TF1} ->
+		begin
+		  TrTF1 = id(TF1, TrUserData),
+		  e_mfield_Transaction_produce(TrTF1, <<Bin/binary, 10>>,
+					       TrUserData)
+		end;
+	    {import, TF1} ->
+		begin
+		  TrTF1 = id(TF1, TrUserData),
+		  e_mfield_Transaction_import(TrTF1, <<Bin/binary, 18>>,
+					      TrUserData)
+		end
+	  end;
+      _ -> Bin
     end.
 
 encode_msg_Produce(Msg, TrUserData) ->
@@ -336,6 +366,16 @@ encode_msg_ResponseImport(#{producerName := F1,
       e_mfield_ResponseImport_sale(TrF2, <<B1/binary, 18>>,
 				   TrUserData)
     end.
+
+e_mfield_Transaction_produce(Msg, Bin, TrUserData) ->
+    SubBin = encode_msg_Produce(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_mfield_Transaction_import(Msg, Bin, TrUserData) ->
+    SubBin = encode_msg_Import(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
 
 e_mfield_DealerTimeout_sales(Msg, Bin, TrUserData) ->
     SubBin = encode_msg_SaleInfo(Msg, <<>>, TrUserData),
@@ -495,6 +535,8 @@ decode_msg_2_doit('Authentication', Bin, TrUserData) ->
 decode_msg_2_doit('ServerResponse', Bin, TrUserData) ->
     id(decode_msg_ServerResponse(Bin, TrUserData),
        TrUserData);
+decode_msg_2_doit('Transaction', Bin, TrUserData) ->
+    id(decode_msg_Transaction(Bin, TrUserData), TrUserData);
 decode_msg_2_doit('Produce', Bin, TrUserData) ->
     id(decode_msg_Produce(Bin, TrUserData), TrUserData);
 decode_msg_2_doit('Import', Bin, TrUserData) ->
@@ -828,6 +870,154 @@ skip_64_ServerResponse(<<_:64, Rest/binary>>, Z1, Z2,
 		       F@_1, TrUserData) ->
     dfp_read_field_def_ServerResponse(Rest, Z1, Z2, F@_1,
 				      TrUserData).
+
+decode_msg_Transaction(Bin, TrUserData) ->
+    dfp_read_field_def_Transaction(Bin, 0, 0,
+				   id('$undef', TrUserData), TrUserData).
+
+dfp_read_field_def_Transaction(<<10, Rest/binary>>, Z1,
+			       Z2, F@_1, TrUserData) ->
+    d_field_Transaction_produce(Rest, Z1, Z2, F@_1,
+				TrUserData);
+dfp_read_field_def_Transaction(<<18, Rest/binary>>, Z1,
+			       Z2, F@_1, TrUserData) ->
+    d_field_Transaction_import(Rest, Z1, Z2, F@_1,
+			       TrUserData);
+dfp_read_field_def_Transaction(<<>>, 0, 0, F@_1, _) ->
+    S1 = #{},
+    if F@_1 == '$undef' -> S1;
+       true -> S1#{txn => F@_1}
+    end;
+dfp_read_field_def_Transaction(Other, Z1, Z2, F@_1,
+			       TrUserData) ->
+    dg_read_field_def_Transaction(Other, Z1, Z2, F@_1,
+				  TrUserData).
+
+dg_read_field_def_Transaction(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_Transaction(Rest, N + 7,
+				  X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_Transaction(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_Transaction_produce(Rest, 0, 0, F@_1,
+				      TrUserData);
+      18 ->
+	  d_field_Transaction_import(Rest, 0, 0, F@_1,
+				     TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_Transaction(Rest, 0, 0, F@_1, TrUserData);
+	    1 -> skip_64_Transaction(Rest, 0, 0, F@_1, TrUserData);
+	    2 ->
+		skip_length_delimited_Transaction(Rest, 0, 0, F@_1,
+						  TrUserData);
+	    3 ->
+		skip_group_Transaction(Rest, Key bsr 3, 0, F@_1,
+				       TrUserData);
+	    5 -> skip_32_Transaction(Rest, 0, 0, F@_1, TrUserData)
+	  end
+    end;
+dg_read_field_def_Transaction(<<>>, 0, 0, F@_1, _) ->
+    S1 = #{},
+    if F@_1 == '$undef' -> S1;
+       true -> S1#{txn => F@_1}
+    end.
+
+d_field_Transaction_produce(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    d_field_Transaction_produce(Rest, N + 7, X bsl N + Acc,
+				F@_1, TrUserData);
+d_field_Transaction_produce(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, Prev, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(decode_msg_Produce(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_Transaction(RestF, 0, 0,
+				   case Prev of
+				     '$undef' ->
+					 id({produce, NewFValue}, TrUserData);
+				     {produce, MVPrev} ->
+					 id({produce,
+					     merge_msg_Produce(MVPrev,
+							       NewFValue,
+							       TrUserData)},
+					    TrUserData);
+				     _ -> id({produce, NewFValue}, TrUserData)
+				   end,
+				   TrUserData).
+
+d_field_Transaction_import(<<1:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, TrUserData)
+    when N < 57 ->
+    d_field_Transaction_import(Rest, N + 7, X bsl N + Acc,
+			       F@_1, TrUserData);
+d_field_Transaction_import(<<0:1, X:7, Rest/binary>>, N,
+			   Acc, Prev, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(decode_msg_Import(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_Transaction(RestF, 0, 0,
+				   case Prev of
+				     '$undef' ->
+					 id({import, NewFValue}, TrUserData);
+				     {import, MVPrev} ->
+					 id({import,
+					     merge_msg_Import(MVPrev, NewFValue,
+							      TrUserData)},
+					    TrUserData);
+				     _ -> id({import, NewFValue}, TrUserData)
+				   end,
+				   TrUserData).
+
+skip_varint_Transaction(<<1:1, _:7, Rest/binary>>, Z1,
+			Z2, F@_1, TrUserData) ->
+    skip_varint_Transaction(Rest, Z1, Z2, F@_1, TrUserData);
+skip_varint_Transaction(<<0:1, _:7, Rest/binary>>, Z1,
+			Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_Transaction(Rest, Z1, Z2, F@_1,
+				   TrUserData).
+
+skip_length_delimited_Transaction(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_Transaction(Rest, N + 7,
+				      X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_Transaction(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_Transaction(Rest2, 0, 0, F@_1,
+				   TrUserData).
+
+skip_group_Transaction(Bin, FNum, Z2, F@_1,
+		       TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_Transaction(Rest, 0, Z2, F@_1,
+				   TrUserData).
+
+skip_32_Transaction(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+		    TrUserData) ->
+    dfp_read_field_def_Transaction(Rest, Z1, Z2, F@_1,
+				   TrUserData).
+
+skip_64_Transaction(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+		    TrUserData) ->
+    dfp_read_field_def_Transaction(Rest, Z1, Z2, F@_1,
+				   TrUserData).
 
 decode_msg_Produce(Bin, TrUserData) ->
     dfp_read_field_def_Produce(Bin, 0, 0,
@@ -2095,6 +2285,8 @@ merge_msgs(Prev, New, MsgName, Opts) ->
 	  merge_msg_Authentication(Prev, New, TrUserData);
       'ServerResponse' ->
 	  merge_msg_ServerResponse(Prev, New, TrUserData);
+      'Transaction' ->
+	  merge_msg_Transaction(Prev, New, TrUserData);
       'Produce' -> merge_msg_Produce(Prev, New, TrUserData);
       'Import' -> merge_msg_Import(Prev, New, TrUserData);
       'SubscribeProducer' ->
@@ -2120,6 +2312,24 @@ merge_msg_Authentication(#{},
 merge_msg_ServerResponse(#{}, #{success := NFsuccess},
 			 _) ->
     #{success => NFsuccess}.
+
+-compile({nowarn_unused_function,merge_msg_Transaction/3}).
+merge_msg_Transaction(PMsg, NMsg, TrUserData) ->
+    S1 = #{},
+    case {PMsg, NMsg} of
+      {#{txn := {produce, OPFtxn}},
+       #{txn := {produce, ONFtxn}}} ->
+	  S1#{txn =>
+		  {produce,
+		   merge_msg_Produce(OPFtxn, ONFtxn, TrUserData)}};
+      {#{txn := {import, OPFtxn}},
+       #{txn := {import, ONFtxn}}} ->
+	  S1#{txn =>
+		  {import, merge_msg_Import(OPFtxn, ONFtxn, TrUserData)}};
+      {_, #{txn := NFtxn}} -> S1#{txn => NFtxn};
+      {#{txn := PFtxn}, _} -> S1#{txn => PFtxn};
+      {_, _} -> S1
+    end.
 
 -compile({nowarn_unused_function,merge_msg_Produce/3}).
 merge_msg_Produce(#{},
@@ -2204,6 +2414,8 @@ verify_msg(Msg, MsgName, Opts) ->
 	  v_msg_Authentication(Msg, [MsgName], TrUserData);
       'ServerResponse' ->
 	  v_msg_ServerResponse(Msg, [MsgName], TrUserData);
+      'Transaction' ->
+	  v_msg_Transaction(Msg, [MsgName], TrUserData);
       'Produce' -> v_msg_Produce(Msg, [MsgName], TrUserData);
       'Import' -> v_msg_Import(Msg, [MsgName], TrUserData);
       'SubscribeProducer' ->
@@ -2270,6 +2482,32 @@ v_msg_ServerResponse(M, Path, _TrUserData)
 v_msg_ServerResponse(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ServerResponse'}, X,
 		  Path).
+
+-compile({nowarn_unused_function,v_msg_Transaction/3}).
+-dialyzer({nowarn_function,v_msg_Transaction/3}).
+v_msg_Transaction(#{} = M, Path, TrUserData) ->
+    case M of
+      #{txn := {produce, OF1}} ->
+	  v_msg_Produce(OF1, [produce, txn | Path], TrUserData);
+      #{txn := {import, OF1}} ->
+	  v_msg_Import(OF1, [import, txn | Path], TrUserData);
+      #{txn := F1} ->
+	  mk_type_error(invalid_oneof, F1, [txn | Path]);
+      _ -> ok
+    end,
+    lists:foreach(fun (txn) -> ok;
+		      (OtherKey) ->
+			  mk_type_error({extraneous_key, OtherKey}, M, Path)
+		  end,
+		  maps:keys(M)),
+    ok;
+v_msg_Transaction(M, Path, _TrUserData)
+    when is_map(M) ->
+    mk_type_error({missing_fields, [] -- maps:keys(M),
+		   'Transaction'},
+		  M, Path);
+v_msg_Transaction(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'Transaction'}, X, Path).
 
 -compile({nowarn_unused_function,v_msg_Produce/3}).
 -dialyzer({nowarn_function,v_msg_Produce/3}).
@@ -2612,6 +2850,15 @@ get_msg_defs() ->
      {{msg, 'ServerResponse'},
       [#{name => success, fnum => 1, rnum => 2, type => bool,
 	 occurrence => required, opts => []}]},
+     {{msg, 'Transaction'},
+      [#{name => txn, rnum => 2,
+	 fields =>
+	     [#{name => produce, fnum => 1, rnum => 2,
+		type => {msg, 'Produce'}, occurrence => optional,
+		opts => []},
+	      #{name => import, fnum => 2, rnum => 2,
+		type => {msg, 'Import'}, occurrence => optional,
+		opts => []}]}]},
      {{msg, 'Produce'},
       [#{name => productName, fnum => 1, rnum => 2,
 	 type => string, occurrence => required, opts => []},
@@ -2668,18 +2915,20 @@ get_msg_defs() ->
 
 
 get_msg_names() ->
-    ['Authentication', 'ServerResponse', 'Produce',
-     'Import', 'SubscribeProducer', 'UnsubscribeProducer',
-     'SaleInfo', 'DealerTimeout', 'ResponseImport'].
+    ['Authentication', 'ServerResponse', 'Transaction',
+     'Produce', 'Import', 'SubscribeProducer',
+     'UnsubscribeProducer', 'SaleInfo', 'DealerTimeout',
+     'ResponseImport'].
 
 
 get_group_names() -> [].
 
 
 get_msg_or_group_names() ->
-    ['Authentication', 'ServerResponse', 'Produce',
-     'Import', 'SubscribeProducer', 'UnsubscribeProducer',
-     'SaleInfo', 'DealerTimeout', 'ResponseImport'].
+    ['Authentication', 'ServerResponse', 'Transaction',
+     'Produce', 'Import', 'SubscribeProducer',
+     'UnsubscribeProducer', 'SaleInfo', 'DealerTimeout',
+     'ResponseImport'].
 
 
 get_enum_names() ->
@@ -2714,6 +2963,15 @@ find_msg_def('Authentication') ->
 find_msg_def('ServerResponse') ->
     [#{name => success, fnum => 1, rnum => 2, type => bool,
        occurrence => required, opts => []}];
+find_msg_def('Transaction') ->
+    [#{name => txn, rnum => 2,
+       fields =>
+	   [#{name => produce, fnum => 1, rnum => 2,
+	      type => {msg, 'Produce'}, occurrence => optional,
+	      opts => []},
+	    #{name => import, fnum => 2, rnum => 2,
+	      type => {msg, 'Import'}, occurrence => optional,
+	      opts => []}]}];
 find_msg_def('Produce') ->
     [#{name => productName, fnum => 1, rnum => 2,
        type => string, occurrence => required, opts => []},
@@ -2864,6 +3122,7 @@ service_and_rpc_name_to_fqbins(S, R) ->
 
 fqbin_to_msg_name(<<"protos.Authentication">>) -> 'Authentication';
 fqbin_to_msg_name(<<"protos.ServerResponse">>) -> 'ServerResponse';
+fqbin_to_msg_name(<<"protos.Transaction">>) -> 'Transaction';
 fqbin_to_msg_name(<<"protos.Produce">>) -> 'Produce';
 fqbin_to_msg_name(<<"protos.Import">>) -> 'Import';
 fqbin_to_msg_name(<<"protos.SubscribeProducer">>) -> 'SubscribeProducer';
@@ -2876,6 +3135,7 @@ fqbin_to_msg_name(E) -> error({gpb_error, {badmsg, E}}).
 
 msg_name_to_fqbin('Authentication') -> <<"protos.Authentication">>;
 msg_name_to_fqbin('ServerResponse') -> <<"protos.ServerResponse">>;
+msg_name_to_fqbin('Transaction') -> <<"protos.Transaction">>;
 msg_name_to_fqbin('Produce') -> <<"protos.Produce">>;
 msg_name_to_fqbin('Import') -> <<"protos.Import">>;
 msg_name_to_fqbin('SubscribeProducer') -> <<"protos.SubscribeProducer">>;
@@ -2932,7 +3192,8 @@ get_all_proto_names() -> ["protos"].
 get_msg_containment("protos") ->
     ['Authentication', 'DealerTimeout', 'Import', 'Produce',
      'ResponseImport', 'SaleInfo', 'ServerResponse',
-     'SubscribeProducer', 'UnsubscribeProducer'];
+     'SubscribeProducer', 'Transaction',
+     'UnsubscribeProducer'];
 get_msg_containment(P) ->
     error({gpb_error, {badproto, P}}).
 
@@ -2965,6 +3226,7 @@ get_proto_by_msg_name_as_fqbin(<<"protos.Import">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.DealerTimeout">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.ServerResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Produce">>) -> "protos";
+get_proto_by_msg_name_as_fqbin(<<"protos.Transaction">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Authentication">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.SaleInfo">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(E) ->
