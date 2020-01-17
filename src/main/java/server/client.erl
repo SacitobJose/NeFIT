@@ -1,10 +1,10 @@
--module(myuser).
+-module(client).
 -export([client/1]).
 -import(login, [create_account/2, cancel_register/2, login/2, logout/1]).
 -import(importer, [importer/2]).
 -import(producer, [producer/2]).
 
--include("protos").
+-include("protos.hrl").
 
 client(Sock) ->
     % recebe uma conexão, verifica a autenticação e chama importer(Sock, Username) ou producer(Sock, Username, TimeOut)
