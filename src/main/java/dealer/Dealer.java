@@ -1,8 +1,12 @@
 package dealer;
 
-import protos.Protos.SaleInfoOrBuilder;
+import protos.Protos.Produce;
+import protos.Protos.Import;
+
+import protos.Protos.SaleInfo;
+import protos.Protos.DealerTimeout;
+
 import protos.Protos.ServerResponse;
-import protos.Protos.DealerTimeoutOrBuilder;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -42,22 +46,27 @@ class DealerToSocket extends Thread {
             OutputStream os = this.socket.getOutputStream();
             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
+            // Receber pedidos durante x tempo
+            // Enviar resposta ao servidor com a informação correta
             while (true) {
-                // Get server request
-                ServerResponse aVal = ServerResponse.parseDelimitedFrom(is);
+                // Handle request
+                Produce.Builder produce = Produce.newBuilder();
+                Import.Builder imp = Import.newBuilder();
 
+                // Handle response
                 // DealerTimeout & SaleInfo declarations
-                DealerTimeoutOrBuilder.Builder dealerTimeout = DealerTimeoutOrBuilder.newBuilder();
-                SaleInfoOrBuilder saleInfo = SaleInfoOrBuilder.newBuilder();
+                DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
+                SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
 
-                dealer.setSuccess(aVal.getSuccess());
-                dealer.setProducerName(aVal.getProducerName());
-                dealer.setProductName(aVal.getProductName());
+                dealerTimeout.setSuccess(true);
+                dealerTimeout.setProducerName(imp.getProducerName());
+                dealerTimeout.setProductName(produce.getProductName());
 
-                dealer.addAllSales();
+                saleInfo.setUsername(imp.getProducerName());
+                saleInfo.setQuantity(imp.getQuantity());
+                saleInfo.setPrice(imp.getUnitaryPrice());
 
-                // Receber pedidos durante x tempo
-                // Enviar resposta ao servidor com a informação correta
+                dealerTimeout.addSales(saleInfo);
             }
         } catch (Exception e) {
             e.printStackTrace();
