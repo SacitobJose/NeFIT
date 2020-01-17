@@ -11,7 +11,7 @@ importer(Sock, Username) ->
             logout(Username);
         {tcp_error, _} ->
             logout(Username);
-        {producer, negotiatorsHandler, ProducerName} ->
-            ToSend = protos:encode_msg(#'ResponseImport'{producerName = ProducerName}),
+        {producer, negotiatorsHandler, ProducerName, SaleInfo} ->
+            ToSend = protos:encode_msg(#'ResponseImport'{producerName = ProducerName, sale = SaleInfo}),
             gen_tcp:send(Sock, ToSend)
     end.

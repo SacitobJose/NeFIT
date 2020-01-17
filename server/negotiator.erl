@@ -18,8 +18,8 @@ negotiator(Sock, Importers, Producers) ->
             {ok, Producer} = maps:find(ProducerName, Producers),
             Producer ! {timeout, negotiatorsHandler, Data},
             % extract importers' usernames, send them the producer's info and remove them from their map
-            ImportersBuying = extractImporters([], maps:find(sales, Map_Data)),
-            NewImporters = sendImporters(Importers, ImportersBuying, ProducerName),
+            ImportersBuying = extractImporters(#{}, maps:find(sales, Map_Data)),
+            NewImporters = sendImporters(Importers, maps:to_list(ImportersBuying), ProducerName),
             negotiator(Sock, NewImporters, Producers -- [ProducerName])
     end.
 
@@ -28,14 +28,15 @@ extractImporters(Importers, []) ->
     Importers.
 
 extractImporters(Importers, [H|T]) ->
-    MapImporter = protos:decode_msg(H, 'SaleInfo'),
-    {ok, Username} = maps:find(username, Map_Importer),
-    extractImporters(Importers ++ Username, T).
+    SaleInfo = protos:decode_msg(H, 'SaleInfo'),
+    {ok, Username} = maps:find(username, SaleInfo),
+    extractImporters(maps:put(Username, SaleInfo, Importers), T).
 
 % Sends producer's username to each importer and extract them from importers' map
 sendImporters(Importers, [], ProducerName) ->
     Importers.
 
 sendImporters(Importers, [H|T], ProducerName) ->
-    [PID ! {producer, negotiatorsHandler, ProducerName} || {ok, PID} <- maps:find(H, Importers)],
+    {PID, SaleInfo} <- H
+    PID ! {producer, negotiatorsHandler, ProducerName, SaleInfo},
     sendImporters(Importers -- H, T).

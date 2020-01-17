@@ -4,13 +4,15 @@
 -import(importer, [importer/2]).
 -import(producer, [producer/2]).
 
+-include("protos").
+
 client(Sock) ->
     % recebe uma conexão, verifica a autenticação e chama importer(Sock, Username) ou producer(Sock, Username, TimeOut)
     receive
         {tcp, _, Data} ->
             Auth = protos:decode_msg(Data, 'Authentication'),
             case maps:find(type, Auth) of
-                <<"LOGIN">> ->
+                "LOGIN" ->
                     Username = maps:find(username, Auth),
                     Password = maps:find(password, Auth),
                     Kind = maps:find(kind, Auth),
@@ -36,9 +38,9 @@ client(Sock) ->
                             wrong_password ->
                                 ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
                                 gen_tcp:send(Sock, ServerResponse),
-                                client(Sock);
+                                client(Sock)
                         end;
-                <<"REGISTER">> ->
+                "REGISTER" ->
                     Username = maps:find(username, Auth),
                     Password = maps:find(password, Auth),
                     Kind = maps:find(kind, Auth),
@@ -56,8 +58,8 @@ client(Sock) ->
                             user_exists ->
                                 ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
                                 gen_tcp:send(Sock, ServerResponse),
-                                client(Sock);
-                        end;
+                                client(Sock)
+                        end
             end;
         {tcp_closed, _} ->
             io:format("user disconnected ~n");

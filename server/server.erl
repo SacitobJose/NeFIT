@@ -7,11 +7,11 @@
 % Inicialização do servidor
 server() ->
     % Inicia o handler para os users, o loginHandler para controlo de acessos de clientes e o negotiatorsHandler para o tratar dos negociadores
-    register(negotiatorsHandler, spawn(fun() -> negotiatorsHandler(#{}, N) end)),
     register(server, self()),
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
     {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
+    negotiatorsConnect(LSock, #{}, 5),
     io:format("Server started~n", []),
     acceptor(LSock).
 
@@ -24,13 +24,14 @@ acceptor(LSock) ->
     % Nova conexão
     client(Sock).
 
-negotiatorsHandler(Negotiators, 0) ->
-    negotiators(#{}, Negotiators, 0).
+negotiatorsConnect(LSock, Negotiators, 0) ->
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0))).
 
-negotiatorsHandler(Negotiators, N) ->
+negotiatorsConnect(LSock, Negotiators, N) ->
     % estabelecer conexão ao socket do negociador
+    {ok, Sock} = gen_tcp:accept(LSock),
     PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
-    negotiatorsHandler(Negotiators ++ [PID], N-1).
+    negotiatorsConnect(LSock, Negotiators ++ [PID], N-1).
 
 negotiators(Map, Negotiators, N) ->
     receive

@@ -60,3 +60,8 @@ message DealerTimeout {
   required string productName = 3;
   repeated SaleInfo sales = 4;
 }
+
+message ResponseImport {
+  required string producerName = 1;
+  required SaleInfo sale = 2;
+}

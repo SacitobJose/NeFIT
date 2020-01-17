@@ -14,5 +14,3 @@ producer(Sock, Username) ->
         {timeout, negotiatorsHandler, Data} ->
             gen_tcp:send(Sock, Data)
     end.
-    
-    
