@@ -1,12 +1,16 @@
 package catalog.pubsub;
+
 import org.zeromq.ZMQ;
+import org.zeromq.ZContext;
+import org.zeromq.SocketType;
+import org.zeromq.ZMQ.Socket;
 
 public class Broker {
 
   public static void main(String[] args) {
-    ZMQ.Context context = ZMQ.context(1);
-    ZMQ.Socket pubs = context.socket(ZMQ.XSUB);
-    ZMQ.Socket subs = context.socket(ZMQ.XPUB);
+    ZContext context = new ZContext();
+    ZMQ.Socket subs = context.createSocket(SocketType.XSUB);
+    ZMQ.Socket pubs = context.createSocket(SocketType.XPUB);
     pubs.bind("tcp://*:"+args[0]);
     subs.bind("tcp://*:"+args[1]);
     new Proxy(context, pubs, subs).poll();
