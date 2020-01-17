@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.Socket;
 
 import org.zeromq.ZMQ;
+import org.zeromq.ZContext;
+import org.zeromq.SocketType;
+import org.zeromq.ZMQ.Socket;
 
 import protos.Protos.Authentication;
 import protos.Protos.ServerResponse;
@@ -56,8 +58,8 @@ class ClientToSocket extends Thread {
     }
 
     private void importerMenu() throws IOException {
-        ZMQ.Context context = ZMQ.context(1);
-        ZMQ.Socket subSocket = context.socket(ZMQ.SUB);
+        ZContext context = new ZContext();
+        ZMQ.Socket subSocket = context.createSocket(SocketType.SUB);
         subSocket.connect("tcp://localhost:7777");
 
         Thread s = new Subscriptions(subSocket);
@@ -81,6 +83,9 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
+                System.out.print("Fabricante: ");
+                System.out.flush();
+
                 break;
             case 2: {
                 System.out.print("Fabricante: ");
@@ -100,6 +105,7 @@ class ClientToSocket extends Thread {
             }
             case 4:
                 clearTerminal();
+                context.close();
                 System.exit(1);
                 break;
             }
@@ -108,8 +114,8 @@ class ClientToSocket extends Thread {
     }
 
     private void producerMenu() throws IOException {
-        ZMQ.Context context = ZMQ.context(1);
-        ZMQ.Socket pubSocket = context.socket(ZMQ.PUB);
+        ZContext context = new ZContext();
+        ZMQ.Socket pubSocket = context.createSocket(SocketType.PUB);
         pubSocket.connect("tcp://localhost:7777");
 
         // socket.send("pqpqpq");
