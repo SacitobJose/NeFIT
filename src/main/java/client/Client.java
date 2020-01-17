@@ -60,10 +60,8 @@ class ClientToSocket extends Thread {
         ZMQ.Socket subSocket = context.socket(ZMQ.SUB);
         subSocket.connect("tcp://localhost:7777");
 
-        // while (true) {
-        //     byte[] b = socket.recv();
-        //     System.out.println(new String(b));
-        // }
+        Thread s = new Subscriptions(subSocket);
+        s.start();
 
         while (true) {
             StringBuilder main = new StringBuilder();
@@ -84,11 +82,22 @@ class ClientToSocket extends Thread {
             switch (escolha) {
             case 1:
                 break;
-            case 2:
-                // socket.subscribe("lalala".getBytes());
+            case 2: {
+                System.out.print("Fabricante: ");
+                System.out.flush();
+
+                String producer = this.stdin.readLine();
+                subSocket.subscribe(producer);
                 break;
-            case 3:
+            }
+            case 3: {
+                System.out.print("Fabricante: ");
+                System.out.flush();
+
+                String producer = this.stdin.readLine();
+                subSocket.unsubscribe(producer);
                 break;
+            }
             case 4:
                 clearTerminal();
                 System.exit(1);
@@ -221,6 +230,21 @@ class SocketToClient extends Thread {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+}
+
+class Subscriptions extends Thread {
+    ZMQ.Socket subSocket;
+
+    public Subscriptions(ZMQ.Socket subSocket) throws IOException {
+        this.subSocket = subSocket;
+    }
+
+    public void run() {
+        while (true) {
+            byte[] b = this.subSocket.recv();
+            System.out.println(new String(b));
         }
     }
 }
