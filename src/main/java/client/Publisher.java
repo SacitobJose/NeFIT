@@ -1,4 +1,5 @@
-package catalog.pubsub;
+package client;
+
 import org.zeromq.ZMQ;
 
 public class Publisher {
@@ -15,4 +16,3 @@ public class Publisher {
         context.term();
     }
 }
-
