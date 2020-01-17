@@ -1,8 +1,12 @@
 -module(server).
+
 -export([server/0]).
+
 -import(login, [handler/1]).
 -import(client, [client/1]).
 -import(negotiator, [negotiator/1]).
+
+-include("protos.hrl").
 
 % Inicialização do servidor
 server() ->
@@ -25,12 +29,12 @@ acceptor(LSock) ->
     client(Sock).
 
 negotiatorsConnect(LSock, Negotiators, 0) ->
-    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0))).
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0) end));
 
 negotiatorsConnect(LSock, Negotiators, N) ->
     % estabelecer conexão ao socket do negociador
     {ok, Sock} = gen_tcp:accept(LSock),
-    PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
+    PID = spawn(fun() -> negotiators(Sock, #{}, #{}) end),
     negotiatorsConnect(LSock, Negotiators ++ [PID], N-1).
 
 negotiators(Map, Negotiators, N) ->
@@ -48,8 +52,9 @@ negotiators(Map, Negotiators, N) ->
             case maps:find(Product, Map) of
                 {ok, Value} ->
                     Value ! {new_importer, Username, PID, Data};
-                _ -> % confirmar
+                _ ->
                     NewMap = maps:put(Product, lists:nth(Negotiators, N), Map),
                     lists:nth(Negotiators, N) ! {new_importer, Username, PID, Data},
                     negotiators(NewMap, Negotiators, N rem length(Negotiators))
-            end;
+            end
+    end.

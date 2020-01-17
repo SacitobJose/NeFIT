@@ -1,10 +1,14 @@
--module[negotiator].
+-module(negotiator).
+
+-export([negotiator/3]).
+
+-include("protos.hrl").
 
 negotiator(Sock, Importers, Producers) ->
     receive
         {new_producer, Username, PID, Data} ->
             gen_tcp:send(Sock, Data),
-            NewProducers = maps:put(ProducerName, PID, Producers),
+            NewProducers = maps:put(Username, PID, Producers),
             negotiator(Sock, Importers, NewProducers);
         {new_importer, Username, PID, Data} ->
             gen_tcp:send(Sock, Data),
@@ -25,8 +29,7 @@ negotiator(Sock, Importers, Producers) ->
 
 % Extracts importers' usernames from map
 extractImporters(Importers, []) ->
-    Importers.
-
+    Importers;
 extractImporters(Importers, [H|T]) ->
     SaleInfo = protos:decode_msg(H, 'SaleInfo'),
     {ok, Username} = maps:find(username, SaleInfo),
@@ -34,9 +37,8 @@ extractImporters(Importers, [H|T]) ->
 
 % Sends producer's username to each importer and extract them from importers' map
 sendImporters(Importers, [], ProducerName) ->
-    Importers.
-
+    Importers;
 sendImporters(Importers, [H|T], ProducerName) ->
-    {PID, SaleInfo} <- H
+    {PID, SaleInfo} = H,
     PID ! {producer, negotiatorsHandler, ProducerName, SaleInfo},
-    sendImporters(Importers -- H, T).
+    sendImporters(Importers -- H, T, ProducerName).

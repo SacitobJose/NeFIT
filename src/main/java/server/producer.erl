@@ -1,5 +1,10 @@
 -module(producer).
--export([producer/1]).
+
+-import(login, [logout/1]).
+
+-export([producer/2]).
+
+-include("protos.hrl").
 
 producer(Sock, Username) ->
     receive
