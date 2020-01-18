@@ -218,7 +218,20 @@ class ClientToSocket extends Thread {
                 StringBuilder auth = new StringBuilder();
                 auth.append("Authentication:");
 
-                // Verificar o papel do utilizador
+                System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
+                System.out.flush();
+                String method = stdin.readLine();
+                if (method.equals("r"))
+                    auth.append(1);
+                else if (method.equals("l"))
+                    auth.append(0);
+                else {
+                    System.out.println("Não é nenhum dos métodos válidos.");
+                    continue;
+                }
+
+                auth.append(":");
+
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 System.out.flush();
                 role = stdin.readLine();
@@ -228,21 +241,6 @@ class ClientToSocket extends Thread {
                     auth.append(1);
                 else {
                     System.out.println("Não é nenhum dos papéis válidos.");
-                    continue;
-                }
-
-                auth.append(":");
-
-                // Verificar credenciais do utilizador
-                System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
-                System.out.flush();
-                String method = stdin.readLine();
-                if (method.equals("r"))
-                    auth.append(0);
-                else if (method.equals("l"))
-                    auth.append(1);
-                else {
-                    System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
@@ -260,6 +258,7 @@ class ClientToSocket extends Thread {
                 auth.append(stdin.readLine());
 
                 // Try to authenticate
+                System.out.println(auth.toString());
                 this.os.println(auth.toString());
                 this.os.flush();
 
@@ -268,9 +267,9 @@ class ClientToSocket extends Thread {
                 String[] res = response.split(":");
                 if (res[1].equals("0")) {
                     if (method.equals("l"))
-                        System.out.println("O nome do utilizador não existe ou a palavra passe está incorreta.");
+                        System.out.println("O nome de utilizador não existe ou a palavra passe está incorreta.");
                     else
-                        System.out.println("O nome do utilizador já existe.");
+                        System.out.println("O nome de utilizador já existe.");
                     continue;
                 }
 
@@ -307,7 +306,9 @@ class SocketToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                // DO SOMETHING
+                String line = this.is.readLine();
+                String[] parts = line.split(":");
+
             }
         } catch (Exception e) {
             e.printStackTrace();

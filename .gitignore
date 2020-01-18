@@ -10,6 +10,9 @@
 *.toc
 *.out
 
+# Erlang
+*.beam
+
 # VS Code
 /target
 /bin

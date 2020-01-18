@@ -24,7 +24,7 @@ client(Sock) ->
                             Res = login(Username, Password),
                             case Res of
                                 ok ->
-                                    gen_tcp:send(Sock, io_lib:format("Login:ok~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:1~n", [])),
                                     case Kind of
                                         <<"0">> ->
                                             producer(Sock, Username);
@@ -32,17 +32,17 @@ client(Sock) ->
                                             importer(Sock, Username)
                                     end;
                                 wrong_user ->
-                                    gen_tcp:send(Sock, io_lib:format("Login:Inexistent:User~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                                     client(Sock);
                                 already_loggedin ->
-                                    gen_tcp:send(Sock, io_lib:format("Login:Already:LoggedIn~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                                     client(Sock);
                                 wrong_password ->
-                                    gen_tcp:send(Sock, io_lib:format("Login:Wrong:Password~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                                     client(Sock)
                             end;
                         _ ->
-                            gen_tcp:send(Sock, io_lib:format("Login_Invalid~n", [])),
+                            gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                             client(Sock)
                     end;
                 <<"1">> ->
@@ -54,7 +54,7 @@ client(Sock) ->
                             Res = create_account(Username, Password),
                             case Res of
                                 ok ->
-                                    gen_tcp:send(Sock, io_lib:format("Register:ok~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:1~n", [])),
                                     io:format("New Register~n", []),
                                     case Kind of
                                         <<"0">> ->
@@ -63,11 +63,11 @@ client(Sock) ->
                                             importer(Sock, Username)
                                     end;
                                 user_exists ->
-                                    gen_tcp:send(Sock, io_lib:format("Register:Already:Exists~n", [])),
+                                    gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                                     client(Sock)
                             end;
                         _ ->
-                            gen_tcp:send(Sock, io_lib:format("Register:Invalid~n", [])),
+                            gen_tcp:send(Sock, io_lib:format("ServerResponse:0~n", [])),
                             client(Sock)
                     end
             end;
