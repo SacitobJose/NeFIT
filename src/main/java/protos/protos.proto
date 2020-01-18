@@ -64,7 +64,7 @@ message SaleInfo {
   required int64 price = 3;
 }
 
-DealerTimeout:success:producerName:productName:username:quantity:price:username:quantity:price:...:<<>>
+DealerTimeout:success:producerName:productName:username:<<>>:...:username:<<>>:
 message DealerTimeout {
   required bool success = 1;
   required string producerName = 2;

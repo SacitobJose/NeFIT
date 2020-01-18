@@ -28,7 +28,7 @@ acceptor(LSock) ->
     % Nova conexão
     client(Sock).
 
-negotiatorsConnect(LSock, Negotiators, 0) ->
+negotiatorsConnect(_, Negotiators, 0) ->
     register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0) end));
 
 negotiatorsConnect(LSock, Negotiators, N) ->

@@ -10,56 +10,66 @@ client(Sock) ->
     % recebe uma conexão, verifica a autenticação e chama importer(Sock, Username) ou producer(Sock, Username, TimeOut)
     receive
         {tcp, _, Data} ->
-            Auth = protos:decode_msg(Data, 'Authentication'),
-            case maps:find(type, Auth) of
-                "LOGIN" ->
-                    Username = maps:find(username, Auth),
-                    Password = maps:find(password, Auth),
-                    Kind = maps:find(kind, Auth),
-                        Res = login(Username, Password),
-                        case Res of
-                            ok ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                case Kind of
-                                    <<"Producer">> ->
-                                        producer(Sock, Username);
-                                    <<"Importer">> ->
-                                        importer(Sock, Username)
-                                end;
-                            wrong_user ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                client(Sock);
-                            already_loggedin ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                client(Sock);
-                            wrong_password ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                client(Sock)
-                        end;
-                "REGISTER" ->
-                    Username = maps:find(username, Auth),
-                    Password = maps:find(password, Auth),
-                    Kind = maps:find(kind, Auth),
-                        Res = create_account(Username, Password),
-                        case Res of
-                            ok ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                case Kind of
-                                    <<"Producer">> ->
-                                        producer(Sock, Username);
-                                    <<"Importer">> ->
-                                        importer(Sock, Username)
-                                end;
-                            user_exists ->
-                                ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                                gen_tcp:send(Sock, ServerResponse),
-                                client(Sock)
-                        end
+            
+            Message = string:split(string:trim(Data), ":", all),
+            Fazer = lists:nth(2, Message),
+
+            case Fazer of
+                <<"0">> ->
+                    case length(Message) of
+                        5 ->
+                            Kind = lists:nth(3, Message),
+                            Username = lists:nth(4, Message),
+                            Password = lists:nth(5, Message),
+                            Res = login(Username, Password),
+                            case Res of
+                                ok ->
+                                    gen_tcp:send(Sock, io_lib:format("Login:ok~n", [])),
+                                    case Kind of
+                                        <<"0">> ->
+                                            producer(Sock, Username);
+                                        <<"1">> ->
+                                            importer(Sock, Username)
+                                    end;
+                                wrong_user ->
+                                    gen_tcp:send(Sock, io_lib:format("Login:Inexistent:User~n", [])),
+                                    client(Sock);
+                                already_loggedin ->
+                                    gen_tcp:send(Sock, io_lib:format("Login:Already:LoggedIn~n", [])),
+                                    client(Sock);
+                                wrong_password ->
+                                    gen_tcp:send(Sock, io_lib:format("Login:Wrong:Password~n", [])),
+                                    client(Sock)
+                            end;
+                        _ ->
+                            gen_tcp:send(Sock, io_lib:format("Login_Invalid~n", [])),
+                            client(Sock)
+                    end;
+                <<"1">> ->
+                    case length(Message) of
+                        5 ->
+                            Kind = lists:nth(3, Message),
+                            Username = lists:nth(4, Message),
+                            Password = lists:nth(5, Message),
+                            Res = create_account(Username, Password),
+                            case Res of
+                                ok ->
+                                    gen_tcp:send(Sock, io_lib:format("Register:ok~n", [])),
+                                    io:format("New Register~n", []),
+                                    case Kind of
+                                        <<"0">> ->
+                                            producer(Sock, Username);
+                                        <<"1">> ->
+                                            importer(Sock, Username)
+                                    end;
+                                user_exists ->
+                                    gen_tcp:send(Sock, io_lib:format("Register:Already:Exists~n", [])),
+                                    client(Sock)
+                            end;
+                        _ ->
+                            gen_tcp:send(Sock, io_lib:format("Register:Invalid~n", [])),
+                            client(Sock)
+                    end
             end;
         {tcp_closed, _} ->
             io:format("user disconnected ~n");

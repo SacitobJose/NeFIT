@@ -9,13 +9,14 @@
 producer(Sock, Username) ->
     receive
         {tcp, _, Data} ->
-            ProducerInfo = protos:decode_msg(Data, 'Produce'),
-            Product = maps:find(productName, ProducerInfo),
-            negotiatorsHandler ! {new_producer, Product, Username, self(), Data};
+            Message = string:split(string:trim(Data), ":", all),
+            Product = lists:nth(2, Message),
+            Protobuf = lists:nth(3, Message),
+            negotiatorsHandler ! {new_producer, Product, Username, self(), Protobuf};
         {tcp_closed, _} ->
             logout(Username);
         {tcp_error, _} ->
             logout(Username);
-        {timeout, negotiatorsHandler, Data} ->
-            gen_tcp:send(Sock, Data)
+        {timeout, negotiatorsHandler, ToSend} ->
+            gen_tcp:send(Sock, ToSend)
     end.
