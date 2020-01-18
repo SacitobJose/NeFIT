@@ -10,8 +10,10 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
 
+import protos.Protos.DealerTimeout;
 import protos.Protos.Import;
 import protos.Protos.Produce;
+import protos.Protos.SaleInfo;
 import protos.Protos.Transaction;
 
 public class Client {
@@ -199,6 +201,8 @@ class ClientToSocket extends Thread {
                 txn.setProduce(prod.build());
 
                 transaction.append(txn.build());
+
+                this.os.println(transaction.toString());
                 break;
             case 2:
                 clearTerminal();
@@ -308,7 +312,31 @@ class SocketToClient extends Thread {
             while (true) {
                 String line = this.is.readLine();
                 String[] parts = line.split(":");
+                if (parts[0].equals("Import")) {
+                    String producerName = parts[1];
+                    String productName = parts[2];
+                    SaleInfo sale = SaleInfo.parseFrom(parts[3].getBytes());
+                    long quantity = sale.getQuantity();
+                    long price = sale.getPrice();
 
+                    System.out.println("Encomenda efetuada:");
+                    System.out.println("\tProduto: " + Long.toString(quantity) + " " + productName);
+                    System.out.println("\tPreço por unidade: " + Long.toString(price));
+                    System.out.println("\tProdutor: " + producerName);
+                } else {
+                    DealerTimeout timeout = DealerTimeout.parseFrom(parts[1].getBytes());
+                    String productName = timeout.getProductName();
+                    if (timeout.getSuccess()) {
+                        System.out.println("Venda efetuada:");
+                        System.out.println("\tProduto: " + productName);
+                        System.out.println("\tCompradores:");
+                        timeout.getSalesList().forEach((sale) -> {
+                            System.out.println("\t\t" + sale.getUsername() + ": " + Long.toString(sale.getQuantity()) + "x a " + Long.toString(sale.getPrice()) + "/unidade");
+                        });
+                    } else {
+                        System.out.println("Venda de " + productName + "recusada");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
