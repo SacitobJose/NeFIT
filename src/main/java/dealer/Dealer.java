@@ -1,12 +1,11 @@
 package dealer;
 
+import protos.Protos.Transaction;
 import protos.Protos.Produce;
 import protos.Protos.Import;
 
 import protos.Protos.SaleInfo;
 import protos.Protos.DealerTimeout;
-
-import protos.Protos.ServerResponse;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -46,27 +45,49 @@ class DealerToSocket extends Thread {
             OutputStream os = this.socket.getOutputStream();
             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-            // Receber pedidos durante x tempo
-            // Enviar resposta ao servidor com a informação correta
+            // TODO: Receber pedidos durante x tempo (timeout)
             while (true) {
+                SaleInfo.Builder saleInfo;
+                DealerTimeout.Builder dealerTimeout;
+
                 // Handle request
-                Produce.Builder produce = Produce.newBuilder();
-                Import.Builder imp = Import.newBuilder();
+                Transaction.Builder transaction = Transaction.newBuilder();
+                switch (transaction.getTxnCase()) {
+                case PRODUCE:
+                    // Produce
+                    Produce produce = transaction.getProduce();
 
-                // Handle response
-                // DealerTimeout & SaleInfo declarations
-                DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
-                SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
+                    // Handle response
+                    saleInfo = SaleInfo.newBuilder();
+                    dealerTimeout = DealerTimeout.newBuilder();
 
-                dealerTimeout.setSuccess(true);
-                dealerTimeout.setProducerName(imp.getProducerName());
-                dealerTimeout.setProductName(produce.getProductName());
+                    // ...
 
-                saleInfo.setUsername(imp.getProducerName());
-                saleInfo.setQuantity(imp.getQuantity());
-                saleInfo.setPrice(imp.getUnitaryPrice());
+                    break;
 
-                dealerTimeout.addSales(saleInfo);
+                case IMPORT:
+                    // Import
+                    Import imp = transaction.getImport();
+
+                    // Handle response
+                    saleInfo = SaleInfo.newBuilder();
+                    dealerTimeout = DealerTimeout.newBuilder();
+
+                    saleInfo.setUsername(imp.getProducerName());
+                    saleInfo.setQuantity(imp.getQuantity());
+                    saleInfo.setPrice(imp.getUnitaryPrice());
+
+                    dealerTimeout.setSuccess(true);
+                    dealerTimeout.setProducerName(imp.getProducerName());
+                    dealerTimeout.setProductName(imp.getProductName());
+                    dealerTimeout.addSales(saleInfo);
+
+                    break;
+
+                default:
+                    // DO SOMETHING ?
+                    break;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

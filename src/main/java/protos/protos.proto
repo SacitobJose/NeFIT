@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package protos;
 
-Authentication:0/1:0/1:username:password
+// Authentication:0/1:0/1:username:password
 message Authentication {
   enum AuthType {
     REGISTER = 0;
@@ -20,12 +20,12 @@ message Authentication {
   required string password = 4;
 }
 
-ServerResponse:0/1
+// ServerResponse:0/1
 message ServerResponse {
   required bool success = 1;
 }
 
-Transaction:productName:<<>>
+// Transaction:productName:<<>>
 message Transaction {
   oneof txn {
     Produce produce = 1;
@@ -64,7 +64,7 @@ message SaleInfo {
   required int64 price = 3;
 }
 
-DealerTimeout:success:producerName:productName:username:quantity:price:username:quantity:price:...:<<>>
+// DealerTimeout:success:producerName:productName:username:quantity:price:username:quantity:price:...:<<>>
 message DealerTimeout {
   required bool success = 1;
   required string producerName = 2;
