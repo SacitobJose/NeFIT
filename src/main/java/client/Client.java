@@ -2,18 +2,16 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
 
-import protos.Protos.Authentication;
+import protos.Protos.Import;
 import protos.Protos.Produce;
-import protos.Protos.ServerResponse;
 import protos.Protos.Transaction;
 
 public class Client {
@@ -30,15 +28,15 @@ public class Client {
 
 class ClientToSocket extends Thread {
     Socket socket;
-    InputStream is;
-    OutputStream os;
+    BufferedReader is;
+    PrintWriter os;
     String username;
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
-        is = cli.getInputStream();
-        os = cli.getOutputStream();
+        is = new BufferedReader(new InputStreamReader(cli.getInputStream()));
+        os = new PrintWriter(cli.getOutputStream());
         this.username = null;
     }
 
@@ -89,9 +87,35 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
-                System.out.print("Fabricante: ");
-                System.out.flush();
+                StringBuilder transaction = new StringBuilder();
+                transaction.append("Transaction:");
 
+                Transaction.Builder txn = Transaction.newBuilder();
+                Import.Builder prod = Import.newBuilder();
+
+                System.out.print("Nome do produto: ");
+                System.out.flush();
+                String productName = this.stdin.readLine();
+                prod.setProductName(productName);
+                transaction.append(productName);
+
+                transaction.append(":");
+
+                System.out.print("Nome de produtor: ");
+                System.out.flush();
+                prod.setProducerName(this.stdin.readLine());
+
+                System.out.print("Quantidade: ");
+                System.out.flush();
+                prod.setQuantity(this.readInt());
+
+                System.out.print("Preço por produto: ");
+                System.out.flush();
+                prod.setUnitaryPrice(this.readInt());
+
+                txn.setImport(prod.build());
+
+                transaction.append(txn.build());
                 break;
             case 2: {
                 System.out.print("Fabricante: ");
@@ -142,12 +166,19 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
+                StringBuilder transaction = new StringBuilder();
+                transaction.append("Transaction:");
+
                 Transaction.Builder txn = Transaction.newBuilder();
                 Produce.Builder prod = Produce.newBuilder();
 
                 System.out.print("Nome do produto: ");
                 System.out.flush();
-                prod.setProductName(this.stdin.readLine());
+                String productName = this.stdin.readLine();
+                prod.setProductName(productName);
+                transaction.append(productName);
+
+                transaction.append(":");
 
                 System.out.print("Quantidade mínima: ");
                 System.out.flush();
@@ -166,7 +197,8 @@ class ClientToSocket extends Thread {
                 prod.setNegotiationPeriod(this.readInt());
 
                 txn.setProduce(prod.build());
-                txn.build().writeDelimitedTo(os);
+
+                transaction.append(txn.build());
                 break;
             case 2:
                 clearTerminal();
@@ -179,54 +211,62 @@ class ClientToSocket extends Thread {
     }
 
     public void run() {
-
         try {
             String role;
 
             while (true) {
-                Authentication.Builder auth = Authentication.newBuilder();
+                StringBuilder auth = new StringBuilder();
+                auth.append("Authentication:");
 
                 // Verificar o papel do utilizador
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 System.out.flush();
                 role = stdin.readLine();
                 if (role.equals("f"))
-                    auth.setUserType(Authentication.UserType.PRODUCER);
+                    auth.append(0);
                 else if (role.equals("i"))
-                    auth.setUserType(Authentication.UserType.IMPORTER);
+                    auth.append(1);
                 else {
                     System.out.println("Não é nenhum dos papéis válidos.");
                     continue;
                 }
+
+                auth.append(":");
 
                 // Verificar credenciais do utilizador
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 System.out.flush();
                 String method = stdin.readLine();
                 if (method.equals("r"))
-                    auth.setType(Authentication.AuthType.REGISTER);
+                    auth.append(0);
                 else if (method.equals("l"))
-                    auth.setType(Authentication.AuthType.LOGIN);
+                    auth.append(1);
                 else {
                     System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
+                auth.append(":");
+
                 System.out.print("Nome de utilizador: ");
                 System.out.flush();
                 String username = stdin.readLine();
-                auth.setUsername(username);
+                auth.append(username);
+
+                auth.append(":");
 
                 System.out.print("Palavra-passe: ");
                 System.out.flush();
-                auth.setPassword(stdin.readLine());
+                auth.append(stdin.readLine());
 
                 // Try to authenticate
-                auth.build().writeDelimitedTo(os);
+                this.os.println(auth.toString());
+                this.os.flush();
 
                 // Receive authentication confirmation
-                ServerResponse aVal = ServerResponse.parseDelimitedFrom(is);
-                if (!aVal.getSuccess()) {
+                String response = this.is.readLine();
+                String[] res = response.split(":");
+                if (res[1].equals("0")) {
                     if (method.equals("l"))
                         System.out.println("O nome do utilizador não existe ou a palavra passe está incorreta.");
                     else
@@ -258,9 +298,9 @@ class ClientToSocket extends Thread {
 }
 
 class SocketToClient extends Thread {
-    InputStream is;
+    BufferedReader is;
 
-    public SocketToClient(InputStream is) throws IOException {
+    public SocketToClient(BufferedReader is) throws IOException {
         this.is = is;
     }
 

@@ -5,7 +5,8 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 
-\usepackage{xcolor}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{hyperref}
 
 % Encoding
 %--------------------------------------
@@ -53,12 +54,6 @@
     \maketitle
 \end{titlepage}
 
-% Resumo
-
-\begin{abstract}
-	Este projeto de avaliação relativo à unidade curricular de Fundamentos de Sistemas Distribuídos consiste, globalmente, ...
-\end{abstract}
-
 % Índice
 
 \tableofcontents
@@ -66,23 +61,30 @@
 % Introdução
 
 \chapter{Introdução} \label{intro} {
-	\section{Contextualização}
+	Neste trabalho prático é requerido o desenvolvimento de um protótipo de uma plataforma de negociação entre fabricantes e importadores de produtos. 
+	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
+	cada um deles desempenhará sempre ou o papel de fabricante ou de importador. Cada fabricante indicará a disponibilidade para produzir um determinado artigo, numa quantidade mínima e máxima, 
+	a um preço mínimo (unitário), bem como o período de tempo durante o qual os importadores poderão fazer ofertas de encomenda (período de negociação). Por sua vez, cada importador indica a quantidade 
+	e valor unitário a que está disposto a pagar por um determinado artigo de um fabricante. Os clientes autenticam-se no servidor de \textit{front-end}, o qual encaminha as suas ordens para um (de entre vários) 
+	negociadores. O catálogo disponibilizará uma interface \textit{RESTful}, que permitirá obter informação sobre os fabricantes, importadores, e negociações em curso. Como tal, por forma a implementar este protótipo, 
+	foi utilizada a linguagem de programação \textit{Java} (cliente, negociador e catálogo), \textit{Erlang} (servidor \textit{front-end}), e, ainda, \textit{Protocol Buffers}, \textit{ZeroMQ} e \textit{Dropwizard}.
 }
 
 \chapter{Metodologia}
-    \section{Modelo adoptado}
+	\section{Abordagem adotada}
 
-\chapter{Resultados}
+	\section{Implementação}
 
 \chapter{Conclusão}
 
 \chapter{Webgrafia}
-    \begin{itemize}
-        \item \textit{Website}:
-        \par \textit{https://www.google.com}
+	\begin{itemize}
+		\item \textbf{\textit{Protocol Buffers}}:
+		\par \textit{\url{https://developers.google.com/protocol-buffers}}
+        \item \textbf{\textit{Protocol Buffers - Java}}:
+		\par \textit{\url{https://developers.google.com/protocol-buffers/docs/reference/java-generated}}
+		\item \textbf{Documentação - \textit{Java}}:
+		\par \textit{\url{https://docs.oracle.com/en/java/javase/11/docs/api/index.html}}
     \end{itemize}
-
-\appendix
-\chapter{Observações}
 
 \end{document}

@@ -3,7 +3,6 @@ package catalog.pubsub;
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
-import org.zeromq.ZMQ.Socket;
 
 public class Broker {
 
