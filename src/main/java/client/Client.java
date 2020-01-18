@@ -10,8 +10,10 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
 
+import protos.Protos.DealerTimeout;
 import protos.Protos.Import;
 import protos.Protos.Produce;
+import protos.Protos.SaleInfo;
 import protos.Protos.Transaction;
 
 public class Client {
@@ -144,12 +146,6 @@ class ClientToSocket extends Thread {
     }
 
     private void producerMenu() throws IOException {
-        ZContext context = new ZContext();
-        ZMQ.Socket pubSocket = context.createSocket(SocketType.PUB);
-        pubSocket.connect("tcp://localhost:7777");
-
-        // socket.send("pqpqpq");
-
         while (true) {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
@@ -199,10 +195,11 @@ class ClientToSocket extends Thread {
                 txn.setProduce(prod.build());
 
                 transaction.append(txn.build());
+
+                this.os.println(transaction.toString());
                 break;
             case 2:
                 clearTerminal();
-                context.close();
                 System.exit(1);
                 break;
             }
@@ -218,7 +215,20 @@ class ClientToSocket extends Thread {
                 StringBuilder auth = new StringBuilder();
                 auth.append("Authentication:");
 
-                // Verificar o papel do utilizador
+                System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
+                System.out.flush();
+                String method = stdin.readLine();
+                if (method.equals("r"))
+                    auth.append(1);
+                else if (method.equals("l"))
+                    auth.append(0);
+                else {
+                    System.out.println("Não é nenhum dos métodos válidos.");
+                    continue;
+                }
+
+                auth.append(":");
+
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 System.out.flush();
                 role = stdin.readLine();
@@ -228,21 +238,6 @@ class ClientToSocket extends Thread {
                     auth.append(1);
                 else {
                     System.out.println("Não é nenhum dos papéis válidos.");
-                    continue;
-                }
-
-                auth.append(":");
-
-                // Verificar credenciais do utilizador
-                System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
-                System.out.flush();
-                String method = stdin.readLine();
-                if (method.equals("r"))
-                    auth.append(0);
-                else if (method.equals("l"))
-                    auth.append(1);
-                else {
-                    System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
@@ -260,6 +255,7 @@ class ClientToSocket extends Thread {
                 auth.append(stdin.readLine());
 
                 // Try to authenticate
+                System.out.println(auth.toString());
                 this.os.println(auth.toString());
                 this.os.flush();
 
@@ -268,9 +264,9 @@ class ClientToSocket extends Thread {
                 String[] res = response.split(":");
                 if (res[1].equals("0")) {
                     if (method.equals("l"))
-                        System.out.println("O nome do utilizador não existe ou a palavra passe está incorreta.");
+                        System.out.println("O nome de utilizador não existe ou a palavra passe está incorreta.");
                     else
-                        System.out.println("O nome do utilizador já existe.");
+                        System.out.println("O nome de utilizador já existe.");
                     continue;
                 }
 
@@ -307,7 +303,33 @@ class SocketToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                // DO SOMETHING
+                String line = this.is.readLine();
+                String[] parts = line.split(":");
+                if (parts[0].equals("Import")) {
+                    String producerName = parts[1];
+                    String productName = parts[2];
+                    SaleInfo sale = SaleInfo.parseFrom(parts[3].getBytes());
+                    long quantity = sale.getQuantity();
+                    long price = sale.getPrice();
+
+                    System.out.println("Encomenda efetuada:");
+                    System.out.println("\tProduto: " + Long.toString(quantity) + " " + productName);
+                    System.out.println("\tPreço por unidade: " + Long.toString(price));
+                    System.out.println("\tProdutor: " + producerName);
+                } else {
+                    DealerTimeout timeout = DealerTimeout.parseFrom(parts[1].getBytes());
+                    String productName = timeout.getProductName();
+                    if (timeout.getSuccess()) {
+                        System.out.println("Venda efetuada:");
+                        System.out.println("\tProduto: " + productName);
+                        System.out.println("\tCompradores:");
+                        timeout.getSalesList().forEach((sale) -> {
+                            System.out.println("\t\t" + sale.getUsername() + ": " + Long.toString(sale.getQuantity()) + "x a " + Long.toString(sale.getPrice()) + "/unidade");
+                        });
+                    } else {
+                        System.out.println("Venda de " + productName + "recusada");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,10 +7,10 @@ import protos.Protos.Import;
 import protos.Protos.SaleInfo;
 import protos.Protos.DealerTimeout;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+// import java.io.BufferedReader;
+// import java.io.InputStream;
+// import java.io.InputStreamReader;
+// import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -22,9 +22,33 @@ public class Dealer {
             int port = Integer.parseInt(args[1]);
             Socket s = new Socket("localhost", port);
             Thread dts = new DealerToSocket(s);
+            Thread timeout = new TimeoutThread(dts, 10000);
             dts.start();
+            timeout.start();
         } catch (Exception e) {
             System.out.println("Não foi possível conectar ao negociador.");
+        }
+    }
+}
+
+/**
+ * Timeout thread
+ */
+class TimeoutThread extends Thread {
+    private Thread t;
+    private int time;
+
+    public TimeoutThread(Thread t, int mills) {
+        this.t = t;
+        this.time = mills;
+    }
+
+    public void run() {
+        try {
+            Thread.sleep(this.time);
+            this.t.notify();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
@@ -41,11 +65,10 @@ class DealerToSocket extends Thread {
 
     public void run() {
         try {
-            InputStream is = this.socket.getInputStream();
-            OutputStream os = this.socket.getOutputStream();
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            // InputStream is = this.socket.getInputStream();
+            // OutputStream os = this.socket.getOutputStream();
+            // BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-            // TODO: Receber pedidos durante x tempo (timeout)
             while (true) {
                 SaleInfo.Builder saleInfo;
                 DealerTimeout.Builder dealerTimeout;

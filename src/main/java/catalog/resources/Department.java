@@ -20,7 +20,7 @@ public class Department {
     private volatile String defaultName;
     private long counter;
 
-    public CompanyResource(String template, String defaultName) {
+    public Department(String template, String defaultName) {
         this.template = template;
         this.defaultName = defaultName;
     }

@@ -10,7 +10,7 @@ public class Proxy {
     Proxy(ZContext context, ZMQ.Socket s1, ZMQ.Socket s2) {
         this.s1 = s1;
         this.s2 = s2;
-        items = context.poller(2);
+        items = context.createPoller(2);
         items.register(s1, ZMQ.Poller.POLLIN);
         items.register(s2, ZMQ.Poller.POLLIN);
     }

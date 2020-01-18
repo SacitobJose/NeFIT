@@ -21,7 +21,7 @@ public class CompanyApplication extends Application<CompanyConfiguration> {
     public void run(CompanyConfiguration configuration,
                     Environment environment) {
         environment.jersey().register(
-            new CompanyResource(configuration.template, configuration.defaultName));
+            new CompanyConfiguration(configuration.template, configuration.defaultName));
         environment.healthChecks().register("template",
             new TemplateHealthCheck(configuration.template));
     }
