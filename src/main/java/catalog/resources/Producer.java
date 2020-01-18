@@ -13,14 +13,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/department")
+@Path("/producer")
 @Produces(MediaType.APPLICATION_JSON)
-public class Department {
+public class Producer {
     private final String template;
     private volatile String defaultName;
     private long counter;
 
-    public Department(String template, String defaultName) {
+    public Producer(String template, String defaultName) {
         this.template = template;
         this.defaultName = defaultName;
     }
@@ -40,4 +40,3 @@ public class Department {
         return Response.ok().build();
     }
 }
-

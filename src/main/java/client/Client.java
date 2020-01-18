@@ -255,7 +255,6 @@ class ClientToSocket extends Thread {
                 auth.append(stdin.readLine());
 
                 // Try to authenticate
-                System.out.println(auth.toString());
                 this.os.println(auth.toString());
                 this.os.flush();
 
