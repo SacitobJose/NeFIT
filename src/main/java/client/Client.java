@@ -146,12 +146,6 @@ class ClientToSocket extends Thread {
     }
 
     private void producerMenu() throws IOException {
-        ZContext context = new ZContext();
-        ZMQ.Socket pubSocket = context.createSocket(SocketType.PUB);
-        pubSocket.connect("tcp://localhost:7777");
-
-        // socket.send("pqpqpq");
-
         while (true) {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
@@ -206,7 +200,6 @@ class ClientToSocket extends Thread {
                 break;
             case 2:
                 clearTerminal();
-                context.close();
                 System.exit(1);
                 break;
             }
