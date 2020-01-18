@@ -2,29 +2,6 @@ syntax = "proto2";
 
 package protos;
 
-// Authentication:0/1:0/1:username:password
-message Authentication {
-  enum AuthType {
-    REGISTER = 0;
-    LOGIN = 1;
-  }
-
-  enum UserType {
-    PRODUCER = 0;
-    IMPORTER = 1;
-  }
-
-  required AuthType type = 1;
-  required UserType userType = 2;
-  required string username = 3;
-  required string password = 4;
-}
-
-// ServerResponse:0/1
-message ServerResponse {
-  required bool success = 1;
-}
-
 // Transaction:productName:<<>>
 message Transaction {
   oneof txn {
@@ -46,16 +23,6 @@ message Import {
   required string producerName = 2;
   required int64 quantity = 3;
   required int64 unitaryPrice = 4;
-}
-
-message SubscribeProducer {
-  required string username = 1;
-  required string producerName = 2;
-}
-
-message UnsubscribeProducer {
-  required string username = 1;
-  required string producerName = 2;
 }
 
 message SaleInfo {
