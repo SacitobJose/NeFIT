@@ -62,7 +62,7 @@
 
 \chapter{Introdução} \label{intro} {
 	Neste trabalho prático é requerido o desenvolvimento de um protótipo de uma plataforma de negociação entre fabricantes e importadores de produtos. 
-	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
+	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo, de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
 	cada um deles desempenhará sempre ou o papel de fabricante ou de importador. Cada fabricante indicará a disponibilidade para produzir um determinado artigo, numa quantidade mínima e máxima, 
 	a um preço mínimo (unitário), bem como o período de tempo durante o qual os importadores poderão fazer ofertas de encomenda (período de negociação). Por sua vez, cada importador indica a quantidade 
 	e valor unitário a que está disposto a pagar por um determinado artigo de um fabricante. Os clientes autenticam-se no servidor de \textit{front-end}, o qual encaminha as suas ordens para um (de entre vários) 
@@ -70,10 +70,41 @@
 	foi utilizada a linguagem de programação \textit{Java} (cliente, negociador e catálogo), \textit{Erlang} (servidor \textit{front-end}), e, ainda, \textit{Protocol Buffers}, \textit{ZeroMQ} e \textit{Dropwizard}.
 }
 
-\chapter{Metodologia}
-	\section{Abordagem adotada}
+\chapter{O sistema}
+	\section{Funcionamento}
 
 	\section{Implementação}
+	
+	\subsection{Servidor}
+	A implementação do servidor foi feita em Erlang. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
+	\begin{itemize}
+		\item \texttt{server.erl};
+		\item \texttt{login.erl};
+		\item \texttt{client.erl};
+		\item \texttt{importer.erl};
+		\item \texttt{producer.erl};
+		\item \texttt{negotiator.erl}.
+	\end{itemize}
+
+	\subsubsection{\texttt{server.erl}}
+	Este é o primeiro ator criado, responsável pela criação de todos os outros atores e por aceitar novas conexões (clientes).
+
+	\subsubsection{\texttt{login.erl}}
+	Este tipo de ator é registado, como \texttt{loginHandler}, e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
+
+	\subsubsection{\texttt{client.erl}}
+	Ator criado a cada nova conexão. Espera a receção de uma comunicação TCP com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
+	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
+
+	\subsubsection{\texttt{importer.erl}}
+	Ator criado pelo anterior, sempre que um cliente, do tipo importador, se autentica com sucesso. 
+	Fica então responsável pela comunicação com o importador, recebendo as suas encomendas e fazendo com que as mesmas cheguem ao respetivo negociador, através do \texttt{negotiatorsHandler}.
+
+	\subsubsection{\texttt{producer.erl}}
+	Semelhante ao anterior, mas para um cliente do tipo fabricante.
+
+	\subsubsection{\texttt{negotiator.erl}}
+	Existirá um ator deste tipo para cada negociador (quantidade pré-definida).
 
 \chapter{Conclusão}
 
