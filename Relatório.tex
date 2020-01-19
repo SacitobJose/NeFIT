@@ -136,6 +136,20 @@
 	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, tendo em conta que o utilizador não está a realizar nenhuma operação ou quando este clica na opção "Atualizações".
 	
 	Em ambos os casos, é dada a opção ao utilizador para sair da interface.
+
+	\subsection{Negociador}
+	No que toca ao desenvolvimento do negociador, este foi implementado em \textit{Java} com recurso à linguagem neutra \textit{Protocol Buffers} para efetuar a serialização de dados envolvidos nos processos de comunicação. 
+	
+	Por forma a satisfazer os requisitos impostos, foram declaradas duas variáveis relativas às negociações em curso no sistema e, ainda, aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
+	De forma a instanciar o negociador em causa, foi declarado um \textit{socket} que irá comunicar com o servidor, processando vários pedidos em simultâneo.
+	
+	O negociador presente neste protótipo, ao receber pedidos do servidor, consegue processar se o mesmo corresponde a um pedido proveniente de um produtor ou de um importador.
+	Caso este seja de um produtor, é aberto um período limitado de negociação para determinar quais os importadores que serão escolhidos para proceder à produção de um determinado produto. O critério adotado nestas situações 
+	é escolher qual o importador que possui o maior valor total de encomenda para o artigo em questão.
+	Por outro lado, se o pedido for de um importador, é verificado se o mesmo está associado à produção de um determinado tipo de artigo. Em caso afirmativo, é atualizada, com essa informação, a variável relativa às negociações
+	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
+
+	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
 \chapter{Conclusão}
 
 \chapter{Webgrafia}
