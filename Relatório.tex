@@ -73,38 +73,63 @@
 \chapter{O sistema}
 	\section{Funcionamento}
 
+	O sistema é dividido em quatro partes principais: servidor \textit{front-end}, cliente, negociador e catálogo.
+
+	O cliente é a entidade que representa importadores ou fabricantes. 
+	O mesmo apresenta uma interface rudimentar que permite ao utilizador fazer ofertas ou encomendas, dependendo se é um importador ou fabricante.
+	
+	O servidor, por sua vez, é responsável por receber estas encomendas e fazê-las chegar ao negociador correspondente. Tem ainda um pequeno mecanismo de autenticação para os seus clientes.
+	Foi ainda tomada a decisão de que cada produto seria atribuído a um negociador, sendo esse negociador o responsável por todas as negociações que existam com esse produto.
+	
+	Um negociador é responsável por intermediar as negociações entre importadores e fabricantes, fazendo corresponder ofertas e encomendas que satisfaçam os requisitos de ambas.
+
+	% FALAR DO CATÁLOGO
+
 	\section{Implementação}
 	
-	\subsection{Servidor}
+	\subsection{Servidor \textit{front-end}}
 	A implementação do servidor foi feita em Erlang. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
 	\begin{itemize}
-		\item \texttt{server.erl};
-		\item \texttt{login.erl};
-		\item \texttt{client.erl};
-		\item \texttt{importer.erl};
-		\item \texttt{producer.erl};
-		\item \texttt{negotiator.erl}.
+		\item Servidor;
+		\item \texttt{loginHandler};
+		\item Clientes;
+		\item Importadorers;
+		\item Fabricantes;
+		\item negotiatorsHandler;
+		\item Negociadores.
 	\end{itemize}
 
-	\subsubsection{\texttt{server.erl}}
-	Este é o primeiro ator criado, responsável pela criação de todos os outros atores e por aceitar novas conexões (clientes).
+	\subsubsection{Servidor central}
+	Este é o primeiro ator criado, responsável pela criação de todos os outros atores e por aceitar novas conexões (clientes), bem como pela conexão inicial de todos os negociadores.
 
-	\subsubsection{\texttt{login.erl}}
-	Este tipo de ator é registado, como \texttt{loginHandler}, e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
+	\subsubsection{\texttt{loginHandler}}
+	Este ator é registado e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
 
-	\subsubsection{\texttt{client.erl}}
+	\subsubsection{Clientes}
 	Ator criado a cada nova conexão. Espera a receção de uma comunicação TCP com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
 	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
 
-	\subsubsection{\texttt{importer.erl}}
-	Ator criado pelo anterior, sempre que um cliente, do tipo importador, se autentica com sucesso. 
-	Fica então responsável pela comunicação com o importador, recebendo as suas encomendas e fazendo com que as mesmas cheguem ao respetivo negociador, através do \texttt{negotiatorsHandler}.
+	\subsubsection{Importadores e Produtores}
+	Ator criado pelo anterior, sempre que um cliente, do tipo importador ou fabricante, se autentica com sucesso. 
+	Fica então responsável pela comunicação com o cliente, recebendo as suas encomendas/ofertas e fazendo com que as mesmas cheguem ao respetivo negociador, através do \texttt{negotiatorsHandler}.
 
-	\subsubsection{\texttt{producer.erl}}
-	Semelhante ao anterior, mas para um cliente do tipo fabricante.
+	\subsubsection{\texttt{negotiatorsHandler}}
+	O \texttt{negotiatorsHandler} é um ator, registado pelo servidor central, que é contactado por importadores ou fabricantes que queiram fazer encomendas ou ofertas. 
+	Ao recebê-las, consoante o produto, passa-as para o respetivo negociador. Cada novo produto é atribuído a um negociador, em estilo \textit{round-robin}.
 
-	\subsubsection{\texttt{negotiator.erl}}
-	Existirá um ator deste tipo para cada negociador (quantidade pré-definida).
+	\subsubsection{Negociadores}
+	Existirá um ator deste tipo para cada negociador (quantidade pré-definida). Um negociador é responsável por um certo número de produtos, tratando de todas as ofertas e encomendas desse produto.
+	Quando um cliente faz uma oferta ou encomenda, a mesma acaba por chegar ao ator (negociador) responsável pelo produto, fazendo-a depois chegar ao negociador propriamente dito (exterior ao servidor).
+
+
+	\subsection{Cliente}
+
+
+	\subsection{Negociador}
+
+
+	\subsection{Catálogo}
+
 
 \chapter{Conclusão}
 
