@@ -14,8 +14,1180 @@ public final class Protos {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface NewNegotiationOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.NewNegotiation)
+  public interface CatalogRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.CatalogRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    boolean hasNn();
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    protos.Protos.POSTNegotiation getNn();
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    protos.Protos.POSTNegotiationOrBuilder getNnOrBuilder();
+
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    boolean hasNo();
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    protos.Protos.POSTNegotiationOver getNo();
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    protos.Protos.POSTNegotiationOverOrBuilder getNoOrBuilder();
+
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    boolean hasGpi();
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    protos.Protos.GETProducerInfo getGpi();
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    protos.Protos.GETProducerInfoOrBuilder getGpiOrBuilder();
+
+    public protos.Protos.CatalogRequest.RequestCase getRequestCase();
+  }
+  /**
+   * Protobuf type {@code protos.CatalogRequest}
+   */
+  public  static final class CatalogRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protos.CatalogRequest)
+      CatalogRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CatalogRequest.newBuilder() to construct.
+    private CatalogRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CatalogRequest() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CatalogRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              protos.Protos.POSTNegotiation.Builder subBuilder = null;
+              if (requestCase_ == 1) {
+                subBuilder = ((protos.Protos.POSTNegotiation) request_).toBuilder();
+              }
+              request_ =
+                  input.readMessage(protos.Protos.POSTNegotiation.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((protos.Protos.POSTNegotiation) request_);
+                request_ = subBuilder.buildPartial();
+              }
+              requestCase_ = 1;
+              break;
+            }
+            case 18: {
+              protos.Protos.POSTNegotiationOver.Builder subBuilder = null;
+              if (requestCase_ == 2) {
+                subBuilder = ((protos.Protos.POSTNegotiationOver) request_).toBuilder();
+              }
+              request_ =
+                  input.readMessage(protos.Protos.POSTNegotiationOver.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((protos.Protos.POSTNegotiationOver) request_);
+                request_ = subBuilder.buildPartial();
+              }
+              requestCase_ = 2;
+              break;
+            }
+            case 26: {
+              protos.Protos.GETProducerInfo.Builder subBuilder = null;
+              if (requestCase_ == 3) {
+                subBuilder = ((protos.Protos.GETProducerInfo) request_).toBuilder();
+              }
+              request_ =
+                  input.readMessage(protos.Protos.GETProducerInfo.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((protos.Protos.GETProducerInfo) request_);
+                request_ = subBuilder.buildPartial();
+              }
+              requestCase_ = 3;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return protos.Protos.internal_static_protos_CatalogRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return protos.Protos.internal_static_protos_CatalogRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              protos.Protos.CatalogRequest.class, protos.Protos.CatalogRequest.Builder.class);
+    }
+
+    private int bitField0_;
+    private int requestCase_ = 0;
+    private java.lang.Object request_;
+    public enum RequestCase
+        implements com.google.protobuf.Internal.EnumLite {
+      NN(1),
+      NO(2),
+      GPI(3),
+      REQUEST_NOT_SET(0);
+      private final int value;
+      private RequestCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static RequestCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static RequestCase forNumber(int value) {
+        switch (value) {
+          case 1: return NN;
+          case 2: return NO;
+          case 3: return GPI;
+          case 0: return REQUEST_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public RequestCase
+    getRequestCase() {
+      return RequestCase.forNumber(
+          requestCase_);
+    }
+
+    public static final int NN_FIELD_NUMBER = 1;
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    public boolean hasNn() {
+      return requestCase_ == 1;
+    }
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    public protos.Protos.POSTNegotiation getNn() {
+      if (requestCase_ == 1) {
+         return (protos.Protos.POSTNegotiation) request_;
+      }
+      return protos.Protos.POSTNegotiation.getDefaultInstance();
+    }
+    /**
+     * <code>optional .protos.POSTNegotiation nn = 1;</code>
+     */
+    public protos.Protos.POSTNegotiationOrBuilder getNnOrBuilder() {
+      if (requestCase_ == 1) {
+         return (protos.Protos.POSTNegotiation) request_;
+      }
+      return protos.Protos.POSTNegotiation.getDefaultInstance();
+    }
+
+    public static final int NO_FIELD_NUMBER = 2;
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    public boolean hasNo() {
+      return requestCase_ == 2;
+    }
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    public protos.Protos.POSTNegotiationOver getNo() {
+      if (requestCase_ == 2) {
+         return (protos.Protos.POSTNegotiationOver) request_;
+      }
+      return protos.Protos.POSTNegotiationOver.getDefaultInstance();
+    }
+    /**
+     * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+     */
+    public protos.Protos.POSTNegotiationOverOrBuilder getNoOrBuilder() {
+      if (requestCase_ == 2) {
+         return (protos.Protos.POSTNegotiationOver) request_;
+      }
+      return protos.Protos.POSTNegotiationOver.getDefaultInstance();
+    }
+
+    public static final int GPI_FIELD_NUMBER = 3;
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    public boolean hasGpi() {
+      return requestCase_ == 3;
+    }
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    public protos.Protos.GETProducerInfo getGpi() {
+      if (requestCase_ == 3) {
+         return (protos.Protos.GETProducerInfo) request_;
+      }
+      return protos.Protos.GETProducerInfo.getDefaultInstance();
+    }
+    /**
+     * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+     */
+    public protos.Protos.GETProducerInfoOrBuilder getGpiOrBuilder() {
+      if (requestCase_ == 3) {
+         return (protos.Protos.GETProducerInfo) request_;
+      }
+      return protos.Protos.GETProducerInfo.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (hasNn()) {
+        if (!getNn().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasNo()) {
+        if (!getNo().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasGpi()) {
+        if (!getGpi().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (requestCase_ == 1) {
+        output.writeMessage(1, (protos.Protos.POSTNegotiation) request_);
+      }
+      if (requestCase_ == 2) {
+        output.writeMessage(2, (protos.Protos.POSTNegotiationOver) request_);
+      }
+      if (requestCase_ == 3) {
+        output.writeMessage(3, (protos.Protos.GETProducerInfo) request_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (requestCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (protos.Protos.POSTNegotiation) request_);
+      }
+      if (requestCase_ == 2) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, (protos.Protos.POSTNegotiationOver) request_);
+      }
+      if (requestCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (protos.Protos.GETProducerInfo) request_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof protos.Protos.CatalogRequest)) {
+        return super.equals(obj);
+      }
+      protos.Protos.CatalogRequest other = (protos.Protos.CatalogRequest) obj;
+
+      boolean result = true;
+      result = result && getRequestCase().equals(
+          other.getRequestCase());
+      if (!result) return false;
+      switch (requestCase_) {
+        case 1:
+          result = result && getNn()
+              .equals(other.getNn());
+          break;
+        case 2:
+          result = result && getNo()
+              .equals(other.getNo());
+          break;
+        case 3:
+          result = result && getGpi()
+              .equals(other.getGpi());
+          break;
+        case 0:
+        default:
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      switch (requestCase_) {
+        case 1:
+          hash = (37 * hash) + NN_FIELD_NUMBER;
+          hash = (53 * hash) + getNn().hashCode();
+          break;
+        case 2:
+          hash = (37 * hash) + NO_FIELD_NUMBER;
+          hash = (53 * hash) + getNo().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + GPI_FIELD_NUMBER;
+          hash = (53 * hash) + getGpi().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static protos.Protos.CatalogRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.CatalogRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static protos.Protos.CatalogRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.CatalogRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(protos.Protos.CatalogRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protos.CatalogRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protos.CatalogRequest)
+        protos.Protos.CatalogRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return protos.Protos.internal_static_protos_CatalogRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return protos.Protos.internal_static_protos_CatalogRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                protos.Protos.CatalogRequest.class, protos.Protos.CatalogRequest.Builder.class);
+      }
+
+      // Construct using protos.Protos.CatalogRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        requestCase_ = 0;
+        request_ = null;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return protos.Protos.internal_static_protos_CatalogRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public protos.Protos.CatalogRequest getDefaultInstanceForType() {
+        return protos.Protos.CatalogRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public protos.Protos.CatalogRequest build() {
+        protos.Protos.CatalogRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public protos.Protos.CatalogRequest buildPartial() {
+        protos.Protos.CatalogRequest result = new protos.Protos.CatalogRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (requestCase_ == 1) {
+          if (nnBuilder_ == null) {
+            result.request_ = request_;
+          } else {
+            result.request_ = nnBuilder_.build();
+          }
+        }
+        if (requestCase_ == 2) {
+          if (noBuilder_ == null) {
+            result.request_ = request_;
+          } else {
+            result.request_ = noBuilder_.build();
+          }
+        }
+        if (requestCase_ == 3) {
+          if (gpiBuilder_ == null) {
+            result.request_ = request_;
+          } else {
+            result.request_ = gpiBuilder_.build();
+          }
+        }
+        result.bitField0_ = to_bitField0_;
+        result.requestCase_ = requestCase_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof protos.Protos.CatalogRequest) {
+          return mergeFrom((protos.Protos.CatalogRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(protos.Protos.CatalogRequest other) {
+        if (other == protos.Protos.CatalogRequest.getDefaultInstance()) return this;
+        switch (other.getRequestCase()) {
+          case NN: {
+            mergeNn(other.getNn());
+            break;
+          }
+          case NO: {
+            mergeNo(other.getNo());
+            break;
+          }
+          case GPI: {
+            mergeGpi(other.getGpi());
+            break;
+          }
+          case REQUEST_NOT_SET: {
+            break;
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (hasNn()) {
+          if (!getNn().isInitialized()) {
+            return false;
+          }
+        }
+        if (hasNo()) {
+          if (!getNo().isInitialized()) {
+            return false;
+          }
+        }
+        if (hasGpi()) {
+          if (!getGpi().isInitialized()) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        protos.Protos.CatalogRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (protos.Protos.CatalogRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int requestCase_ = 0;
+      private java.lang.Object request_;
+      public RequestCase
+          getRequestCase() {
+        return RequestCase.forNumber(
+            requestCase_);
+      }
+
+      public Builder clearRequest() {
+        requestCase_ = 0;
+        request_ = null;
+        onChanged();
+        return this;
+      }
+
+      private int bitField0_;
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder> nnBuilder_;
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public boolean hasNn() {
+        return requestCase_ == 1;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation getNn() {
+        if (nnBuilder_ == null) {
+          if (requestCase_ == 1) {
+            return (protos.Protos.POSTNegotiation) request_;
+          }
+          return protos.Protos.POSTNegotiation.getDefaultInstance();
+        } else {
+          if (requestCase_ == 1) {
+            return nnBuilder_.getMessage();
+          }
+          return protos.Protos.POSTNegotiation.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public Builder setNn(protos.Protos.POSTNegotiation value) {
+        if (nnBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          request_ = value;
+          onChanged();
+        } else {
+          nnBuilder_.setMessage(value);
+        }
+        requestCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public Builder setNn(
+          protos.Protos.POSTNegotiation.Builder builderForValue) {
+        if (nnBuilder_ == null) {
+          request_ = builderForValue.build();
+          onChanged();
+        } else {
+          nnBuilder_.setMessage(builderForValue.build());
+        }
+        requestCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public Builder mergeNn(protos.Protos.POSTNegotiation value) {
+        if (nnBuilder_ == null) {
+          if (requestCase_ == 1 &&
+              request_ != protos.Protos.POSTNegotiation.getDefaultInstance()) {
+            request_ = protos.Protos.POSTNegotiation.newBuilder((protos.Protos.POSTNegotiation) request_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            request_ = value;
+          }
+          onChanged();
+        } else {
+          if (requestCase_ == 1) {
+            nnBuilder_.mergeFrom(value);
+          }
+          nnBuilder_.setMessage(value);
+        }
+        requestCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public Builder clearNn() {
+        if (nnBuilder_ == null) {
+          if (requestCase_ == 1) {
+            requestCase_ = 0;
+            request_ = null;
+            onChanged();
+          }
+        } else {
+          if (requestCase_ == 1) {
+            requestCase_ = 0;
+            request_ = null;
+          }
+          nnBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation.Builder getNnBuilder() {
+        return getNnFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      public protos.Protos.POSTNegotiationOrBuilder getNnOrBuilder() {
+        if ((requestCase_ == 1) && (nnBuilder_ != null)) {
+          return nnBuilder_.getMessageOrBuilder();
+        } else {
+          if (requestCase_ == 1) {
+            return (protos.Protos.POSTNegotiation) request_;
+          }
+          return protos.Protos.POSTNegotiation.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.POSTNegotiation nn = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder> 
+          getNnFieldBuilder() {
+        if (nnBuilder_ == null) {
+          if (!(requestCase_ == 1)) {
+            request_ = protos.Protos.POSTNegotiation.getDefaultInstance();
+          }
+          nnBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder>(
+                  (protos.Protos.POSTNegotiation) request_,
+                  getParentForChildren(),
+                  isClean());
+          request_ = null;
+        }
+        requestCase_ = 1;
+        onChanged();;
+        return nnBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.POSTNegotiationOver, protos.Protos.POSTNegotiationOver.Builder, protos.Protos.POSTNegotiationOverOrBuilder> noBuilder_;
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public boolean hasNo() {
+        return requestCase_ == 2;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public protos.Protos.POSTNegotiationOver getNo() {
+        if (noBuilder_ == null) {
+          if (requestCase_ == 2) {
+            return (protos.Protos.POSTNegotiationOver) request_;
+          }
+          return protos.Protos.POSTNegotiationOver.getDefaultInstance();
+        } else {
+          if (requestCase_ == 2) {
+            return noBuilder_.getMessage();
+          }
+          return protos.Protos.POSTNegotiationOver.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public Builder setNo(protos.Protos.POSTNegotiationOver value) {
+        if (noBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          request_ = value;
+          onChanged();
+        } else {
+          noBuilder_.setMessage(value);
+        }
+        requestCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public Builder setNo(
+          protos.Protos.POSTNegotiationOver.Builder builderForValue) {
+        if (noBuilder_ == null) {
+          request_ = builderForValue.build();
+          onChanged();
+        } else {
+          noBuilder_.setMessage(builderForValue.build());
+        }
+        requestCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public Builder mergeNo(protos.Protos.POSTNegotiationOver value) {
+        if (noBuilder_ == null) {
+          if (requestCase_ == 2 &&
+              request_ != protos.Protos.POSTNegotiationOver.getDefaultInstance()) {
+            request_ = protos.Protos.POSTNegotiationOver.newBuilder((protos.Protos.POSTNegotiationOver) request_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            request_ = value;
+          }
+          onChanged();
+        } else {
+          if (requestCase_ == 2) {
+            noBuilder_.mergeFrom(value);
+          }
+          noBuilder_.setMessage(value);
+        }
+        requestCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public Builder clearNo() {
+        if (noBuilder_ == null) {
+          if (requestCase_ == 2) {
+            requestCase_ = 0;
+            request_ = null;
+            onChanged();
+          }
+        } else {
+          if (requestCase_ == 2) {
+            requestCase_ = 0;
+            request_ = null;
+          }
+          noBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public protos.Protos.POSTNegotiationOver.Builder getNoBuilder() {
+        return getNoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      public protos.Protos.POSTNegotiationOverOrBuilder getNoOrBuilder() {
+        if ((requestCase_ == 2) && (noBuilder_ != null)) {
+          return noBuilder_.getMessageOrBuilder();
+        } else {
+          if (requestCase_ == 2) {
+            return (protos.Protos.POSTNegotiationOver) request_;
+          }
+          return protos.Protos.POSTNegotiationOver.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.POSTNegotiationOver no = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.POSTNegotiationOver, protos.Protos.POSTNegotiationOver.Builder, protos.Protos.POSTNegotiationOverOrBuilder> 
+          getNoFieldBuilder() {
+        if (noBuilder_ == null) {
+          if (!(requestCase_ == 2)) {
+            request_ = protos.Protos.POSTNegotiationOver.getDefaultInstance();
+          }
+          noBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              protos.Protos.POSTNegotiationOver, protos.Protos.POSTNegotiationOver.Builder, protos.Protos.POSTNegotiationOverOrBuilder>(
+                  (protos.Protos.POSTNegotiationOver) request_,
+                  getParentForChildren(),
+                  isClean());
+          request_ = null;
+        }
+        requestCase_ = 2;
+        onChanged();;
+        return noBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.GETProducerInfo, protos.Protos.GETProducerInfo.Builder, protos.Protos.GETProducerInfoOrBuilder> gpiBuilder_;
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public boolean hasGpi() {
+        return requestCase_ == 3;
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public protos.Protos.GETProducerInfo getGpi() {
+        if (gpiBuilder_ == null) {
+          if (requestCase_ == 3) {
+            return (protos.Protos.GETProducerInfo) request_;
+          }
+          return protos.Protos.GETProducerInfo.getDefaultInstance();
+        } else {
+          if (requestCase_ == 3) {
+            return gpiBuilder_.getMessage();
+          }
+          return protos.Protos.GETProducerInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public Builder setGpi(protos.Protos.GETProducerInfo value) {
+        if (gpiBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          request_ = value;
+          onChanged();
+        } else {
+          gpiBuilder_.setMessage(value);
+        }
+        requestCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public Builder setGpi(
+          protos.Protos.GETProducerInfo.Builder builderForValue) {
+        if (gpiBuilder_ == null) {
+          request_ = builderForValue.build();
+          onChanged();
+        } else {
+          gpiBuilder_.setMessage(builderForValue.build());
+        }
+        requestCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public Builder mergeGpi(protos.Protos.GETProducerInfo value) {
+        if (gpiBuilder_ == null) {
+          if (requestCase_ == 3 &&
+              request_ != protos.Protos.GETProducerInfo.getDefaultInstance()) {
+            request_ = protos.Protos.GETProducerInfo.newBuilder((protos.Protos.GETProducerInfo) request_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            request_ = value;
+          }
+          onChanged();
+        } else {
+          if (requestCase_ == 3) {
+            gpiBuilder_.mergeFrom(value);
+          }
+          gpiBuilder_.setMessage(value);
+        }
+        requestCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public Builder clearGpi() {
+        if (gpiBuilder_ == null) {
+          if (requestCase_ == 3) {
+            requestCase_ = 0;
+            request_ = null;
+            onChanged();
+          }
+        } else {
+          if (requestCase_ == 3) {
+            requestCase_ = 0;
+            request_ = null;
+          }
+          gpiBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public protos.Protos.GETProducerInfo.Builder getGpiBuilder() {
+        return getGpiFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      public protos.Protos.GETProducerInfoOrBuilder getGpiOrBuilder() {
+        if ((requestCase_ == 3) && (gpiBuilder_ != null)) {
+          return gpiBuilder_.getMessageOrBuilder();
+        } else {
+          if (requestCase_ == 3) {
+            return (protos.Protos.GETProducerInfo) request_;
+          }
+          return protos.Protos.GETProducerInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .protos.GETProducerInfo gpi = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          protos.Protos.GETProducerInfo, protos.Protos.GETProducerInfo.Builder, protos.Protos.GETProducerInfoOrBuilder> 
+          getGpiFieldBuilder() {
+        if (gpiBuilder_ == null) {
+          if (!(requestCase_ == 3)) {
+            request_ = protos.Protos.GETProducerInfo.getDefaultInstance();
+          }
+          gpiBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              protos.Protos.GETProducerInfo, protos.Protos.GETProducerInfo.Builder, protos.Protos.GETProducerInfoOrBuilder>(
+                  (protos.Protos.GETProducerInfo) request_,
+                  getParentForChildren(),
+                  isClean());
+          request_ = null;
+        }
+        requestCase_ = 3;
+        onChanged();;
+        return gpiBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protos.CatalogRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:protos.CatalogRequest)
+    private static final protos.Protos.CatalogRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new protos.Protos.CatalogRequest();
+    }
+
+    public static protos.Protos.CatalogRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<CatalogRequest>
+        PARSER = new com.google.protobuf.AbstractParser<CatalogRequest>() {
+      @java.lang.Override
+      public CatalogRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CatalogRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CatalogRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CatalogRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public protos.Protos.CatalogRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface POSTNegotiationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.POSTNegotiation)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -83,18 +1255,18 @@ public final class Protos {
     long getNegotiationPeriod();
   }
   /**
-   * Protobuf type {@code protos.NewNegotiation}
+   * Protobuf type {@code protos.POSTNegotiation}
    */
-  public  static final class NewNegotiation extends
+  public  static final class POSTNegotiation extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.NewNegotiation)
-      NewNegotiationOrBuilder {
+      // @@protoc_insertion_point(message_implements:protos.POSTNegotiation)
+      POSTNegotiationOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use NewNegotiation.newBuilder() to construct.
-    private NewNegotiation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use POSTNegotiation.newBuilder() to construct.
+    private POSTNegotiation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private NewNegotiation() {
+    private POSTNegotiation() {
       productName_ = "";
       producerName_ = "";
       minimumAmount_ = 0L;
@@ -108,7 +1280,7 @@ public final class Protos {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private NewNegotiation(
+    private POSTNegotiation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -180,15 +1352,15 @@ public final class Protos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
+      return protos.Protos.internal_static_protos_POSTNegotiation_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_NewNegotiation_fieldAccessorTable
+      return protos.Protos.internal_static_protos_POSTNegotiation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              protos.Protos.NewNegotiation.class, protos.Protos.NewNegotiation.Builder.class);
+              protos.Protos.POSTNegotiation.class, protos.Protos.POSTNegotiation.Builder.class);
     }
 
     private int bitField0_;
@@ -433,10 +1605,10 @@ public final class Protos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof protos.Protos.NewNegotiation)) {
+      if (!(obj instanceof protos.Protos.POSTNegotiation)) {
         return super.equals(obj);
       }
-      protos.Protos.NewNegotiation other = (protos.Protos.NewNegotiation) obj;
+      protos.Protos.POSTNegotiation other = (protos.Protos.POSTNegotiation) obj;
 
       boolean result = true;
       result = result && (hasProductName() == other.hasProductName());
@@ -513,69 +1685,69 @@ public final class Protos {
       return hash;
     }
 
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NewNegotiation parseFrom(byte[] data)
+    public static protos.Protos.POSTNegotiation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NewNegotiation parseFrom(java.io.InputStream input)
+    public static protos.Protos.POSTNegotiation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.NewNegotiation parseDelimitedFrom(java.io.InputStream input)
+    public static protos.Protos.POSTNegotiation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static protos.Protos.NewNegotiation parseDelimitedFrom(
+    public static protos.Protos.POSTNegotiation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.NewNegotiation parseFrom(
+    public static protos.Protos.POSTNegotiation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -588,7 +1760,7 @@ public final class Protos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(protos.Protos.NewNegotiation prototype) {
+    public static Builder newBuilder(protos.Protos.POSTNegotiation prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -604,26 +1776,26 @@ public final class Protos {
       return builder;
     }
     /**
-     * Protobuf type {@code protos.NewNegotiation}
+     * Protobuf type {@code protos.POSTNegotiation}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.NewNegotiation)
-        protos.Protos.NewNegotiationOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protos.POSTNegotiation)
+        protos.Protos.POSTNegotiationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
+        return protos.Protos.internal_static_protos_POSTNegotiation_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_NewNegotiation_fieldAccessorTable
+        return protos.Protos.internal_static_protos_POSTNegotiation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                protos.Protos.NewNegotiation.class, protos.Protos.NewNegotiation.Builder.class);
+                protos.Protos.POSTNegotiation.class, protos.Protos.POSTNegotiation.Builder.class);
       }
 
-      // Construct using protos.Protos.NewNegotiation.newBuilder()
+      // Construct using protos.Protos.POSTNegotiation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -659,17 +1831,17 @@ public final class Protos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
+        return protos.Protos.internal_static_protos_POSTNegotiation_descriptor;
       }
 
       @java.lang.Override
-      public protos.Protos.NewNegotiation getDefaultInstanceForType() {
-        return protos.Protos.NewNegotiation.getDefaultInstance();
+      public protos.Protos.POSTNegotiation getDefaultInstanceForType() {
+        return protos.Protos.POSTNegotiation.getDefaultInstance();
       }
 
       @java.lang.Override
-      public protos.Protos.NewNegotiation build() {
-        protos.Protos.NewNegotiation result = buildPartial();
+      public protos.Protos.POSTNegotiation build() {
+        protos.Protos.POSTNegotiation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -677,8 +1849,8 @@ public final class Protos {
       }
 
       @java.lang.Override
-      public protos.Protos.NewNegotiation buildPartial() {
-        protos.Protos.NewNegotiation result = new protos.Protos.NewNegotiation(this);
+      public protos.Protos.POSTNegotiation buildPartial() {
+        protos.Protos.POSTNegotiation result = new protos.Protos.POSTNegotiation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -744,16 +1916,16 @@ public final class Protos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.NewNegotiation) {
-          return mergeFrom((protos.Protos.NewNegotiation)other);
+        if (other instanceof protos.Protos.POSTNegotiation) {
+          return mergeFrom((protos.Protos.POSTNegotiation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(protos.Protos.NewNegotiation other) {
-        if (other == protos.Protos.NewNegotiation.getDefaultInstance()) return this;
+      public Builder mergeFrom(protos.Protos.POSTNegotiation other) {
+        if (other == protos.Protos.POSTNegotiation.getDefaultInstance()) return this;
         if (other.hasProductName()) {
           bitField0_ |= 0x00000001;
           productName_ = other.productName_;
@@ -809,11 +1981,11 @@ public final class Protos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        protos.Protos.NewNegotiation parsedMessage = null;
+        protos.Protos.POSTNegotiation parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.NewNegotiation) e.getUnfinishedMessage();
+          parsedMessage = (protos.Protos.POSTNegotiation) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1116,48 +2288,48 @@ public final class Protos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protos.NewNegotiation)
+      // @@protoc_insertion_point(builder_scope:protos.POSTNegotiation)
     }
 
-    // @@protoc_insertion_point(class_scope:protos.NewNegotiation)
-    private static final protos.Protos.NewNegotiation DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protos.POSTNegotiation)
+    private static final protos.Protos.POSTNegotiation DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new protos.Protos.NewNegotiation();
+      DEFAULT_INSTANCE = new protos.Protos.POSTNegotiation();
     }
 
-    public static protos.Protos.NewNegotiation getDefaultInstance() {
+    public static protos.Protos.POSTNegotiation getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<NewNegotiation>
-        PARSER = new com.google.protobuf.AbstractParser<NewNegotiation>() {
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<POSTNegotiation>
+        PARSER = new com.google.protobuf.AbstractParser<POSTNegotiation>() {
       @java.lang.Override
-      public NewNegotiation parsePartialFrom(
+      public POSTNegotiation parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NewNegotiation(input, extensionRegistry);
+        return new POSTNegotiation(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<NewNegotiation> parser() {
+    public static com.google.protobuf.Parser<POSTNegotiation> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<NewNegotiation> getParserForType() {
+    public com.google.protobuf.Parser<POSTNegotiation> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public protos.Protos.NewNegotiation getDefaultInstanceForType() {
+    public protos.Protos.POSTNegotiation getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface NegotiationOverOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.NegotiationOver)
+  public interface POSTNegotiationOverOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.POSTNegotiationOver)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1189,18 +2361,18 @@ public final class Protos {
         getProducerNameBytes();
   }
   /**
-   * Protobuf type {@code protos.NegotiationOver}
+   * Protobuf type {@code protos.POSTNegotiationOver}
    */
-  public  static final class NegotiationOver extends
+  public  static final class POSTNegotiationOver extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.NegotiationOver)
-      NegotiationOverOrBuilder {
+      // @@protoc_insertion_point(message_implements:protos.POSTNegotiationOver)
+      POSTNegotiationOverOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use NegotiationOver.newBuilder() to construct.
-    private NegotiationOver(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use POSTNegotiationOver.newBuilder() to construct.
+    private POSTNegotiationOver(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private NegotiationOver() {
+    private POSTNegotiationOver() {
       productName_ = "";
       producerName_ = "";
     }
@@ -1210,7 +2382,7 @@ public final class Protos {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private NegotiationOver(
+    private POSTNegotiationOver(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1262,15 +2434,15 @@ public final class Protos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
+      return protos.Protos.internal_static_protos_POSTNegotiationOver_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_NegotiationOver_fieldAccessorTable
+      return protos.Protos.internal_static_protos_POSTNegotiationOver_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              protos.Protos.NegotiationOver.class, protos.Protos.NegotiationOver.Builder.class);
+              protos.Protos.POSTNegotiationOver.class, protos.Protos.POSTNegotiationOver.Builder.class);
     }
 
     private int bitField0_;
@@ -1411,10 +2583,10 @@ public final class Protos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof protos.Protos.NegotiationOver)) {
+      if (!(obj instanceof protos.Protos.POSTNegotiationOver)) {
         return super.equals(obj);
       }
-      protos.Protos.NegotiationOver other = (protos.Protos.NegotiationOver) obj;
+      protos.Protos.POSTNegotiationOver other = (protos.Protos.POSTNegotiationOver) obj;
 
       boolean result = true;
       result = result && (hasProductName() == other.hasProductName());
@@ -1451,69 +2623,69 @@ public final class Protos {
       return hash;
     }
 
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NegotiationOver parseFrom(byte[] data)
+    public static protos.Protos.POSTNegotiationOver parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.NegotiationOver parseFrom(java.io.InputStream input)
+    public static protos.Protos.POSTNegotiationOver parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.NegotiationOver parseDelimitedFrom(java.io.InputStream input)
+    public static protos.Protos.POSTNegotiationOver parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static protos.Protos.NegotiationOver parseDelimitedFrom(
+    public static protos.Protos.POSTNegotiationOver parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.NegotiationOver parseFrom(
+    public static protos.Protos.POSTNegotiationOver parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1526,7 +2698,7 @@ public final class Protos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(protos.Protos.NegotiationOver prototype) {
+    public static Builder newBuilder(protos.Protos.POSTNegotiationOver prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1542,26 +2714,26 @@ public final class Protos {
       return builder;
     }
     /**
-     * Protobuf type {@code protos.NegotiationOver}
+     * Protobuf type {@code protos.POSTNegotiationOver}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.NegotiationOver)
-        protos.Protos.NegotiationOverOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protos.POSTNegotiationOver)
+        protos.Protos.POSTNegotiationOverOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
+        return protos.Protos.internal_static_protos_POSTNegotiationOver_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_NegotiationOver_fieldAccessorTable
+        return protos.Protos.internal_static_protos_POSTNegotiationOver_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                protos.Protos.NegotiationOver.class, protos.Protos.NegotiationOver.Builder.class);
+                protos.Protos.POSTNegotiationOver.class, protos.Protos.POSTNegotiationOver.Builder.class);
       }
 
-      // Construct using protos.Protos.NegotiationOver.newBuilder()
+      // Construct using protos.Protos.POSTNegotiationOver.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1589,17 +2761,17 @@ public final class Protos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
+        return protos.Protos.internal_static_protos_POSTNegotiationOver_descriptor;
       }
 
       @java.lang.Override
-      public protos.Protos.NegotiationOver getDefaultInstanceForType() {
-        return protos.Protos.NegotiationOver.getDefaultInstance();
+      public protos.Protos.POSTNegotiationOver getDefaultInstanceForType() {
+        return protos.Protos.POSTNegotiationOver.getDefaultInstance();
       }
 
       @java.lang.Override
-      public protos.Protos.NegotiationOver build() {
-        protos.Protos.NegotiationOver result = buildPartial();
+      public protos.Protos.POSTNegotiationOver build() {
+        protos.Protos.POSTNegotiationOver result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1607,8 +2779,8 @@ public final class Protos {
       }
 
       @java.lang.Override
-      public protos.Protos.NegotiationOver buildPartial() {
-        protos.Protos.NegotiationOver result = new protos.Protos.NegotiationOver(this);
+      public protos.Protos.POSTNegotiationOver buildPartial() {
+        protos.Protos.POSTNegotiationOver result = new protos.Protos.POSTNegotiationOver(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1658,16 +2830,16 @@ public final class Protos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.NegotiationOver) {
-          return mergeFrom((protos.Protos.NegotiationOver)other);
+        if (other instanceof protos.Protos.POSTNegotiationOver) {
+          return mergeFrom((protos.Protos.POSTNegotiationOver)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(protos.Protos.NegotiationOver other) {
-        if (other == protos.Protos.NegotiationOver.getDefaultInstance()) return this;
+      public Builder mergeFrom(protos.Protos.POSTNegotiationOver other) {
+        if (other == protos.Protos.POSTNegotiationOver.getDefaultInstance()) return this;
         if (other.hasProductName()) {
           bitField0_ |= 0x00000001;
           productName_ = other.productName_;
@@ -1699,11 +2871,11 @@ public final class Protos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        protos.Protos.NegotiationOver parsedMessage = null;
+        protos.Protos.POSTNegotiationOver parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.NegotiationOver) e.getUnfinishedMessage();
+          parsedMessage = (protos.Protos.POSTNegotiationOver) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1878,48 +3050,841 @@ public final class Protos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protos.NegotiationOver)
+      // @@protoc_insertion_point(builder_scope:protos.POSTNegotiationOver)
     }
 
-    // @@protoc_insertion_point(class_scope:protos.NegotiationOver)
-    private static final protos.Protos.NegotiationOver DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protos.POSTNegotiationOver)
+    private static final protos.Protos.POSTNegotiationOver DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new protos.Protos.NegotiationOver();
+      DEFAULT_INSTANCE = new protos.Protos.POSTNegotiationOver();
     }
 
-    public static protos.Protos.NegotiationOver getDefaultInstance() {
+    public static protos.Protos.POSTNegotiationOver getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<NegotiationOver>
-        PARSER = new com.google.protobuf.AbstractParser<NegotiationOver>() {
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<POSTNegotiationOver>
+        PARSER = new com.google.protobuf.AbstractParser<POSTNegotiationOver>() {
       @java.lang.Override
-      public NegotiationOver parsePartialFrom(
+      public POSTNegotiationOver parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NegotiationOver(input, extensionRegistry);
+        return new POSTNegotiationOver(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<NegotiationOver> parser() {
+    public static com.google.protobuf.Parser<POSTNegotiationOver> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<NegotiationOver> getParserForType() {
+    public com.google.protobuf.Parser<POSTNegotiationOver> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public protos.Protos.NegotiationOver getDefaultInstanceForType() {
+    public protos.Protos.POSTNegotiationOver getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface GetProducerInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.GetProducerInfo)
+  public interface GETProducerInfoResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.GETProducerInfoResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    java.util.List<protos.Protos.POSTNegotiation> 
+        getNegotiationsList();
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    protos.Protos.POSTNegotiation getNegotiations(int index);
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    int getNegotiationsCount();
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    java.util.List<? extends protos.Protos.POSTNegotiationOrBuilder> 
+        getNegotiationsOrBuilderList();
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    protos.Protos.POSTNegotiationOrBuilder getNegotiationsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code protos.GETProducerInfoResponse}
+   */
+  public  static final class GETProducerInfoResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protos.GETProducerInfoResponse)
+      GETProducerInfoResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GETProducerInfoResponse.newBuilder() to construct.
+    private GETProducerInfoResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GETProducerInfoResponse() {
+      negotiations_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GETProducerInfoResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                negotiations_ = new java.util.ArrayList<protos.Protos.POSTNegotiation>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              negotiations_.add(
+                  input.readMessage(protos.Protos.POSTNegotiation.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          negotiations_ = java.util.Collections.unmodifiableList(negotiations_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return protos.Protos.internal_static_protos_GETProducerInfoResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return protos.Protos.internal_static_protos_GETProducerInfoResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              protos.Protos.GETProducerInfoResponse.class, protos.Protos.GETProducerInfoResponse.Builder.class);
+    }
+
+    public static final int NEGOTIATIONS_FIELD_NUMBER = 1;
+    private java.util.List<protos.Protos.POSTNegotiation> negotiations_;
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    public java.util.List<protos.Protos.POSTNegotiation> getNegotiationsList() {
+      return negotiations_;
+    }
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    public java.util.List<? extends protos.Protos.POSTNegotiationOrBuilder> 
+        getNegotiationsOrBuilderList() {
+      return negotiations_;
+    }
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    public int getNegotiationsCount() {
+      return negotiations_.size();
+    }
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    public protos.Protos.POSTNegotiation getNegotiations(int index) {
+      return negotiations_.get(index);
+    }
+    /**
+     * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+     */
+    public protos.Protos.POSTNegotiationOrBuilder getNegotiationsOrBuilder(
+        int index) {
+      return negotiations_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      for (int i = 0; i < getNegotiationsCount(); i++) {
+        if (!getNegotiations(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < negotiations_.size(); i++) {
+        output.writeMessage(1, negotiations_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < negotiations_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, negotiations_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof protos.Protos.GETProducerInfoResponse)) {
+        return super.equals(obj);
+      }
+      protos.Protos.GETProducerInfoResponse other = (protos.Protos.GETProducerInfoResponse) obj;
+
+      boolean result = true;
+      result = result && getNegotiationsList()
+          .equals(other.getNegotiationsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getNegotiationsCount() > 0) {
+        hash = (37 * hash) + NEGOTIATIONS_FIELD_NUMBER;
+        hash = (53 * hash) + getNegotiationsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GETProducerInfoResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(protos.Protos.GETProducerInfoResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protos.GETProducerInfoResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protos.GETProducerInfoResponse)
+        protos.Protos.GETProducerInfoResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return protos.Protos.internal_static_protos_GETProducerInfoResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return protos.Protos.internal_static_protos_GETProducerInfoResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                protos.Protos.GETProducerInfoResponse.class, protos.Protos.GETProducerInfoResponse.Builder.class);
+      }
+
+      // Construct using protos.Protos.GETProducerInfoResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getNegotiationsFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (negotiationsBuilder_ == null) {
+          negotiations_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          negotiationsBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return protos.Protos.internal_static_protos_GETProducerInfoResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public protos.Protos.GETProducerInfoResponse getDefaultInstanceForType() {
+        return protos.Protos.GETProducerInfoResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public protos.Protos.GETProducerInfoResponse build() {
+        protos.Protos.GETProducerInfoResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public protos.Protos.GETProducerInfoResponse buildPartial() {
+        protos.Protos.GETProducerInfoResponse result = new protos.Protos.GETProducerInfoResponse(this);
+        int from_bitField0_ = bitField0_;
+        if (negotiationsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            negotiations_ = java.util.Collections.unmodifiableList(negotiations_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.negotiations_ = negotiations_;
+        } else {
+          result.negotiations_ = negotiationsBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof protos.Protos.GETProducerInfoResponse) {
+          return mergeFrom((protos.Protos.GETProducerInfoResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(protos.Protos.GETProducerInfoResponse other) {
+        if (other == protos.Protos.GETProducerInfoResponse.getDefaultInstance()) return this;
+        if (negotiationsBuilder_ == null) {
+          if (!other.negotiations_.isEmpty()) {
+            if (negotiations_.isEmpty()) {
+              negotiations_ = other.negotiations_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureNegotiationsIsMutable();
+              negotiations_.addAll(other.negotiations_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.negotiations_.isEmpty()) {
+            if (negotiationsBuilder_.isEmpty()) {
+              negotiationsBuilder_.dispose();
+              negotiationsBuilder_ = null;
+              negotiations_ = other.negotiations_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              negotiationsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getNegotiationsFieldBuilder() : null;
+            } else {
+              negotiationsBuilder_.addAllMessages(other.negotiations_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        for (int i = 0; i < getNegotiationsCount(); i++) {
+          if (!getNegotiations(i).isInitialized()) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        protos.Protos.GETProducerInfoResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (protos.Protos.GETProducerInfoResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<protos.Protos.POSTNegotiation> negotiations_ =
+        java.util.Collections.emptyList();
+      private void ensureNegotiationsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          negotiations_ = new java.util.ArrayList<protos.Protos.POSTNegotiation>(negotiations_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder> negotiationsBuilder_;
+
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public java.util.List<protos.Protos.POSTNegotiation> getNegotiationsList() {
+        if (negotiationsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(negotiations_);
+        } else {
+          return negotiationsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public int getNegotiationsCount() {
+        if (negotiationsBuilder_ == null) {
+          return negotiations_.size();
+        } else {
+          return negotiationsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation getNegotiations(int index) {
+        if (negotiationsBuilder_ == null) {
+          return negotiations_.get(index);
+        } else {
+          return negotiationsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder setNegotiations(
+          int index, protos.Protos.POSTNegotiation value) {
+        if (negotiationsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNegotiationsIsMutable();
+          negotiations_.set(index, value);
+          onChanged();
+        } else {
+          negotiationsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder setNegotiations(
+          int index, protos.Protos.POSTNegotiation.Builder builderForValue) {
+        if (negotiationsBuilder_ == null) {
+          ensureNegotiationsIsMutable();
+          negotiations_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          negotiationsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder addNegotiations(protos.Protos.POSTNegotiation value) {
+        if (negotiationsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNegotiationsIsMutable();
+          negotiations_.add(value);
+          onChanged();
+        } else {
+          negotiationsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder addNegotiations(
+          int index, protos.Protos.POSTNegotiation value) {
+        if (negotiationsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNegotiationsIsMutable();
+          negotiations_.add(index, value);
+          onChanged();
+        } else {
+          negotiationsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder addNegotiations(
+          protos.Protos.POSTNegotiation.Builder builderForValue) {
+        if (negotiationsBuilder_ == null) {
+          ensureNegotiationsIsMutable();
+          negotiations_.add(builderForValue.build());
+          onChanged();
+        } else {
+          negotiationsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder addNegotiations(
+          int index, protos.Protos.POSTNegotiation.Builder builderForValue) {
+        if (negotiationsBuilder_ == null) {
+          ensureNegotiationsIsMutable();
+          negotiations_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          negotiationsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder addAllNegotiations(
+          java.lang.Iterable<? extends protos.Protos.POSTNegotiation> values) {
+        if (negotiationsBuilder_ == null) {
+          ensureNegotiationsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, negotiations_);
+          onChanged();
+        } else {
+          negotiationsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder clearNegotiations() {
+        if (negotiationsBuilder_ == null) {
+          negotiations_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          negotiationsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public Builder removeNegotiations(int index) {
+        if (negotiationsBuilder_ == null) {
+          ensureNegotiationsIsMutable();
+          negotiations_.remove(index);
+          onChanged();
+        } else {
+          negotiationsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation.Builder getNegotiationsBuilder(
+          int index) {
+        return getNegotiationsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public protos.Protos.POSTNegotiationOrBuilder getNegotiationsOrBuilder(
+          int index) {
+        if (negotiationsBuilder_ == null) {
+          return negotiations_.get(index);  } else {
+          return negotiationsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public java.util.List<? extends protos.Protos.POSTNegotiationOrBuilder> 
+           getNegotiationsOrBuilderList() {
+        if (negotiationsBuilder_ != null) {
+          return negotiationsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(negotiations_);
+        }
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation.Builder addNegotiationsBuilder() {
+        return getNegotiationsFieldBuilder().addBuilder(
+            protos.Protos.POSTNegotiation.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public protos.Protos.POSTNegotiation.Builder addNegotiationsBuilder(
+          int index) {
+        return getNegotiationsFieldBuilder().addBuilder(
+            index, protos.Protos.POSTNegotiation.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .protos.POSTNegotiation negotiations = 1;</code>
+       */
+      public java.util.List<protos.Protos.POSTNegotiation.Builder> 
+           getNegotiationsBuilderList() {
+        return getNegotiationsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder> 
+          getNegotiationsFieldBuilder() {
+        if (negotiationsBuilder_ == null) {
+          negotiationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder>(
+                  negotiations_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          negotiations_ = null;
+        }
+        return negotiationsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protos.GETProducerInfoResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:protos.GETProducerInfoResponse)
+    private static final protos.Protos.GETProducerInfoResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new protos.Protos.GETProducerInfoResponse();
+    }
+
+    public static protos.Protos.GETProducerInfoResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<GETProducerInfoResponse>
+        PARSER = new com.google.protobuf.AbstractParser<GETProducerInfoResponse>() {
+      @java.lang.Override
+      public GETProducerInfoResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GETProducerInfoResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GETProducerInfoResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GETProducerInfoResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public protos.Protos.GETProducerInfoResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GETProducerInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.GETProducerInfo)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1937,18 +3902,18 @@ public final class Protos {
         getProducerNameBytes();
   }
   /**
-   * Protobuf type {@code protos.GetProducerInfo}
+   * Protobuf type {@code protos.GETProducerInfo}
    */
-  public  static final class GetProducerInfo extends
+  public  static final class GETProducerInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.GetProducerInfo)
-      GetProducerInfoOrBuilder {
+      // @@protoc_insertion_point(message_implements:protos.GETProducerInfo)
+      GETProducerInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use GetProducerInfo.newBuilder() to construct.
-    private GetProducerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use GETProducerInfo.newBuilder() to construct.
+    private GETProducerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private GetProducerInfo() {
+    private GETProducerInfo() {
       producerName_ = "";
     }
 
@@ -1957,7 +3922,7 @@ public final class Protos {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private GetProducerInfo(
+    private GETProducerInfo(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2003,15 +3968,15 @@ public final class Protos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+      return protos.Protos.internal_static_protos_GETProducerInfo_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_GetProducerInfo_fieldAccessorTable
+      return protos.Protos.internal_static_protos_GETProducerInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              protos.Protos.GetProducerInfo.class, protos.Protos.GetProducerInfo.Builder.class);
+              protos.Protos.GETProducerInfo.class, protos.Protos.GETProducerInfo.Builder.class);
     }
 
     private int bitField0_;
@@ -2100,10 +4065,10 @@ public final class Protos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof protos.Protos.GetProducerInfo)) {
+      if (!(obj instanceof protos.Protos.GETProducerInfo)) {
         return super.equals(obj);
       }
-      protos.Protos.GetProducerInfo other = (protos.Protos.GetProducerInfo) obj;
+      protos.Protos.GETProducerInfo other = (protos.Protos.GETProducerInfo) obj;
 
       boolean result = true;
       result = result && (hasProducerName() == other.hasProducerName());
@@ -2131,69 +4096,69 @@ public final class Protos {
       return hash;
     }
 
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(byte[] data)
+    public static protos.Protos.GETProducerInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(java.io.InputStream input)
+    public static protos.Protos.GETProducerInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.GetProducerInfo parseDelimitedFrom(java.io.InputStream input)
+    public static protos.Protos.GETProducerInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static protos.Protos.GetProducerInfo parseDelimitedFrom(
+    public static protos.Protos.GETProducerInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.GetProducerInfo parseFrom(
+    public static protos.Protos.GETProducerInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2206,7 +4171,7 @@ public final class Protos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(protos.Protos.GetProducerInfo prototype) {
+    public static Builder newBuilder(protos.Protos.GETProducerInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -2222,26 +4187,26 @@ public final class Protos {
       return builder;
     }
     /**
-     * Protobuf type {@code protos.GetProducerInfo}
+     * Protobuf type {@code protos.GETProducerInfo}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.GetProducerInfo)
-        protos.Protos.GetProducerInfoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protos.GETProducerInfo)
+        protos.Protos.GETProducerInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+        return protos.Protos.internal_static_protos_GETProducerInfo_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_GetProducerInfo_fieldAccessorTable
+        return protos.Protos.internal_static_protos_GETProducerInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                protos.Protos.GetProducerInfo.class, protos.Protos.GetProducerInfo.Builder.class);
+                protos.Protos.GETProducerInfo.class, protos.Protos.GETProducerInfo.Builder.class);
       }
 
-      // Construct using protos.Protos.GetProducerInfo.newBuilder()
+      // Construct using protos.Protos.GETProducerInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2267,17 +4232,17 @@ public final class Protos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+        return protos.Protos.internal_static_protos_GETProducerInfo_descriptor;
       }
 
       @java.lang.Override
-      public protos.Protos.GetProducerInfo getDefaultInstanceForType() {
-        return protos.Protos.GetProducerInfo.getDefaultInstance();
+      public protos.Protos.GETProducerInfo getDefaultInstanceForType() {
+        return protos.Protos.GETProducerInfo.getDefaultInstance();
       }
 
       @java.lang.Override
-      public protos.Protos.GetProducerInfo build() {
-        protos.Protos.GetProducerInfo result = buildPartial();
+      public protos.Protos.GETProducerInfo build() {
+        protos.Protos.GETProducerInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -2285,8 +4250,8 @@ public final class Protos {
       }
 
       @java.lang.Override
-      public protos.Protos.GetProducerInfo buildPartial() {
-        protos.Protos.GetProducerInfo result = new protos.Protos.GetProducerInfo(this);
+      public protos.Protos.GETProducerInfo buildPartial() {
+        protos.Protos.GETProducerInfo result = new protos.Protos.GETProducerInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2332,16 +4297,16 @@ public final class Protos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.GetProducerInfo) {
-          return mergeFrom((protos.Protos.GetProducerInfo)other);
+        if (other instanceof protos.Protos.GETProducerInfo) {
+          return mergeFrom((protos.Protos.GETProducerInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(protos.Protos.GetProducerInfo other) {
-        if (other == protos.Protos.GetProducerInfo.getDefaultInstance()) return this;
+      public Builder mergeFrom(protos.Protos.GETProducerInfo other) {
+        if (other == protos.Protos.GETProducerInfo.getDefaultInstance()) return this;
         if (other.hasProducerName()) {
           bitField0_ |= 0x00000001;
           producerName_ = other.producerName_;
@@ -2365,11 +4330,11 @@ public final class Protos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        protos.Protos.GetProducerInfo parsedMessage = null;
+        protos.Protos.GETProducerInfo parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.GetProducerInfo) e.getUnfinishedMessage();
+          parsedMessage = (protos.Protos.GETProducerInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2468,61 +4433,71 @@ public final class Protos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protos.GetProducerInfo)
+      // @@protoc_insertion_point(builder_scope:protos.GETProducerInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:protos.GetProducerInfo)
-    private static final protos.Protos.GetProducerInfo DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protos.GETProducerInfo)
+    private static final protos.Protos.GETProducerInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new protos.Protos.GetProducerInfo();
+      DEFAULT_INSTANCE = new protos.Protos.GETProducerInfo();
     }
 
-    public static protos.Protos.GetProducerInfo getDefaultInstance() {
+    public static protos.Protos.GETProducerInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProducerInfo>
-        PARSER = new com.google.protobuf.AbstractParser<GetProducerInfo>() {
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<GETProducerInfo>
+        PARSER = new com.google.protobuf.AbstractParser<GETProducerInfo>() {
       @java.lang.Override
-      public GetProducerInfo parsePartialFrom(
+      public GETProducerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetProducerInfo(input, extensionRegistry);
+        return new GETProducerInfo(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<GetProducerInfo> parser() {
+    public static com.google.protobuf.Parser<GETProducerInfo> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<GetProducerInfo> getParserForType() {
+    public com.google.protobuf.Parser<GETProducerInfo> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public protos.Protos.GetProducerInfo getDefaultInstanceForType() {
+    public protos.Protos.GETProducerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_NewNegotiation_descriptor;
+    internal_static_protos_CatalogRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_NewNegotiation_fieldAccessorTable;
+      internal_static_protos_CatalogRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_NegotiationOver_descriptor;
+    internal_static_protos_POSTNegotiation_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_NegotiationOver_fieldAccessorTable;
+      internal_static_protos_POSTNegotiation_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_GetProducerInfo_descriptor;
+    internal_static_protos_POSTNegotiationOver_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_GetProducerInfo_fieldAccessorTable;
+      internal_static_protos_POSTNegotiationOver_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_protos_GETProducerInfoResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_protos_GETProducerInfoResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_protos_GETProducerInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_protos_GETProducerInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2533,13 +4508,19 @@ public final class Protos {
   static {
     java.lang.String[] descriptorData = {
       "\n!src/main/java/protos/protos.proto\022\006pro" +
-      "tos\"\241\001\n\016NewNegotiation\022\023\n\013productName\030\001 " +
-      "\002(\t\022\024\n\014producerName\030\002 \002(\t\022\025\n\rminimumAmou" +
-      "nt\030\003 \002(\003\022\025\n\rmaximumAmount\030\004 \002(\003\022\033\n\023minim" +
-      "umUnitaryPrice\030\005 \002(\003\022\031\n\021negotiationPerio" +
-      "d\030\006 \002(\003\"<\n\017NegotiationOver\022\023\n\013productNam" +
-      "e\030\001 \002(\t\022\024\n\014producerName\030\002 \002(\t\"\'\n\017GetProd" +
-      "ucerInfo\022\024\n\014producerName\030\001 \002(\t"
+      "tos\"\225\001\n\016CatalogRequest\022%\n\002nn\030\001 \001(\0132\027.pro" +
+      "tos.POSTNegotiationH\000\022)\n\002no\030\002 \001(\0132\033.prot" +
+      "os.POSTNegotiationOverH\000\022&\n\003gpi\030\003 \001(\0132\027." +
+      "protos.GETProducerInfoH\000B\t\n\007request\"\242\001\n\017" +
+      "POSTNegotiation\022\023\n\013productName\030\001 \002(\t\022\024\n\014" +
+      "producerName\030\002 \002(\t\022\025\n\rminimumAmount\030\003 \002(" +
+      "\003\022\025\n\rmaximumAmount\030\004 \002(\003\022\033\n\023minimumUnita" +
+      "ryPrice\030\005 \002(\003\022\031\n\021negotiationPeriod\030\006 \002(\003" +
+      "\"@\n\023POSTNegotiationOver\022\023\n\013productName\030\001" +
+      " \002(\t\022\024\n\014producerName\030\002 \002(\t\"H\n\027GETProduce" +
+      "rInfoResponse\022-\n\014negotiations\030\001 \003(\0132\027.pr" +
+      "otos.POSTNegotiation\"\'\n\017GETProducerInfo\022" +
+      "\024\n\014producerName\030\001 \002(\t"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2553,23 +4534,35 @@ public final class Protos {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_protos_NewNegotiation_descriptor =
+    internal_static_protos_CatalogRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_protos_NewNegotiation_fieldAccessorTable = new
+    internal_static_protos_CatalogRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_NewNegotiation_descriptor,
-        new java.lang.String[] { "ProductName", "ProducerName", "MinimumAmount", "MaximumAmount", "MinimumUnitaryPrice", "NegotiationPeriod", });
-    internal_static_protos_NegotiationOver_descriptor =
+        internal_static_protos_CatalogRequest_descriptor,
+        new java.lang.String[] { "Nn", "No", "Gpi", "Request", });
+    internal_static_protos_POSTNegotiation_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_protos_NegotiationOver_fieldAccessorTable = new
+    internal_static_protos_POSTNegotiation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_NegotiationOver_descriptor,
-        new java.lang.String[] { "ProductName", "ProducerName", });
-    internal_static_protos_GetProducerInfo_descriptor =
+        internal_static_protos_POSTNegotiation_descriptor,
+        new java.lang.String[] { "ProductName", "ProducerName", "MinimumAmount", "MaximumAmount", "MinimumUnitaryPrice", "NegotiationPeriod", });
+    internal_static_protos_POSTNegotiationOver_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_protos_GetProducerInfo_fieldAccessorTable = new
+    internal_static_protos_POSTNegotiationOver_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_GetProducerInfo_descriptor,
+        internal_static_protos_POSTNegotiationOver_descriptor,
+        new java.lang.String[] { "ProductName", "ProducerName", });
+    internal_static_protos_GETProducerInfoResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_protos_GETProducerInfoResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protos_GETProducerInfoResponse_descriptor,
+        new java.lang.String[] { "Negotiations", });
+    internal_static_protos_GETProducerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_protos_GETProducerInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protos_GETProducerInfo_descriptor,
         new java.lang.String[] { "ProducerName", });
   }
 
