@@ -2,7 +2,15 @@ syntax = "proto2";
 
 package protos;
 
-message NewNegotiation {
+message CatalogRequest {
+  oneof request {
+    POSTNegotiation nn = 1;
+    POSTNegotiationOver no = 2;
+    GETProducerInfo gpi = 3;
+  }
+}
+
+message POSTNegotiation {
   required string productName = 1;
   required string producerName = 2;
   required int64 minimumAmount = 3;
@@ -11,11 +19,15 @@ message NewNegotiation {
   required int64 negotiationPeriod = 6;
 }
 
-message NegotiationOver {
+message POSTNegotiationOver {
   required string productName = 1;
   required string producerName = 2;
 }
 
-message GetProducerInfo {
+message GETProducerInfoResponse {
+  repeated POSTNegotiation negotiations = 1;
+}
+
+message GETProducerInfo {
   required string producerName = 1;
 }
