@@ -82,8 +82,10 @@
 	Foi ainda tomada a decisão de que cada produto seria atribuído a um negociador, sendo esse negociador o responsável por todas as negociações que existam com esse produto.
 	
 	Um negociador é responsável por intermediar as negociações entre importadores e fabricantes, fazendo corresponder ofertas e encomendas que satisfaçam os requisitos de ambas.
+	Quando uma negociação chega ao fim do seu tempo, envia as informações de fabricante, importadores e respetivas quantidades e preços para o servidor.
 
-	% FALAR DO CATÁLOGO
+	Por fim, o catálogo apresenta uma interface \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
+
 
 	\section{Implementação}
 	
@@ -95,18 +97,24 @@
 		\item Clientes;
 		\item Importadorers;
 		\item Fabricantes;
-		\item negotiatorsHandler;
+		\item \texttt{negotiatorsHandler};
 		\item Negociadores.
 	\end{itemize}
 
+	O servidor é apenas um ponto de ligação entre clientes e negociadores, sendo que decide ainda quais os negociadores que tratarão de determinadas ofertas/encomendas.
+	Vejamos em mais detalhe o trabalho de cada tipo de atores e a forma como o servidor reage a cada situação.
+
 	\subsubsection{Servidor central}
-	Este é o primeiro ator criado, responsável pela criação de todos os outros atores e por aceitar novas conexões (clientes), bem como pela conexão inicial de todos os negociadores.
+	Este é o primeiro ator criado, responsável pela criação de todos os outros atores e por aceitar novas conexões (clientes), criando um novo ator por cada uma. 
+	É ainda responsável pela conexão inicial de todos os negociadores, criando um ator por cada conexão.
+	Assim, cada cliente e cada negociador terá um correspondente ator no servidor, com o qual comunicará diretamente, já que cada um destes atores será o responsável pelo \textit{socket} correspondente.
 
 	\subsubsection{\texttt{loginHandler}}
-	Este ator é registado e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
+	Este ator é registado e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido. 
+	De realçar que só é contactado diretamente por outros atores do servidor, nomeadamente os criados a cada nova conexão de clientes, que veremos de seguida.
 
-	\subsubsection{\texttt{client.erl}}
-	Ator criado a cada nova conexão. Espera a receção de uma comunicação \textit{TCP} com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
+	\subsubsection{Clientes}
+	Ator criado a cada nova conexão. Espera a receção de uma comunicação \textit{TCP} com a autenticação do cliente e, usando o \texttt{loginHandler}, confirma a sua identificação.
 	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
 
 	\subsubsection{Importadores e Produtores}
@@ -114,21 +122,12 @@
 	Fica então responsável pela comunicação com o cliente, recebendo as suas encomendas/ofertas e fazendo com que as mesmas cheguem ao respetivo negociador, através do \texttt{negotiatorsHandler}.
 
 	\subsubsection{\texttt{negotiatorsHandler}}
-	O \texttt{negotiatorsHandler} é um ator, registado pelo servidor central, que é contactado por importadores ou fabricantes que queiram fazer encomendas ou ofertas. 
+	O \texttt{negotiatorsHandler} é um ator, registado pelo servidor central, aquando da conexão de todos os negociadores, que é contactado pelos atores dos importadores ou fabricantes que queiram fazer encomendas ou ofertas. 
 	Ao recebê-las, consoante o produto, passa-as para o respetivo negociador. Cada novo produto é atribuído a um negociador, em estilo \textit{round-robin}.
 
 	\subsubsection{Negociadores}
 	Existirá um ator deste tipo para cada negociador (quantidade pré-definida). Um negociador é responsável por um certo número de produtos, tratando de todas as ofertas e encomendas desse produto.
 	Quando um cliente faz uma oferta ou encomenda, a mesma acaba por chegar ao ator (negociador) responsável pelo produto, fazendo-a depois chegar ao negociador propriamente dito (exterior ao servidor).
-
-
-	\subsection{Cliente}
-
-
-	\subsection{Negociador}
-
-
-	\subsection{Catálogo}
 
 
 	\subsection{Cliente}
@@ -175,7 +174,14 @@
 	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
 
 	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
+
+
+	\section{Catálogo}
+
 \chapter{Conclusão}
+
+A realização deste trabalho mostrou-nos a dificuldade de integrar diferentes linguagens e tecnologias, bem como os desafios da construção de um sistema distribuído com entidades tão diferentes.
+
 
 \chapter{Webgrafia}
 	\begin{itemize}
