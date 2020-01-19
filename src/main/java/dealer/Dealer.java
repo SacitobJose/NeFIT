@@ -96,6 +96,19 @@ class TimeoutThread extends Thread {
 
             ///////////// CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS //////////////
 
+            int index = 0; // Chosen Import index in "importers"
+            long biggestPriceTotal = 0;
+            for (int i = 0; i < importers.size(); i++) {
+                long total = importers.get(i).getQuantity() * importers.get(i).getUnitaryPrice();
+                if (total > biggestPriceTotal) {
+                    biggestPriceTotal = total;
+                    index = i;
+                }
+            }
+            Import chosenOne = importers.get(index);
+
+            ///////////// ---------------------------------------------- //////////////
+
             DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
             dealerTimeout.setSuccess(true);
             dealerTimeout.setProducerName(this.producerName);
