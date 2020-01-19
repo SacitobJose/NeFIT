@@ -21,10 +21,8 @@ negotiator(Sock, Importers, Producers) ->
 		% send info to producer
 		{ok, ProducerName} = maps:find(producerName, Map_Data),
 		{ok, Producer} = maps:find(ProducerName, Producers),
-		Protobuf = maps:find(protobuf, Map_Data),
 		Producer !
-			{timeout, negotiatorsHandler,
-			io_lib:format("Timeout_~p~n", Protobuf)},
+			{timeout, negotiatorsHandler,Data},
 		% get product name
 		{ok, ProductName} = maps:find(productName, Map_Data),
 		% extract importers' usernames, send them the producer's info and remove them from their map

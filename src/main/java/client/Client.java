@@ -11,12 +11,6 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
 import org.zeromq.SocketType;
 
-import protos.Protos.DealerTimeout;
-import protos.Protos.Import;
-import protos.Protos.Produce;
-import protos.Protos.SaleInfo;
-import protos.Protos.Transaction;
-
 public class Client {
     public static void main(String[] args) {
         try {

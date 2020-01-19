@@ -2,15 +2,7 @@ syntax = "proto2";
 
 package protos;
 
-// Transaction:productName:<<>>
-message Transaction {
-  oneof txn {
-    Produce produce = 1;
-    Import import = 2;
-  }
-}
-
-message Produce {
+message NewNegotiation {
   required string productName = 1;
   required string producerName = 2;
   required int64 minimumAmount = 3;
@@ -19,24 +11,11 @@ message Produce {
   required int64 negotiationPeriod = 6;
 }
 
-message Import {
-  required string username = 1;
-  required string productName = 2;
-  required string producerName = 3;
-  required int64 quantity = 4;
-  required int64 unitaryPrice = 5;
-}
-
-message SaleInfo {
-  required string username = 1;
-  required int64 quantity = 2;
-  required int64 price = 3;
-}
-
-// DealerTimeout:success:producerName:productName:username:<<>>:...:username:<<>>:<<DealerTimeout>>
-message DealerTimeout {
-  required bool success = 1;
+message NegotiationOver {
+  required string productName = 1;
   required string producerName = 2;
-  required string productName = 3;
-  repeated SaleInfo sales = 4;
+}
+
+message GetProducerInfo {
+  required string producerName = 1;
 }

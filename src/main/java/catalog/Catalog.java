@@ -20,6 +20,7 @@ public class Catalog {
         poller.start();
 
         // Start the DropWizard server
-        
+        ServerSocket serverSocket = new ServerSocket(9999);
+        Socket connectionSocket = serverSocket.accept();
     }
 }
