@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -40,28 +39,48 @@ public class Dealer {
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("localhost", 1234);
+            System.out.println("Conectado!");
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter os = new PrintWriter(socket.getOutputStream());
 
             while (true) {
                 String line = is.readLine();
+                System.out.println("Li do socket, nova mensagem\n");
 
-                Transaction transaction = Transaction.parseFrom(line.getBytes());
+                String[] parts = line.split(":");
+                System.out.printf("%s %s\n", parts[0], parts[1]);
+
+                Transaction transaction = Transaction.parseFrom(parts[1].getBytes());
+                System.out.println("Tenho uma transaction\n");
+
                 switch (transaction.getTxnCase()) {
-                case PRODUCE: {
+                case PRODUCE:
+                    System.out.println("Nova oferta de produtor\n");
                     // Produce
                     Produce produce = transaction.getProduce();
-                    negotiations.put(new SimpleEntry<>(produce.getProducerName(), produce.getProductName()),
-                            new ArrayList<>());
+                    String producer = produce.getProducerName();
+                    String product = produce.getProductName();
+                    negotiations.put(new SimpleEntry<>(producer, product), new ArrayList<>());
+
+                    for (Import i : unmatchImports) {
+                        ArrayList<Import> importers = new ArrayList<>();
+                        String producerI = i.getProducerName();
+                        String productI = i.getProductName();
+
+                        if (producerI.equals(producer) && productI.equals(product)) {
+                            importers.add(i);
+                        }
+
+                        negotiations.put(new SimpleEntry<>(producer, product), importers);
+                    }
 
                     Thread timeout = new TimeoutThread(negotiations, produce.getProductName(),
                             produce.getProducerName(), produce.getMinimumAmount(), produce.getMaximumAmount(),
-                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), unmatchImports, os);
+                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), os);
                     timeout.start();
 
                     break;
-                }
-                case IMPORT: {
+                case IMPORT:
                     // Import
                     Import imp = transaction.getImport();
 
@@ -73,8 +92,8 @@ public class Dealer {
                         unmatchImports.add(imp);
 
                     break;
-                }
                 default:
+                    System.out.println("Não entrei no case !!!");
                     break;
                 }
             }
@@ -95,11 +114,10 @@ class TimeoutThread extends Thread {
     private long maximumAmount;
     private long minimumUnitaryPrice;
     private long time;
-    private ArrayList<Import> unmatchImports;
     private PrintWriter os;
 
     public TimeoutThread(HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String productName,
-            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec, ArrayList<Import> unmatchImports,
+            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec,
             PrintWriter os) {
         this.negotiations = negotiations;
         this.productName = productName;
@@ -108,13 +126,14 @@ class TimeoutThread extends Thread {
         this.maximumAmount = maximumAmount;
         this.minimumUnitaryPrice = minimumUnitaryPrice;
         this.time = sec;
-        this.unmatchImports = unmatchImports;
         this.os = os;
     }
 
     public void run() {
         try {
             Thread.sleep(this.time * 1000);
+
+            System.out.println("Timeout\n");
 
             // Time is up, wrap up the sale
             ArrayList<Import> importers = this.negotiations.get(new SimpleEntry<>(this.producerName, this.productName));
@@ -127,34 +146,76 @@ class TimeoutThread extends Thread {
 
             // Get product quantity
             long total = 0;
+            ArrayList<Integer> buyers = new ArrayList<>();
             for (Import imp : importers) {
-                if (imp.getQuantity() + total < this.maximumAmount && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
+                if (imp.getQuantity() + total < this.maximumAmount
+                        && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
                     total += imp.getQuantity();
+                    buyers.add(importers.indexOf(imp));
                 } else if (imp.getUnitaryPrice() < this.minimumUnitaryPrice) {
                     break;
                 }
             }
 
-            // Deal with "unmatchImports"
-            
+            // Kill
+            if (total < this.minimumAmount) {
+                buyers.clear();
+            }
+
+            // Remove data from importers selected
+            for (int index : buyers) {
+                importers.remove(index);
+            }
+
+            synchronized (negotiations) {
+                negotiations.put(new SimpleEntry<>(this.producerName, this.productName), importers);
+            }
 
             /* -------------------------------------------------------------------- */
 
-            DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
-            dealerTimeout.setSuccess(true);
-            dealerTimeout.setProducerName(this.producerName);
-            dealerTimeout.setProductName(this.productName);
+            // Send the response to server
+            StringBuilder timeout = new StringBuilder();
+            timeout.append("DealerTimeout:");
 
-            for (Import import1 : importers) {
+            DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
+            boolean success = buyers.size() > 0;
+            dealerTimeout.setSuccess(success);
+            timeout.append(String.valueOf(success));
+
+            timeout.append(":");
+
+            dealerTimeout.setProducerName(this.producerName);
+            timeout.append(this.producerName);
+
+            timeout.append(":");
+
+            dealerTimeout.setProductName(this.productName);
+            timeout.append(this.productName);
+
+            for (int index : buyers) {
+                Import import1 = importers.get(index);
+
+                timeout.append(":");
+                String username = import1.getProducerName();
                 SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
-                saleInfo.setUsername(import1.getProducerName());
+                saleInfo.setUsername(username);
                 saleInfo.setQuantity(import1.getQuantity());
                 saleInfo.setPrice(import1.getUnitaryPrice());
 
-                dealerTimeout.addSales(saleInfo);
+                dealerTimeout.addSales(saleInfo.build());
+                timeout.append(username);
+                timeout.append(":");
+                timeout.append(saleInfo.build());
             }
 
-            os.println(dealerTimeout.build().toString());
+            timeout.append(":");
+            timeout.append(dealerTimeout.build());
+
+            this.os.println(timeout.toString());
+            this.os.flush();
+
+            System.out.println("Resultado enviado para o servidor\n");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

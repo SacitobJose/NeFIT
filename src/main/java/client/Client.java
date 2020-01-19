@@ -77,13 +77,19 @@ class ClientToSocket extends Thread {
         s.start();
 
         while (true) {
-            this.canPrint.set(true);
-            this.canPrint.notify();
-            while (wantPrintSubscriptions.get())
-                wantPrintSubscriptions.wait();
-            while (wantPrintUpdates.get())
-                wantPrintUpdates.wait();
-            this.canPrint.set(false);
+            synchronized (this.canPrint) {
+                this.canPrint.set(true);
+                this.canPrint.notify();
+                synchronized (wantPrintSubscriptions) {
+                    while (wantPrintSubscriptions.get())
+                        wantPrintSubscriptions.wait();
+                    synchronized (wantPrintUpdates) {
+                        while (wantPrintUpdates.get())
+                            wantPrintUpdates.wait();
+                        this.canPrint.set(false);
+                    }
+                }
+            }
 
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
@@ -133,7 +139,10 @@ class ClientToSocket extends Thread {
                 txn.setImport(prod.build());
 
                 transaction.append(txn.build());
-     
+
+                this.os.println(transaction.toString());
+                this.os.flush();
+
                 waitConfirmation();
                 break;
             case 2: {
@@ -165,11 +174,15 @@ class ClientToSocket extends Thread {
 
     private void producerMenu() throws Exception {
         while (true) {
-            this.canPrint.set(true);
-            this.canPrint.notify();
-            while (wantPrintUpdates.get())
-                wantPrintUpdates.wait();
-            this.canPrint.set(false);
+            synchronized (this.canPrint) {
+                this.canPrint.set(true);
+                this.canPrint.notify();
+                synchronized (wantPrintUpdates) {
+                    while (wantPrintUpdates.get())
+                        wantPrintUpdates.wait();
+                }
+                this.canPrint.set(false);
+            }
 
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
@@ -223,7 +236,8 @@ class ClientToSocket extends Thread {
 
                 transaction.append(txn.build());
 
-                this.os.println(transaction.toString());
+                this.os.println(transaction);
+                this.os.flush();
 
                 waitConfirmation();
                 break;
@@ -329,8 +343,8 @@ class SocketToClient extends Thread {
     AtomicBoolean wantPrintUpdates;
     BufferedReader stdin;
 
-    public SocketToClient(BufferedReader is, AtomicBoolean wantPrintUpdates, AtomicBoolean canWrite, BufferedReader stdin)
-            throws IOException {
+    public SocketToClient(BufferedReader is, AtomicBoolean wantPrintUpdates, AtomicBoolean canWrite,
+            BufferedReader stdin) throws IOException {
         this.is = is;
         this.canWrite = canWrite;
         this.wantPrintUpdates = wantPrintUpdates;
@@ -348,9 +362,13 @@ class SocketToClient extends Thread {
             while (true) {
                 String line = this.is.readLine();
 
-                this.wantPrintUpdates.set(true);
-                while (!this.canWrite.get())
-                    this.canWrite.wait();
+                synchronized (this.wantPrintUpdates) {
+                    this.wantPrintUpdates.set(true);
+                }
+                synchronized (this.canWrite) {
+                    while (!this.canWrite.get())
+                        this.canWrite.wait();
+                }
 
                 String[] parts = line.split(":");
                 if (parts[0].equals("Import")) {
@@ -381,9 +399,10 @@ class SocketToClient extends Thread {
                 }
 
                 this.waitConfirmation();
-
-                this.wantPrintUpdates.set(false);
-                this.wantPrintUpdates.notify();
+                synchronized (wantPrintUpdates) {
+                    this.wantPrintUpdates.set(false);
+                    this.wantPrintUpdates.notify();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -398,8 +417,8 @@ class Subscriptions extends Thread {
     AtomicBoolean canWrite;
     BufferedReader stdin;
 
-    public Subscriptions(ZMQ.Socket subSocket, AtomicBoolean wantWriteSubscriptions, AtomicBoolean canWrite, BufferedReader stdin)
-            throws IOException {
+    public Subscriptions(ZMQ.Socket subSocket, AtomicBoolean wantWriteSubscriptions, AtomicBoolean canWrite,
+            BufferedReader stdin) throws IOException {
         this.subSocket = subSocket;
         this.wantWriteSubscriptions = wantWriteSubscriptions;
         this.canWrite = canWrite;
@@ -416,17 +435,24 @@ class Subscriptions extends Thread {
         try {
             while (true) {
                 byte[] b = this.subSocket.recv();
-                this.wantWriteSubscriptions.set(true);
-                while (!this.canWrite.get()) {
-                    this.canWrite.wait();
+
+                synchronized (this.wantWriteSubscriptions) {
+                    this.wantWriteSubscriptions.set(true);
+                }
+                synchronized (this.canWrite) {
+                    while (!this.canWrite.get()) {
+                        this.canWrite.wait();
+                    }
                 }
 
                 System.out.println(new String(b));
 
                 this.waitConfirmation();
 
-                this.wantWriteSubscriptions.set(false);
-                this.wantWriteSubscriptions.notify();
+                synchronized (this.wantWriteSubscriptions) {
+                    this.wantWriteSubscriptions.set(false);
+                    this.wantWriteSubscriptions.notify();
+                }
             }
         } catch (Exception e) {
             System.exit(-1);

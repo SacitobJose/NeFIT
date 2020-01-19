@@ -4,7 +4,7 @@
 
 -import(login, [handler/1]).
 -import(client, [client/1]).
--import(negotiator, [negotiator/1]).
+-import(negotiator, [negotiator/3]).
 
 -include("protos.hrl").
 
@@ -15,7 +15,7 @@ server() ->
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
     {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
-    negotiatorsConnect(LSock, [], 0),
+    negotiatorsConnect(LSock, [], 1),
     io:format("Server started~n", []),
     acceptor(LSock).
 
@@ -29,12 +29,13 @@ acceptor(LSock) ->
     client(Sock).
 
 negotiatorsConnect(_, Negotiators, 0) ->
-    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0) end));
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, length(Negotiators)) end));
 
 negotiatorsConnect(LSock, Negotiators, N) ->
     % estabelecer conexão ao socket do negociador
     {ok, Sock} = gen_tcp:accept(LSock),
-    PID = spawn(fun() -> negotiators(Sock, #{}, #{}) end),
+    io:format("Negotiator connected~n", []),
+    PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
     negotiatorsConnect(LSock, Negotiators ++ [PID], N-1).
 
 negotiators(Map, Negotiators, N) ->
@@ -44,17 +45,17 @@ negotiators(Map, Negotiators, N) ->
                 {ok, Value} ->
                     Value ! {new_producer, Username, PID, Data};
                 _ ->
-                    NewMap = maps:put(Product, lists:nth(Negotiators, N), Map),
-                    lists:nth(Negotiators, N) ! {new_producer, Username, PID, Data},
-                    negotiators(NewMap, Negotiators, N rem length(Negotiators))
+                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map),
+                    lists:nth(N, Negotiators) ! {new_producer, Username, PID, Data},
+                    negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end;
         {new_importer, Product, Username, PID, Data} ->
             case maps:find(Product, Map) of
                 {ok, Value} ->
                     Value ! {new_importer, Username, PID, Data};
                 _ ->
-                    NewMap = maps:put(Product, lists:nth(Negotiators, N), Map),
-                    lists:nth(Negotiators, N) ! {new_importer, Username, PID, Data},
-                    negotiators(NewMap, Negotiators, N rem length(Negotiators))
+                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map),
+                    lists:nth(N, Negotiators) ! {new_importer, Username, PID, Data},
+                    negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end
     end.
