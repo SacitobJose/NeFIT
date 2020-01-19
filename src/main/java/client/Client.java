@@ -94,6 +94,7 @@ class ClientToSocket extends Thread {
 
                 Transaction.Builder txn = Transaction.newBuilder();
                 Import.Builder prod = Import.newBuilder();
+                prod.setUsername(username);
 
                 System.out.print("Nome do produto: ");
                 System.out.flush();
@@ -175,6 +176,8 @@ class ClientToSocket extends Thread {
                 transaction.append(productName);
 
                 transaction.append(":");
+
+                prod.setProducerName(username);
 
                 System.out.print("Quantidade mínima: ");
                 System.out.flush();

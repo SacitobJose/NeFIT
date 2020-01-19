@@ -1,30 +1,68 @@
 package dealer;
 
-import protos.Protos.Transaction;
-import protos.Protos.Produce;
-import protos.Protos.Import;
-
-import protos.Protos.SaleInfo;
-import protos.Protos.DealerTimeout;
-
-// import java.io.BufferedReader;
-// import java.io.InputStream;
-// import java.io.InputStreamReader;
-// import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.AbstractMap.SimpleEntry;
+
+import protos.Protos.DealerTimeout;
+import protos.Protos.Import;
+import protos.Protos.Produce;
+import protos.Protos.SaleInfo;
+import protos.Protos.Transaction;
 
 /**
  * Dealer
  */
 public class Dealer {
+    public static HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>(); // <ProducerName,
+                                                                                                          // ProductName>
+                                                                                                          // => [Import]
+    public static ArrayList<Import> unmatchImports = new ArrayList<>();
+
     public static void main(String[] args) {
         try {
-            int port = Integer.parseInt(args[1]);
-            Socket s = new Socket("localhost", port);
-            Thread dts = new DealerToSocket(s);
-            Thread timeout = new TimeoutThread(dts, 10000);
-            dts.start();
-            timeout.start();
+            Socket socket = new Socket("localhost", 1234);
+            BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter os = new PrintWriter(socket.getOutputStream());
+
+            while (true) {
+                String line = is.readLine();
+
+                Transaction transaction = Transaction.parseFrom(line.getBytes());
+                switch (transaction.getTxnCase()) {
+                case PRODUCE: {
+                    // Produce
+                    Produce produce = transaction.getProduce();
+                    negotiations.put(new SimpleEntry<>(produce.getProducerName(), produce.getProductName()),
+                            new ArrayList<>());
+
+                    Thread timeout = new TimeoutThread(produce.getNegotiationPeriod(), negotiations,
+                            produce.getProducerName(), produce.getProductName(), os);
+                    timeout.start();
+
+                    break;
+                }
+                case IMPORT: {
+                    // Import
+                    Import imp = transaction.getImport();
+
+                    ArrayList<Import> orders = negotiations
+                            .get(new SimpleEntry<>(imp.getProducerName(), imp.getProductName()));
+                    if (orders != null)
+                        orders.add(imp);
+                    else
+                        unmatchImports.add(imp);
+
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
         } catch (Exception e) {
             System.out.println("Não foi possível conectar ao negociador.");
         }
@@ -35,83 +73,43 @@ public class Dealer {
  * Timeout thread
  */
 class TimeoutThread extends Thread {
-    private Thread t;
-    private int time;
+    private HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations;
+    private String producerName;
+    private String productName;
+    private long time;
+    private PrintWriter os;
 
-    public TimeoutThread(Thread t, int mills) {
-        this.t = t;
-        this.time = mills;
+    public TimeoutThread(long sec, HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String producerName, String productName, PrintWriter os) {
+        this.time = sec;
+        this.producerName = producerName;
+        this.productName = productName;
+        this.os = os;
     }
 
     public void run() {
         try {
-            Thread.sleep(this.time);
-            this.t.notify();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+            Thread.sleep(this.time * 1000);
 
-/**
- * DealerToSocket
- */
-class DealerToSocket extends Thread {
-    Socket socket;
+            // Time is up, wrap up the sale
+            ArrayList<Import> importers = this.negotiations.get(new SimpleEntry<>(this.producerName, this.productName));
 
-    public DealerToSocket(Socket s) {
-        this.socket = s;
-    }
+            ///////////// CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS //////////////
 
-    public void run() {
-        try {
-            // InputStream is = this.socket.getInputStream();
-            // OutputStream os = this.socket.getOutputStream();
-            // BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
+            dealerTimeout.setSuccess(true);
+            dealerTimeout.setProducerName(this.producerName);
+            dealerTimeout.setProductName(this.productName);
+            
+            for (Import import1 : importers) {
+                SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
+                saleInfo.setUsername(import1.getProducerName());
+                saleInfo.setQuantity(import1.getQuantity());
+                saleInfo.setPrice(import1.getUnitaryPrice());
 
-            while (true) {
-                SaleInfo.Builder saleInfo;
-                DealerTimeout.Builder dealerTimeout;
-
-                // Handle request
-                Transaction.Builder transaction = Transaction.newBuilder();
-                switch (transaction.getTxnCase()) {
-                case PRODUCE:
-                    // Produce
-                    Produce produce = transaction.getProduce();
-
-                    // Handle response
-                    saleInfo = SaleInfo.newBuilder();
-                    dealerTimeout = DealerTimeout.newBuilder();
-
-                    // ...
-
-                    break;
-
-                case IMPORT:
-                    // Import
-                    Import imp = transaction.getImport();
-
-                    // Handle response
-                    saleInfo = SaleInfo.newBuilder();
-                    dealerTimeout = DealerTimeout.newBuilder();
-
-                    saleInfo.setUsername(imp.getProducerName());
-                    saleInfo.setQuantity(imp.getQuantity());
-                    saleInfo.setPrice(imp.getUnitaryPrice());
-
-                    dealerTimeout.setSuccess(true);
-                    dealerTimeout.setProducerName(imp.getProducerName());
-                    dealerTimeout.setProductName(imp.getProductName());
-                    dealerTimeout.addSales(saleInfo);
-
-                    break;
-
-                default:
-                    // DO SOMETHING ?
-                    break;
-                }
+                dealerTimeout.addSales(saleInfo);
             }
+
+            os.println(dealerTimeout.build().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
