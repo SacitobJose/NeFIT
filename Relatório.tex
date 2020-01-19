@@ -76,7 +76,7 @@
 	\section{Implementação}
 	
 	\subsection{Servidor}
-	A implementação do servidor foi feita em Erlang. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
+	A implementação do servidor foi feita em \textit{Erlang}. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
 	\begin{itemize}
 		\item \texttt{server.erl};
 		\item \texttt{login.erl};
@@ -93,7 +93,7 @@
 	Este tipo de ator é registado, como \texttt{loginHandler}, e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
 
 	\subsubsection{\texttt{client.erl}}
-	Ator criado a cada nova conexão. Espera a receção de uma comunicação TCP com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
+	Ator criado a cada nova conexão. Espera a receção de uma comunicação \textit{TCP} com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
 	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
 
 	\subsubsection{\texttt{importer.erl}}
@@ -107,25 +107,27 @@
 	Existirá um ator deste tipo para cada negociador (quantidade pré-definida).
 
 	\subsection{Cliente}
-	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em Java. Para além de todas as classes nativas, foram ainda usadas funcionalidades das bibliotecas JeroMQ, uma implementação em Java da ferramenta ZeroMQ para envio/receção de mensagens assíncronas, e Protocol Buffers, um formato de serialização de dados desenvolvido pela Google. Posto isto, passaremos ao detalhe do funcionamento do cliente.
+	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades das bibliotecas \textit{ZeroMQ}, uma implementação em \textit{Java} da ferramenta \textit{ZeroMQ} para envio/receção de mensagens assíncronas, e \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google}. Posto isto, passaremos ao detalhe do funcionamento do cliente.
 	
-	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma thread adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra thread, responsável por receber updates do catálogo quanto a produtores que o utilizador subscreveu.
+	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a produtores que o utilizador subscreveu.
 	
 	De seguida, após toda esta configuração inicial, é mostrado um dos seguintes menus com as operações indicadas:
 	
-	Importador:
-	\begin{itemize}
-		\item Oferta de encomenda;
-		\item Subscrever notificações;
-		\item Cancelar notificações.
-		\item Atualizações.
-	\end{itemize}
+	\begin{enumerate}
+		\item \textbf{Importador}:
+		\begin{itemize}
+			\item Oferta de encomenda;
+			\item Subscrever notificações;
+			\item Cancelar notificações.
+			\item Atualizações.
+		\end{itemize}
 
-	Fornecedor:
-	\begin{itemize}
-		\item Oferta de produção;
-		\item Atualizações.
-	\end{itemize}
+		\item \textbf{Fornecedor}:
+		\begin{itemize}
+			\item Oferta de produção;
+			\item Atualizações.
+		\end{itemize}
+	\end{enumerate}
 
 	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor, bastando indicar o nome desse produtor.
 	
