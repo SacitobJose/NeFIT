@@ -56,7 +56,7 @@ public class Dealer {
 
                     Thread timeout = new TimeoutThread(negotiations, produce.getProductName(),
                             produce.getProducerName(), produce.getMinimumAmount(), produce.getMaximumAmount(),
-                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), os);
+                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), unmatchImports, os);
                     timeout.start();
 
                     break;
@@ -95,10 +95,11 @@ class TimeoutThread extends Thread {
     private long maximumAmount;
     private long minimumUnitaryPrice;
     private long time;
+    private ArrayList<Import> unmatchImports;
     private PrintWriter os;
 
     public TimeoutThread(HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String productName,
-            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec,
+            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec, ArrayList<Import> unmatchImports,
             PrintWriter os) {
         this.negotiations = negotiations;
         this.productName = productName;
@@ -107,6 +108,7 @@ class TimeoutThread extends Thread {
         this.maximumAmount = maximumAmount;
         this.minimumUnitaryPrice = minimumUnitaryPrice;
         this.time = sec;
+        this.unmatchImports = unmatchImports;
         this.os = os;
     }
 
@@ -117,13 +119,26 @@ class TimeoutThread extends Thread {
             // Time is up, wrap up the sale
             ArrayList<Import> importers = this.negotiations.get(new SimpleEntry<>(this.producerName, this.productName));
 
-            ///////////// CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS //////////////
+            /* ---------- CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS ---------- */
 
             // Sorted "importers" by declared comparator
             ImportComparator ic = new ImportComparator();
             importers.sort(ic);
 
-            ///////////// ---------------------------------------------- //////////////
+            // Get product quantity
+            long total = 0;
+            for (Import imp : importers) {
+                if (imp.getQuantity() + total < this.maximumAmount && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
+                    total += imp.getQuantity();
+                } else if (imp.getUnitaryPrice() < this.minimumUnitaryPrice) {
+                    break;
+                }
+            }
+
+            // Deal with "unmatchImports"
+            
+
+            /* -------------------------------------------------------------------- */
 
             DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
             dealerTimeout.setSuccess(true);
