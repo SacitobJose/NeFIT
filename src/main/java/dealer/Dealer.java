@@ -18,9 +18,8 @@ import protos.Protos.Transaction;
  * Dealer
  */
 public class Dealer {
-    public static HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>(); // <ProducerName,
-                                                                                                          // ProductName>
-                                                                                                          // => [Import]
+    // <ProducerName, ProductName> => [Import]
+    public static HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>();
     public static ArrayList<Import> unmatchImports = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -79,10 +78,12 @@ class TimeoutThread extends Thread {
     private long time;
     private PrintWriter os;
 
-    public TimeoutThread(long sec, HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String producerName, String productName, PrintWriter os) {
-        this.time = sec;
+    public TimeoutThread(long sec, HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations,
+            String producerName, String productName, PrintWriter os) {
+        this.negotiations = negotiations;
         this.producerName = producerName;
         this.productName = productName;
+        this.time = sec;
         this.os = os;
     }
 
@@ -99,7 +100,7 @@ class TimeoutThread extends Thread {
             dealerTimeout.setSuccess(true);
             dealerTimeout.setProducerName(this.producerName);
             dealerTimeout.setProductName(this.productName);
-            
+
             for (Import import1 : importers) {
                 SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
                 saleInfo.setUsername(import1.getProducerName());
