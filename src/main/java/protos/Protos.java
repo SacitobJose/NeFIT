@@ -14,960 +14,8 @@ public final class Protos {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface TransactionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.Transaction)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    boolean hasProduce();
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    protos.Protos.Produce getProduce();
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    protos.Protos.ProduceOrBuilder getProduceOrBuilder();
-
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    boolean hasImport();
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    protos.Protos.Import getImport();
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    protos.Protos.ImportOrBuilder getImportOrBuilder();
-
-    public protos.Protos.Transaction.TxnCase getTxnCase();
-  }
-  /**
-   * <pre>
-   * Transaction:productName:&lt;&lt;&gt;&gt;
-   * </pre>
-   *
-   * Protobuf type {@code protos.Transaction}
-   */
-  public  static final class Transaction extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.Transaction)
-      TransactionOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Transaction.newBuilder() to construct.
-    private Transaction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Transaction() {
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private Transaction(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              protos.Protos.Produce.Builder subBuilder = null;
-              if (txnCase_ == 1) {
-                subBuilder = ((protos.Protos.Produce) txn_).toBuilder();
-              }
-              txn_ =
-                  input.readMessage(protos.Protos.Produce.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom((protos.Protos.Produce) txn_);
-                txn_ = subBuilder.buildPartial();
-              }
-              txnCase_ = 1;
-              break;
-            }
-            case 18: {
-              protos.Protos.Import.Builder subBuilder = null;
-              if (txnCase_ == 2) {
-                subBuilder = ((protos.Protos.Import) txn_).toBuilder();
-              }
-              txn_ =
-                  input.readMessage(protos.Protos.Import.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom((protos.Protos.Import) txn_);
-                txn_ = subBuilder.buildPartial();
-              }
-              txnCase_ = 2;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return protos.Protos.internal_static_protos_Transaction_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_Transaction_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              protos.Protos.Transaction.class, protos.Protos.Transaction.Builder.class);
-    }
-
-    private int bitField0_;
-    private int txnCase_ = 0;
-    private java.lang.Object txn_;
-    public enum TxnCase
-        implements com.google.protobuf.Internal.EnumLite {
-      PRODUCE(1),
-      IMPORT(2),
-      TXN_NOT_SET(0);
-      private final int value;
-      private TxnCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static TxnCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static TxnCase forNumber(int value) {
-        switch (value) {
-          case 1: return PRODUCE;
-          case 2: return IMPORT;
-          case 0: return TXN_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public TxnCase
-    getTxnCase() {
-      return TxnCase.forNumber(
-          txnCase_);
-    }
-
-    public static final int PRODUCE_FIELD_NUMBER = 1;
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    public boolean hasProduce() {
-      return txnCase_ == 1;
-    }
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    public protos.Protos.Produce getProduce() {
-      if (txnCase_ == 1) {
-         return (protos.Protos.Produce) txn_;
-      }
-      return protos.Protos.Produce.getDefaultInstance();
-    }
-    /**
-     * <code>optional .protos.Produce produce = 1;</code>
-     */
-    public protos.Protos.ProduceOrBuilder getProduceOrBuilder() {
-      if (txnCase_ == 1) {
-         return (protos.Protos.Produce) txn_;
-      }
-      return protos.Protos.Produce.getDefaultInstance();
-    }
-
-    public static final int IMPORT_FIELD_NUMBER = 2;
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    public boolean hasImport() {
-      return txnCase_ == 2;
-    }
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    public protos.Protos.Import getImport() {
-      if (txnCase_ == 2) {
-         return (protos.Protos.Import) txn_;
-      }
-      return protos.Protos.Import.getDefaultInstance();
-    }
-    /**
-     * <code>optional .protos.Import import = 2;</code>
-     */
-    public protos.Protos.ImportOrBuilder getImportOrBuilder() {
-      if (txnCase_ == 2) {
-         return (protos.Protos.Import) txn_;
-      }
-      return protos.Protos.Import.getDefaultInstance();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      if (hasProduce()) {
-        if (!getProduce().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasImport()) {
-        if (!getImport().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (txnCase_ == 1) {
-        output.writeMessage(1, (protos.Protos.Produce) txn_);
-      }
-      if (txnCase_ == 2) {
-        output.writeMessage(2, (protos.Protos.Import) txn_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (txnCase_ == 1) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, (protos.Protos.Produce) txn_);
-      }
-      if (txnCase_ == 2) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (protos.Protos.Import) txn_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof protos.Protos.Transaction)) {
-        return super.equals(obj);
-      }
-      protos.Protos.Transaction other = (protos.Protos.Transaction) obj;
-
-      boolean result = true;
-      result = result && getTxnCase().equals(
-          other.getTxnCase());
-      if (!result) return false;
-      switch (txnCase_) {
-        case 1:
-          result = result && getProduce()
-              .equals(other.getProduce());
-          break;
-        case 2:
-          result = result && getImport()
-              .equals(other.getImport());
-          break;
-        case 0:
-        default:
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      switch (txnCase_) {
-        case 1:
-          hash = (37 * hash) + PRODUCE_FIELD_NUMBER;
-          hash = (53 * hash) + getProduce().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + IMPORT_FIELD_NUMBER;
-          hash = (53 * hash) + getImport().hashCode();
-          break;
-        case 0:
-        default:
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static protos.Protos.Transaction parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Transaction parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Transaction parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.Transaction parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Transaction parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Transaction parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(protos.Protos.Transaction prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     * Transaction:productName:&lt;&lt;&gt;&gt;
-     * </pre>
-     *
-     * Protobuf type {@code protos.Transaction}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.Transaction)
-        protos.Protos.TransactionOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return protos.Protos.internal_static_protos_Transaction_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_Transaction_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                protos.Protos.Transaction.class, protos.Protos.Transaction.Builder.class);
-      }
-
-      // Construct using protos.Protos.Transaction.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        txnCase_ = 0;
-        txn_ = null;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return protos.Protos.internal_static_protos_Transaction_descriptor;
-      }
-
-      @java.lang.Override
-      public protos.Protos.Transaction getDefaultInstanceForType() {
-        return protos.Protos.Transaction.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public protos.Protos.Transaction build() {
-        protos.Protos.Transaction result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public protos.Protos.Transaction buildPartial() {
-        protos.Protos.Transaction result = new protos.Protos.Transaction(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (txnCase_ == 1) {
-          if (produceBuilder_ == null) {
-            result.txn_ = txn_;
-          } else {
-            result.txn_ = produceBuilder_.build();
-          }
-        }
-        if (txnCase_ == 2) {
-          if (importBuilder_ == null) {
-            result.txn_ = txn_;
-          } else {
-            result.txn_ = importBuilder_.build();
-          }
-        }
-        result.bitField0_ = to_bitField0_;
-        result.txnCase_ = txnCase_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.Transaction) {
-          return mergeFrom((protos.Protos.Transaction)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(protos.Protos.Transaction other) {
-        if (other == protos.Protos.Transaction.getDefaultInstance()) return this;
-        switch (other.getTxnCase()) {
-          case PRODUCE: {
-            mergeProduce(other.getProduce());
-            break;
-          }
-          case IMPORT: {
-            mergeImport(other.getImport());
-            break;
-          }
-          case TXN_NOT_SET: {
-            break;
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        if (hasProduce()) {
-          if (!getProduce().isInitialized()) {
-            return false;
-          }
-        }
-        if (hasImport()) {
-          if (!getImport().isInitialized()) {
-            return false;
-          }
-        }
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        protos.Protos.Transaction parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.Transaction) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int txnCase_ = 0;
-      private java.lang.Object txn_;
-      public TxnCase
-          getTxnCase() {
-        return TxnCase.forNumber(
-            txnCase_);
-      }
-
-      public Builder clearTxn() {
-        txnCase_ = 0;
-        txn_ = null;
-        onChanged();
-        return this;
-      }
-
-      private int bitField0_;
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          protos.Protos.Produce, protos.Protos.Produce.Builder, protos.Protos.ProduceOrBuilder> produceBuilder_;
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public boolean hasProduce() {
-        return txnCase_ == 1;
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public protos.Protos.Produce getProduce() {
-        if (produceBuilder_ == null) {
-          if (txnCase_ == 1) {
-            return (protos.Protos.Produce) txn_;
-          }
-          return protos.Protos.Produce.getDefaultInstance();
-        } else {
-          if (txnCase_ == 1) {
-            return produceBuilder_.getMessage();
-          }
-          return protos.Protos.Produce.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public Builder setProduce(protos.Protos.Produce value) {
-        if (produceBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          txn_ = value;
-          onChanged();
-        } else {
-          produceBuilder_.setMessage(value);
-        }
-        txnCase_ = 1;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public Builder setProduce(
-          protos.Protos.Produce.Builder builderForValue) {
-        if (produceBuilder_ == null) {
-          txn_ = builderForValue.build();
-          onChanged();
-        } else {
-          produceBuilder_.setMessage(builderForValue.build());
-        }
-        txnCase_ = 1;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public Builder mergeProduce(protos.Protos.Produce value) {
-        if (produceBuilder_ == null) {
-          if (txnCase_ == 1 &&
-              txn_ != protos.Protos.Produce.getDefaultInstance()) {
-            txn_ = protos.Protos.Produce.newBuilder((protos.Protos.Produce) txn_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            txn_ = value;
-          }
-          onChanged();
-        } else {
-          if (txnCase_ == 1) {
-            produceBuilder_.mergeFrom(value);
-          }
-          produceBuilder_.setMessage(value);
-        }
-        txnCase_ = 1;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public Builder clearProduce() {
-        if (produceBuilder_ == null) {
-          if (txnCase_ == 1) {
-            txnCase_ = 0;
-            txn_ = null;
-            onChanged();
-          }
-        } else {
-          if (txnCase_ == 1) {
-            txnCase_ = 0;
-            txn_ = null;
-          }
-          produceBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public protos.Protos.Produce.Builder getProduceBuilder() {
-        return getProduceFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      public protos.Protos.ProduceOrBuilder getProduceOrBuilder() {
-        if ((txnCase_ == 1) && (produceBuilder_ != null)) {
-          return produceBuilder_.getMessageOrBuilder();
-        } else {
-          if (txnCase_ == 1) {
-            return (protos.Protos.Produce) txn_;
-          }
-          return protos.Protos.Produce.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .protos.Produce produce = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          protos.Protos.Produce, protos.Protos.Produce.Builder, protos.Protos.ProduceOrBuilder> 
-          getProduceFieldBuilder() {
-        if (produceBuilder_ == null) {
-          if (!(txnCase_ == 1)) {
-            txn_ = protos.Protos.Produce.getDefaultInstance();
-          }
-          produceBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              protos.Protos.Produce, protos.Protos.Produce.Builder, protos.Protos.ProduceOrBuilder>(
-                  (protos.Protos.Produce) txn_,
-                  getParentForChildren(),
-                  isClean());
-          txn_ = null;
-        }
-        txnCase_ = 1;
-        onChanged();;
-        return produceBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          protos.Protos.Import, protos.Protos.Import.Builder, protos.Protos.ImportOrBuilder> importBuilder_;
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public boolean hasImport() {
-        return txnCase_ == 2;
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public protos.Protos.Import getImport() {
-        if (importBuilder_ == null) {
-          if (txnCase_ == 2) {
-            return (protos.Protos.Import) txn_;
-          }
-          return protos.Protos.Import.getDefaultInstance();
-        } else {
-          if (txnCase_ == 2) {
-            return importBuilder_.getMessage();
-          }
-          return protos.Protos.Import.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public Builder setImport(protos.Protos.Import value) {
-        if (importBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          txn_ = value;
-          onChanged();
-        } else {
-          importBuilder_.setMessage(value);
-        }
-        txnCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public Builder setImport(
-          protos.Protos.Import.Builder builderForValue) {
-        if (importBuilder_ == null) {
-          txn_ = builderForValue.build();
-          onChanged();
-        } else {
-          importBuilder_.setMessage(builderForValue.build());
-        }
-        txnCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public Builder mergeImport(protos.Protos.Import value) {
-        if (importBuilder_ == null) {
-          if (txnCase_ == 2 &&
-              txn_ != protos.Protos.Import.getDefaultInstance()) {
-            txn_ = protos.Protos.Import.newBuilder((protos.Protos.Import) txn_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            txn_ = value;
-          }
-          onChanged();
-        } else {
-          if (txnCase_ == 2) {
-            importBuilder_.mergeFrom(value);
-          }
-          importBuilder_.setMessage(value);
-        }
-        txnCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public Builder clearImport() {
-        if (importBuilder_ == null) {
-          if (txnCase_ == 2) {
-            txnCase_ = 0;
-            txn_ = null;
-            onChanged();
-          }
-        } else {
-          if (txnCase_ == 2) {
-            txnCase_ = 0;
-            txn_ = null;
-          }
-          importBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public protos.Protos.Import.Builder getImportBuilder() {
-        return getImportFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      public protos.Protos.ImportOrBuilder getImportOrBuilder() {
-        if ((txnCase_ == 2) && (importBuilder_ != null)) {
-          return importBuilder_.getMessageOrBuilder();
-        } else {
-          if (txnCase_ == 2) {
-            return (protos.Protos.Import) txn_;
-          }
-          return protos.Protos.Import.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>optional .protos.Import import = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          protos.Protos.Import, protos.Protos.Import.Builder, protos.Protos.ImportOrBuilder> 
-          getImportFieldBuilder() {
-        if (importBuilder_ == null) {
-          if (!(txnCase_ == 2)) {
-            txn_ = protos.Protos.Import.getDefaultInstance();
-          }
-          importBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              protos.Protos.Import, protos.Protos.Import.Builder, protos.Protos.ImportOrBuilder>(
-                  (protos.Protos.Import) txn_,
-                  getParentForChildren(),
-                  isClean());
-          txn_ = null;
-        }
-        txnCase_ = 2;
-        onChanged();;
-        return importBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:protos.Transaction)
-    }
-
-    // @@protoc_insertion_point(class_scope:protos.Transaction)
-    private static final protos.Protos.Transaction DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new protos.Protos.Transaction();
-    }
-
-    public static protos.Protos.Transaction getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<Transaction>
-        PARSER = new com.google.protobuf.AbstractParser<Transaction>() {
-      @java.lang.Override
-      public Transaction parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Transaction(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Transaction> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Transaction> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public protos.Protos.Transaction getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ProduceOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.Produce)
+  public interface NewNegotiationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.NewNegotiation)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1035,18 +83,18 @@ public final class Protos {
     long getNegotiationPeriod();
   }
   /**
-   * Protobuf type {@code protos.Produce}
+   * Protobuf type {@code protos.NewNegotiation}
    */
-  public  static final class Produce extends
+  public  static final class NewNegotiation extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.Produce)
-      ProduceOrBuilder {
+      // @@protoc_insertion_point(message_implements:protos.NewNegotiation)
+      NewNegotiationOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Produce.newBuilder() to construct.
-    private Produce(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use NewNegotiation.newBuilder() to construct.
+    private NewNegotiation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Produce() {
+    private NewNegotiation() {
       productName_ = "";
       producerName_ = "";
       minimumAmount_ = 0L;
@@ -1060,7 +108,7 @@ public final class Protos {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Produce(
+    private NewNegotiation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1132,15 +180,15 @@ public final class Protos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return protos.Protos.internal_static_protos_Produce_descriptor;
+      return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_Produce_fieldAccessorTable
+      return protos.Protos.internal_static_protos_NewNegotiation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              protos.Protos.Produce.class, protos.Protos.Produce.Builder.class);
+              protos.Protos.NewNegotiation.class, protos.Protos.NewNegotiation.Builder.class);
     }
 
     private int bitField0_;
@@ -1385,10 +433,10 @@ public final class Protos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof protos.Protos.Produce)) {
+      if (!(obj instanceof protos.Protos.NewNegotiation)) {
         return super.equals(obj);
       }
-      protos.Protos.Produce other = (protos.Protos.Produce) obj;
+      protos.Protos.NewNegotiation other = (protos.Protos.NewNegotiation) obj;
 
       boolean result = true;
       result = result && (hasProductName() == other.hasProductName());
@@ -1465,69 +513,69 @@ public final class Protos {
       return hash;
     }
 
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.Produce parseFrom(byte[] data)
+    public static protos.Protos.NewNegotiation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.Produce parseFrom(java.io.InputStream input)
+    public static protos.Protos.NewNegotiation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.Produce parseDelimitedFrom(java.io.InputStream input)
+    public static protos.Protos.NewNegotiation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static protos.Protos.Produce parseDelimitedFrom(
+    public static protos.Protos.NewNegotiation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.Produce parseFrom(
+    public static protos.Protos.NewNegotiation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1540,7 +588,7 @@ public final class Protos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(protos.Protos.Produce prototype) {
+    public static Builder newBuilder(protos.Protos.NewNegotiation prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1556,26 +604,26 @@ public final class Protos {
       return builder;
     }
     /**
-     * Protobuf type {@code protos.Produce}
+     * Protobuf type {@code protos.NewNegotiation}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.Produce)
-        protos.Protos.ProduceOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protos.NewNegotiation)
+        protos.Protos.NewNegotiationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return protos.Protos.internal_static_protos_Produce_descriptor;
+        return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_Produce_fieldAccessorTable
+        return protos.Protos.internal_static_protos_NewNegotiation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                protos.Protos.Produce.class, protos.Protos.Produce.Builder.class);
+                protos.Protos.NewNegotiation.class, protos.Protos.NewNegotiation.Builder.class);
       }
 
-      // Construct using protos.Protos.Produce.newBuilder()
+      // Construct using protos.Protos.NewNegotiation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1611,17 +659,17 @@ public final class Protos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return protos.Protos.internal_static_protos_Produce_descriptor;
+        return protos.Protos.internal_static_protos_NewNegotiation_descriptor;
       }
 
       @java.lang.Override
-      public protos.Protos.Produce getDefaultInstanceForType() {
-        return protos.Protos.Produce.getDefaultInstance();
+      public protos.Protos.NewNegotiation getDefaultInstanceForType() {
+        return protos.Protos.NewNegotiation.getDefaultInstance();
       }
 
       @java.lang.Override
-      public protos.Protos.Produce build() {
-        protos.Protos.Produce result = buildPartial();
+      public protos.Protos.NewNegotiation build() {
+        protos.Protos.NewNegotiation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1629,8 +677,8 @@ public final class Protos {
       }
 
       @java.lang.Override
-      public protos.Protos.Produce buildPartial() {
-        protos.Protos.Produce result = new protos.Protos.Produce(this);
+      public protos.Protos.NewNegotiation buildPartial() {
+        protos.Protos.NewNegotiation result = new protos.Protos.NewNegotiation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1696,16 +744,16 @@ public final class Protos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.Produce) {
-          return mergeFrom((protos.Protos.Produce)other);
+        if (other instanceof protos.Protos.NewNegotiation) {
+          return mergeFrom((protos.Protos.NewNegotiation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(protos.Protos.Produce other) {
-        if (other == protos.Protos.Produce.getDefaultInstance()) return this;
+      public Builder mergeFrom(protos.Protos.NewNegotiation other) {
+        if (other == protos.Protos.NewNegotiation.getDefaultInstance()) return this;
         if (other.hasProductName()) {
           bitField0_ |= 0x00000001;
           productName_ = other.productName_;
@@ -1761,11 +809,11 @@ public final class Protos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        protos.Protos.Produce parsedMessage = null;
+        protos.Protos.NewNegotiation parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.Produce) e.getUnfinishedMessage();
+          parsedMessage = (protos.Protos.NewNegotiation) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2068,128 +1116,93 @@ public final class Protos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protos.Produce)
+      // @@protoc_insertion_point(builder_scope:protos.NewNegotiation)
     }
 
-    // @@protoc_insertion_point(class_scope:protos.Produce)
-    private static final protos.Protos.Produce DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protos.NewNegotiation)
+    private static final protos.Protos.NewNegotiation DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new protos.Protos.Produce();
+      DEFAULT_INSTANCE = new protos.Protos.NewNegotiation();
     }
 
-    public static protos.Protos.Produce getDefaultInstance() {
+    public static protos.Protos.NewNegotiation getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<Produce>
-        PARSER = new com.google.protobuf.AbstractParser<Produce>() {
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NewNegotiation>
+        PARSER = new com.google.protobuf.AbstractParser<NewNegotiation>() {
       @java.lang.Override
-      public Produce parsePartialFrom(
+      public NewNegotiation parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Produce(input, extensionRegistry);
+        return new NewNegotiation(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<Produce> parser() {
+    public static com.google.protobuf.Parser<NewNegotiation> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Produce> getParserForType() {
+    public com.google.protobuf.Parser<NewNegotiation> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public protos.Protos.Produce getDefaultInstanceForType() {
+    public protos.Protos.NewNegotiation getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface ImportOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.Import)
+  public interface NegotiationOverOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.NegotiationOver)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required string username = 1;</code>
-     */
-    boolean hasUsername();
-    /**
-     * <code>required string username = 1;</code>
-     */
-    java.lang.String getUsername();
-    /**
-     * <code>required string username = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getUsernameBytes();
-
-    /**
-     * <code>required string productName = 2;</code>
+     * <code>required string productName = 1;</code>
      */
     boolean hasProductName();
     /**
-     * <code>required string productName = 2;</code>
+     * <code>required string productName = 1;</code>
      */
     java.lang.String getProductName();
     /**
-     * <code>required string productName = 2;</code>
+     * <code>required string productName = 1;</code>
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
-     * <code>required string producerName = 3;</code>
+     * <code>required string producerName = 2;</code>
      */
     boolean hasProducerName();
     /**
-     * <code>required string producerName = 3;</code>
+     * <code>required string producerName = 2;</code>
      */
     java.lang.String getProducerName();
     /**
-     * <code>required string producerName = 3;</code>
+     * <code>required string producerName = 2;</code>
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
-
-    /**
-     * <code>required int64 quantity = 4;</code>
-     */
-    boolean hasQuantity();
-    /**
-     * <code>required int64 quantity = 4;</code>
-     */
-    long getQuantity();
-
-    /**
-     * <code>required int64 unitaryPrice = 5;</code>
-     */
-    boolean hasUnitaryPrice();
-    /**
-     * <code>required int64 unitaryPrice = 5;</code>
-     */
-    long getUnitaryPrice();
   }
   /**
-   * Protobuf type {@code protos.Import}
+   * Protobuf type {@code protos.NegotiationOver}
    */
-  public  static final class Import extends
+  public  static final class NegotiationOver extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.Import)
-      ImportOrBuilder {
+      // @@protoc_insertion_point(message_implements:protos.NegotiationOver)
+      NegotiationOverOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Import.newBuilder() to construct.
-    private Import(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use NegotiationOver.newBuilder() to construct.
+    private NegotiationOver(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Import() {
-      username_ = "";
+    private NegotiationOver() {
       productName_ = "";
       producerName_ = "";
-      quantity_ = 0L;
-      unitaryPrice_ = 0L;
     }
 
     @java.lang.Override
@@ -2197,7 +1210,7 @@ public final class Protos {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Import(
+    private NegotiationOver(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2219,29 +1232,13 @@ public final class Protos {
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              username_ = bs;
+              productName_ = bs;
               break;
             }
             case 18: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              productName_ = bs;
-              break;
-            }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
               producerName_ = bs;
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000008;
-              quantity_ = input.readInt64();
-              break;
-            }
-            case 40: {
-              bitField0_ |= 0x00000010;
-              unitaryPrice_ = input.readInt64();
               break;
             }
             default: {
@@ -2265,70 +1262,28 @@ public final class Protos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return protos.Protos.internal_static_protos_Import_descriptor;
+      return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_Import_fieldAccessorTable
+      return protos.Protos.internal_static_protos_NegotiationOver_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              protos.Protos.Import.class, protos.Protos.Import.Builder.class);
+              protos.Protos.NegotiationOver.class, protos.Protos.NegotiationOver.Builder.class);
     }
 
     private int bitField0_;
-    public static final int USERNAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object username_;
+    public static final int PRODUCTNAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object productName_;
     /**
-     * <code>required string username = 1;</code>
+     * <code>required string productName = 1;</code>
      */
-    public boolean hasUsername() {
+    public boolean hasProductName() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string username = 1;</code>
-     */
-    public java.lang.String getUsername() {
-      java.lang.Object ref = username_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          username_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string username = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      java.lang.Object ref = username_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        username_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int PRODUCTNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object productName_;
-    /**
-     * <code>required string productName = 2;</code>
-     */
-    public boolean hasProductName() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required string productName = 2;</code>
+     * <code>required string productName = 1;</code>
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -2345,7 +1300,7 @@ public final class Protos {
       }
     }
     /**
-     * <code>required string productName = 2;</code>
+     * <code>required string productName = 1;</code>
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -2359,1846 +1314,6 @@ public final class Protos {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
-    }
-
-    public static final int PRODUCERNAME_FIELD_NUMBER = 3;
-    private volatile java.lang.Object producerName_;
-    /**
-     * <code>required string producerName = 3;</code>
-     */
-    public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required string producerName = 3;</code>
-     */
-    public java.lang.String getProducerName() {
-      java.lang.Object ref = producerName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          producerName_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string producerName = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getProducerNameBytes() {
-      java.lang.Object ref = producerName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        producerName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int QUANTITY_FIELD_NUMBER = 4;
-    private long quantity_;
-    /**
-     * <code>required int64 quantity = 4;</code>
-     */
-    public boolean hasQuantity() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>required int64 quantity = 4;</code>
-     */
-    public long getQuantity() {
-      return quantity_;
-    }
-
-    public static final int UNITARYPRICE_FIELD_NUMBER = 5;
-    private long unitaryPrice_;
-    /**
-     * <code>required int64 unitaryPrice = 5;</code>
-     */
-    public boolean hasUnitaryPrice() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
-    }
-    /**
-     * <code>required int64 unitaryPrice = 5;</code>
-     */
-    public long getUnitaryPrice() {
-      return unitaryPrice_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      if (!hasUsername()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasProductName()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasProducerName()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasQuantity()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasUnitaryPrice()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, productName_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, producerName_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt64(4, quantity_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt64(5, unitaryPrice_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, productName_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, producerName_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(4, quantity_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(5, unitaryPrice_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof protos.Protos.Import)) {
-        return super.equals(obj);
-      }
-      protos.Protos.Import other = (protos.Protos.Import) obj;
-
-      boolean result = true;
-      result = result && (hasUsername() == other.hasUsername());
-      if (hasUsername()) {
-        result = result && getUsername()
-            .equals(other.getUsername());
-      }
-      result = result && (hasProductName() == other.hasProductName());
-      if (hasProductName()) {
-        result = result && getProductName()
-            .equals(other.getProductName());
-      }
-      result = result && (hasProducerName() == other.hasProducerName());
-      if (hasProducerName()) {
-        result = result && getProducerName()
-            .equals(other.getProducerName());
-      }
-      result = result && (hasQuantity() == other.hasQuantity());
-      if (hasQuantity()) {
-        result = result && (getQuantity()
-            == other.getQuantity());
-      }
-      result = result && (hasUnitaryPrice() == other.hasUnitaryPrice());
-      if (hasUnitaryPrice()) {
-        result = result && (getUnitaryPrice()
-            == other.getUnitaryPrice());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasUsername()) {
-        hash = (37 * hash) + USERNAME_FIELD_NUMBER;
-        hash = (53 * hash) + getUsername().hashCode();
-      }
-      if (hasProductName()) {
-        hash = (37 * hash) + PRODUCTNAME_FIELD_NUMBER;
-        hash = (53 * hash) + getProductName().hashCode();
-      }
-      if (hasProducerName()) {
-        hash = (37 * hash) + PRODUCERNAME_FIELD_NUMBER;
-        hash = (53 * hash) + getProducerName().hashCode();
-      }
-      if (hasQuantity()) {
-        hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getQuantity());
-      }
-      if (hasUnitaryPrice()) {
-        hash = (37 * hash) + UNITARYPRICE_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getUnitaryPrice());
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static protos.Protos.Import parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Import parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Import parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Import parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Import parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.Import parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.Import parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Import parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.Import parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Import parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.Import parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.Import parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(protos.Protos.Import prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code protos.Import}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.Import)
-        protos.Protos.ImportOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return protos.Protos.internal_static_protos_Import_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_Import_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                protos.Protos.Import.class, protos.Protos.Import.Builder.class);
-      }
-
-      // Construct using protos.Protos.Import.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        username_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
-        productName_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
-        producerName_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
-        quantity_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000008);
-        unitaryPrice_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000010);
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return protos.Protos.internal_static_protos_Import_descriptor;
-      }
-
-      @java.lang.Override
-      public protos.Protos.Import getDefaultInstanceForType() {
-        return protos.Protos.Import.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public protos.Protos.Import build() {
-        protos.Protos.Import result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public protos.Protos.Import buildPartial() {
-        protos.Protos.Import result = new protos.Protos.Import(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        result.quantity_ = quantity_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
-        }
-        result.unitaryPrice_ = unitaryPrice_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.Import) {
-          return mergeFrom((protos.Protos.Import)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(protos.Protos.Import other) {
-        if (other == protos.Protos.Import.getDefaultInstance()) return this;
-        if (other.hasUsername()) {
-          bitField0_ |= 0x00000001;
-          username_ = other.username_;
-          onChanged();
-        }
-        if (other.hasProductName()) {
-          bitField0_ |= 0x00000002;
-          productName_ = other.productName_;
-          onChanged();
-        }
-        if (other.hasProducerName()) {
-          bitField0_ |= 0x00000004;
-          producerName_ = other.producerName_;
-          onChanged();
-        }
-        if (other.hasQuantity()) {
-          setQuantity(other.getQuantity());
-        }
-        if (other.hasUnitaryPrice()) {
-          setUnitaryPrice(other.getUnitaryPrice());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        if (!hasUsername()) {
-          return false;
-        }
-        if (!hasProductName()) {
-          return false;
-        }
-        if (!hasProducerName()) {
-          return false;
-        }
-        if (!hasQuantity()) {
-          return false;
-        }
-        if (!hasUnitaryPrice()) {
-          return false;
-        }
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        protos.Protos.Import parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.Import) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.lang.Object username_ = "";
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public java.lang.String getUsername() {
-        java.lang.Object ref = username_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            username_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getUsernameBytes() {
-        java.lang.Object ref = username_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          username_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder setUsername(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder clearUsername() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        username_ = getDefaultInstance().getUsername();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder setUsernameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object productName_ = "";
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public boolean hasProductName() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public java.lang.String getProductName() {
-        java.lang.Object ref = productName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            productName_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getProductNameBytes() {
-        java.lang.Object ref = productName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          productName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public Builder setProductName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        productName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public Builder clearProductName() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        productName_ = getDefaultInstance().getProductName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string productName = 2;</code>
-       */
-      public Builder setProductNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        productName_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object producerName_ = "";
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public java.lang.String getProducerName() {
-        java.lang.Object ref = producerName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            producerName_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getProducerNameBytes() {
-        java.lang.Object ref = producerName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          producerName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public Builder setProducerName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-        producerName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public Builder clearProducerName() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        producerName_ = getDefaultInstance().getProducerName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string producerName = 3;</code>
-       */
-      public Builder setProducerNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-        producerName_ = value;
-        onChanged();
-        return this;
-      }
-
-      private long quantity_ ;
-      /**
-       * <code>required int64 quantity = 4;</code>
-       */
-      public boolean hasQuantity() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>required int64 quantity = 4;</code>
-       */
-      public long getQuantity() {
-        return quantity_;
-      }
-      /**
-       * <code>required int64 quantity = 4;</code>
-       */
-      public Builder setQuantity(long value) {
-        bitField0_ |= 0x00000008;
-        quantity_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 quantity = 4;</code>
-       */
-      public Builder clearQuantity() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        quantity_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private long unitaryPrice_ ;
-      /**
-       * <code>required int64 unitaryPrice = 5;</code>
-       */
-      public boolean hasUnitaryPrice() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      /**
-       * <code>required int64 unitaryPrice = 5;</code>
-       */
-      public long getUnitaryPrice() {
-        return unitaryPrice_;
-      }
-      /**
-       * <code>required int64 unitaryPrice = 5;</code>
-       */
-      public Builder setUnitaryPrice(long value) {
-        bitField0_ |= 0x00000010;
-        unitaryPrice_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 unitaryPrice = 5;</code>
-       */
-      public Builder clearUnitaryPrice() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        unitaryPrice_ = 0L;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:protos.Import)
-    }
-
-    // @@protoc_insertion_point(class_scope:protos.Import)
-    private static final protos.Protos.Import DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new protos.Protos.Import();
-    }
-
-    public static protos.Protos.Import getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<Import>
-        PARSER = new com.google.protobuf.AbstractParser<Import>() {
-      @java.lang.Override
-      public Import parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Import(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Import> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Import> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public protos.Protos.Import getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface SaleInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.SaleInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>required string username = 1;</code>
-     */
-    boolean hasUsername();
-    /**
-     * <code>required string username = 1;</code>
-     */
-    java.lang.String getUsername();
-    /**
-     * <code>required string username = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getUsernameBytes();
-
-    /**
-     * <code>required int64 quantity = 2;</code>
-     */
-    boolean hasQuantity();
-    /**
-     * <code>required int64 quantity = 2;</code>
-     */
-    long getQuantity();
-
-    /**
-     * <code>required int64 price = 3;</code>
-     */
-    boolean hasPrice();
-    /**
-     * <code>required int64 price = 3;</code>
-     */
-    long getPrice();
-  }
-  /**
-   * Protobuf type {@code protos.SaleInfo}
-   */
-  public  static final class SaleInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.SaleInfo)
-      SaleInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use SaleInfo.newBuilder() to construct.
-    private SaleInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private SaleInfo() {
-      username_ = "";
-      quantity_ = 0L;
-      price_ = 0L;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private SaleInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              username_ = bs;
-              break;
-            }
-            case 16: {
-              bitField0_ |= 0x00000002;
-              quantity_ = input.readInt64();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              price_ = input.readInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return protos.Protos.internal_static_protos_SaleInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_SaleInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              protos.Protos.SaleInfo.class, protos.Protos.SaleInfo.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int USERNAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object username_;
-    /**
-     * <code>required string username = 1;</code>
-     */
-    public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required string username = 1;</code>
-     */
-    public java.lang.String getUsername() {
-      java.lang.Object ref = username_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          username_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string username = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      java.lang.Object ref = username_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        username_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int QUANTITY_FIELD_NUMBER = 2;
-    private long quantity_;
-    /**
-     * <code>required int64 quantity = 2;</code>
-     */
-    public boolean hasQuantity() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required int64 quantity = 2;</code>
-     */
-    public long getQuantity() {
-      return quantity_;
-    }
-
-    public static final int PRICE_FIELD_NUMBER = 3;
-    private long price_;
-    /**
-     * <code>required int64 price = 3;</code>
-     */
-    public boolean hasPrice() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required int64 price = 3;</code>
-     */
-    public long getPrice() {
-      return price_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      if (!hasUsername()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasQuantity()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasPrice()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt64(2, quantity_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt64(3, price_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, quantity_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, price_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof protos.Protos.SaleInfo)) {
-        return super.equals(obj);
-      }
-      protos.Protos.SaleInfo other = (protos.Protos.SaleInfo) obj;
-
-      boolean result = true;
-      result = result && (hasUsername() == other.hasUsername());
-      if (hasUsername()) {
-        result = result && getUsername()
-            .equals(other.getUsername());
-      }
-      result = result && (hasQuantity() == other.hasQuantity());
-      if (hasQuantity()) {
-        result = result && (getQuantity()
-            == other.getQuantity());
-      }
-      result = result && (hasPrice() == other.hasPrice());
-      if (hasPrice()) {
-        result = result && (getPrice()
-            == other.getPrice());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasUsername()) {
-        hash = (37 * hash) + USERNAME_FIELD_NUMBER;
-        hash = (53 * hash) + getUsername().hashCode();
-      }
-      if (hasQuantity()) {
-        hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getQuantity());
-      }
-      if (hasPrice()) {
-        hash = (37 * hash) + PRICE_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getPrice());
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static protos.Protos.SaleInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.SaleInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static protos.Protos.SaleInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.SaleInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static protos.Protos.SaleInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static protos.Protos.SaleInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(protos.Protos.SaleInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code protos.SaleInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.SaleInfo)
-        protos.Protos.SaleInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return protos.Protos.internal_static_protos_SaleInfo_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_SaleInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                protos.Protos.SaleInfo.class, protos.Protos.SaleInfo.Builder.class);
-      }
-
-      // Construct using protos.Protos.SaleInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        username_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
-        quantity_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        price_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return protos.Protos.internal_static_protos_SaleInfo_descriptor;
-      }
-
-      @java.lang.Override
-      public protos.Protos.SaleInfo getDefaultInstanceForType() {
-        return protos.Protos.SaleInfo.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public protos.Protos.SaleInfo build() {
-        protos.Protos.SaleInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public protos.Protos.SaleInfo buildPartial() {
-        protos.Protos.SaleInfo result = new protos.Protos.SaleInfo(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.quantity_ = quantity_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.price_ = price_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.SaleInfo) {
-          return mergeFrom((protos.Protos.SaleInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(protos.Protos.SaleInfo other) {
-        if (other == protos.Protos.SaleInfo.getDefaultInstance()) return this;
-        if (other.hasUsername()) {
-          bitField0_ |= 0x00000001;
-          username_ = other.username_;
-          onChanged();
-        }
-        if (other.hasQuantity()) {
-          setQuantity(other.getQuantity());
-        }
-        if (other.hasPrice()) {
-          setPrice(other.getPrice());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        if (!hasUsername()) {
-          return false;
-        }
-        if (!hasQuantity()) {
-          return false;
-        }
-        if (!hasPrice()) {
-          return false;
-        }
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        protos.Protos.SaleInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.SaleInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.lang.Object username_ = "";
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public java.lang.String getUsername() {
-        java.lang.Object ref = username_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            username_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getUsernameBytes() {
-        java.lang.Object ref = username_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          username_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder setUsername(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder clearUsername() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        username_ = getDefaultInstance().getUsername();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string username = 1;</code>
-       */
-      public Builder setUsernameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        username_ = value;
-        onChanged();
-        return this;
-      }
-
-      private long quantity_ ;
-      /**
-       * <code>required int64 quantity = 2;</code>
-       */
-      public boolean hasQuantity() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required int64 quantity = 2;</code>
-       */
-      public long getQuantity() {
-        return quantity_;
-      }
-      /**
-       * <code>required int64 quantity = 2;</code>
-       */
-      public Builder setQuantity(long value) {
-        bitField0_ |= 0x00000002;
-        quantity_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 quantity = 2;</code>
-       */
-      public Builder clearQuantity() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        quantity_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private long price_ ;
-      /**
-       * <code>required int64 price = 3;</code>
-       */
-      public boolean hasPrice() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required int64 price = 3;</code>
-       */
-      public long getPrice() {
-        return price_;
-      }
-      /**
-       * <code>required int64 price = 3;</code>
-       */
-      public Builder setPrice(long value) {
-        bitField0_ |= 0x00000004;
-        price_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 price = 3;</code>
-       */
-      public Builder clearPrice() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        price_ = 0L;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:protos.SaleInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:protos.SaleInfo)
-    private static final protos.Protos.SaleInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new protos.Protos.SaleInfo();
-    }
-
-    public static protos.Protos.SaleInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<SaleInfo>
-        PARSER = new com.google.protobuf.AbstractParser<SaleInfo>() {
-      @java.lang.Override
-      public SaleInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SaleInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<SaleInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SaleInfo> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public protos.Protos.SaleInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface DealerTimeoutOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protos.DealerTimeout)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>required bool success = 1;</code>
-     */
-    boolean hasSuccess();
-    /**
-     * <code>required bool success = 1;</code>
-     */
-    boolean getSuccess();
-
-    /**
-     * <code>required string producerName = 2;</code>
-     */
-    boolean hasProducerName();
-    /**
-     * <code>required string producerName = 2;</code>
-     */
-    java.lang.String getProducerName();
-    /**
-     * <code>required string producerName = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getProducerNameBytes();
-
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    boolean hasProductName();
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    java.lang.String getProductName();
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getProductNameBytes();
-
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    java.util.List<protos.Protos.SaleInfo> 
-        getSalesList();
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    protos.Protos.SaleInfo getSales(int index);
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    int getSalesCount();
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    java.util.List<? extends protos.Protos.SaleInfoOrBuilder> 
-        getSalesOrBuilderList();
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    protos.Protos.SaleInfoOrBuilder getSalesOrBuilder(
-        int index);
-  }
-  /**
-   * <pre>
-   * DealerTimeout:success:producerName:productName:username:&lt;&lt;&gt;&gt;:...:username:&lt;&lt;&gt;&gt;:
-   * </pre>
-   *
-   * Protobuf type {@code protos.DealerTimeout}
-   */
-  public  static final class DealerTimeout extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:protos.DealerTimeout)
-      DealerTimeoutOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use DealerTimeout.newBuilder() to construct.
-    private DealerTimeout(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private DealerTimeout() {
-      success_ = false;
-      producerName_ = "";
-      productName_ = "";
-      sales_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private DealerTimeout(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-              bitField0_ |= 0x00000001;
-              success_ = input.readBool();
-              break;
-            }
-            case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              producerName_ = bs;
-              break;
-            }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
-              productName_ = bs;
-              break;
-            }
-            case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                sales_ = new java.util.ArrayList<protos.Protos.SaleInfo>();
-                mutable_bitField0_ |= 0x00000008;
-              }
-              sales_.add(
-                  input.readMessage(protos.Protos.SaleInfo.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          sales_ = java.util.Collections.unmodifiableList(sales_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return protos.Protos.internal_static_protos_DealerTimeout_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return protos.Protos.internal_static_protos_DealerTimeout_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              protos.Protos.DealerTimeout.class, protos.Protos.DealerTimeout.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int SUCCESS_FIELD_NUMBER = 1;
-    private boolean success_;
-    /**
-     * <code>required bool success = 1;</code>
-     */
-    public boolean hasSuccess() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required bool success = 1;</code>
-     */
-    public boolean getSuccess() {
-      return success_;
     }
 
     public static final int PRODUCERNAME_FIELD_NUMBER = 2;
@@ -4243,83 +1358,6 @@ public final class Protos {
       }
     }
 
-    public static final int PRODUCTNAME_FIELD_NUMBER = 3;
-    private volatile java.lang.Object productName_;
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    public boolean hasProductName() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    public java.lang.String getProductName() {
-      java.lang.Object ref = productName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          productName_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string productName = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getProductNameBytes() {
-      java.lang.Object ref = productName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        productName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SALES_FIELD_NUMBER = 4;
-    private java.util.List<protos.Protos.SaleInfo> sales_;
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    public java.util.List<protos.Protos.SaleInfo> getSalesList() {
-      return sales_;
-    }
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    public java.util.List<? extends protos.Protos.SaleInfoOrBuilder> 
-        getSalesOrBuilderList() {
-      return sales_;
-    }
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    public int getSalesCount() {
-      return sales_.size();
-    }
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    public protos.Protos.SaleInfo getSales(int index) {
-      return sales_.get(index);
-    }
-    /**
-     * <code>repeated .protos.SaleInfo sales = 4;</code>
-     */
-    public protos.Protos.SaleInfoOrBuilder getSalesOrBuilder(
-        int index) {
-      return sales_.get(index);
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4327,23 +1365,13 @@ public final class Protos {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasSuccess()) {
+      if (!hasProductName()) {
         memoizedIsInitialized = 0;
         return false;
       }
       if (!hasProducerName()) {
         memoizedIsInitialized = 0;
         return false;
-      }
-      if (!hasProductName()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      for (int i = 0; i < getSalesCount(); i++) {
-        if (!getSales(i).isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
       }
       memoizedIsInitialized = 1;
       return true;
@@ -4353,16 +1381,10 @@ public final class Protos {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBool(1, success_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productName_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, productName_);
-      }
-      for (int i = 0; i < sales_.size(); i++) {
-        output.writeMessage(4, sales_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -4374,18 +1396,10 @@ public final class Protos {
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, success_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productName_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, productName_);
-      }
-      for (int i = 0; i < sales_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, sales_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4397,29 +1411,22 @@ public final class Protos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof protos.Protos.DealerTimeout)) {
+      if (!(obj instanceof protos.Protos.NegotiationOver)) {
         return super.equals(obj);
       }
-      protos.Protos.DealerTimeout other = (protos.Protos.DealerTimeout) obj;
+      protos.Protos.NegotiationOver other = (protos.Protos.NegotiationOver) obj;
 
       boolean result = true;
-      result = result && (hasSuccess() == other.hasSuccess());
-      if (hasSuccess()) {
-        result = result && (getSuccess()
-            == other.getSuccess());
+      result = result && (hasProductName() == other.hasProductName());
+      if (hasProductName()) {
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
       result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
         result = result && getProducerName()
             .equals(other.getProducerName());
       }
-      result = result && (hasProductName() == other.hasProductName());
-      if (hasProductName()) {
-        result = result && getProductName()
-            .equals(other.getProductName());
-      }
-      result = result && getSalesList()
-          .equals(other.getSalesList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4431,91 +1438,82 @@ public final class Protos {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSuccess()) {
-        hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getSuccess());
-      }
-      if (hasProducerName()) {
-        hash = (37 * hash) + PRODUCERNAME_FIELD_NUMBER;
-        hash = (53 * hash) + getProducerName().hashCode();
-      }
       if (hasProductName()) {
         hash = (37 * hash) + PRODUCTNAME_FIELD_NUMBER;
         hash = (53 * hash) + getProductName().hashCode();
       }
-      if (getSalesCount() > 0) {
-        hash = (37 * hash) + SALES_FIELD_NUMBER;
-        hash = (53 * hash) + getSalesList().hashCode();
+      if (hasProducerName()) {
+        hash = (37 * hash) + PRODUCERNAME_FIELD_NUMBER;
+        hash = (53 * hash) + getProducerName().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.DealerTimeout parseFrom(byte[] data)
+    public static protos.Protos.NegotiationOver parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static protos.Protos.DealerTimeout parseFrom(java.io.InputStream input)
+    public static protos.Protos.NegotiationOver parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.DealerTimeout parseDelimitedFrom(java.io.InputStream input)
+    public static protos.Protos.NegotiationOver parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static protos.Protos.DealerTimeout parseDelimitedFrom(
+    public static protos.Protos.NegotiationOver parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static protos.Protos.DealerTimeout parseFrom(
+    public static protos.Protos.NegotiationOver parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4528,7 +1526,7 @@ public final class Protos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(protos.Protos.DealerTimeout prototype) {
+    public static Builder newBuilder(protos.Protos.NegotiationOver prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4544,30 +1542,26 @@ public final class Protos {
       return builder;
     }
     /**
-     * <pre>
-     * DealerTimeout:success:producerName:productName:username:&lt;&lt;&gt;&gt;:...:username:&lt;&lt;&gt;&gt;:
-     * </pre>
-     *
-     * Protobuf type {@code protos.DealerTimeout}
+     * Protobuf type {@code protos.NegotiationOver}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:protos.DealerTimeout)
-        protos.Protos.DealerTimeoutOrBuilder {
+        // @@protoc_insertion_point(builder_implements:protos.NegotiationOver)
+        protos.Protos.NegotiationOverOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return protos.Protos.internal_static_protos_DealerTimeout_descriptor;
+        return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return protos.Protos.internal_static_protos_DealerTimeout_fieldAccessorTable
+        return protos.Protos.internal_static_protos_NegotiationOver_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                protos.Protos.DealerTimeout.class, protos.Protos.DealerTimeout.Builder.class);
+                protos.Protos.NegotiationOver.class, protos.Protos.NegotiationOver.Builder.class);
       }
 
-      // Construct using protos.Protos.DealerTimeout.newBuilder()
+      // Construct using protos.Protos.NegotiationOver.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4580,41 +1574,32 @@ public final class Protos {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getSalesFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        success_ = false;
+        productName_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         producerName_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        productName_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
-        if (salesBuilder_ == null) {
-          sales_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-        } else {
-          salesBuilder_.clear();
-        }
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return protos.Protos.internal_static_protos_DealerTimeout_descriptor;
+        return protos.Protos.internal_static_protos_NegotiationOver_descriptor;
       }
 
       @java.lang.Override
-      public protos.Protos.DealerTimeout getDefaultInstanceForType() {
-        return protos.Protos.DealerTimeout.getDefaultInstance();
+      public protos.Protos.NegotiationOver getDefaultInstanceForType() {
+        return protos.Protos.NegotiationOver.getDefaultInstance();
       }
 
       @java.lang.Override
-      public protos.Protos.DealerTimeout build() {
-        protos.Protos.DealerTimeout result = buildPartial();
+      public protos.Protos.NegotiationOver build() {
+        protos.Protos.NegotiationOver result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4622,31 +1607,18 @@ public final class Protos {
       }
 
       @java.lang.Override
-      public protos.Protos.DealerTimeout buildPartial() {
-        protos.Protos.DealerTimeout result = new protos.Protos.DealerTimeout(this);
+      public protos.Protos.NegotiationOver buildPartial() {
+        protos.Protos.NegotiationOver result = new protos.Protos.NegotiationOver(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.success_ = success_;
+        result.productName_ = productName_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.productName_ = productName_;
-        if (salesBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
-            sales_ = java.util.Collections.unmodifiableList(sales_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.sales_ = sales_;
-        } else {
-          result.sales_ = salesBuilder_.build();
-        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -4686,54 +1658,25 @@ public final class Protos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof protos.Protos.DealerTimeout) {
-          return mergeFrom((protos.Protos.DealerTimeout)other);
+        if (other instanceof protos.Protos.NegotiationOver) {
+          return mergeFrom((protos.Protos.NegotiationOver)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(protos.Protos.DealerTimeout other) {
-        if (other == protos.Protos.DealerTimeout.getDefaultInstance()) return this;
-        if (other.hasSuccess()) {
-          setSuccess(other.getSuccess());
+      public Builder mergeFrom(protos.Protos.NegotiationOver other) {
+        if (other == protos.Protos.NegotiationOver.getDefaultInstance()) return this;
+        if (other.hasProductName()) {
+          bitField0_ |= 0x00000001;
+          productName_ = other.productName_;
+          onChanged();
         }
         if (other.hasProducerName()) {
           bitField0_ |= 0x00000002;
           producerName_ = other.producerName_;
           onChanged();
-        }
-        if (other.hasProductName()) {
-          bitField0_ |= 0x00000004;
-          productName_ = other.productName_;
-          onChanged();
-        }
-        if (salesBuilder_ == null) {
-          if (!other.sales_.isEmpty()) {
-            if (sales_.isEmpty()) {
-              sales_ = other.sales_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureSalesIsMutable();
-              sales_.addAll(other.sales_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.sales_.isEmpty()) {
-            if (salesBuilder_.isEmpty()) {
-              salesBuilder_.dispose();
-              salesBuilder_ = null;
-              sales_ = other.sales_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              salesBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getSalesFieldBuilder() : null;
-            } else {
-              salesBuilder_.addAllMessages(other.sales_);
-            }
-          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4742,19 +1685,11 @@ public final class Protos {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasSuccess()) {
+        if (!hasProductName()) {
           return false;
         }
         if (!hasProducerName()) {
           return false;
-        }
-        if (!hasProductName()) {
-          return false;
-        }
-        for (int i = 0; i < getSalesCount(); i++) {
-          if (!getSales(i).isInitialized()) {
-            return false;
-          }
         }
         return true;
       }
@@ -4764,11 +1699,11 @@ public final class Protos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        protos.Protos.DealerTimeout parsedMessage = null;
+        protos.Protos.NegotiationOver parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (protos.Protos.DealerTimeout) e.getUnfinishedMessage();
+          parsedMessage = (protos.Protos.NegotiationOver) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4779,34 +1714,78 @@ public final class Protos {
       }
       private int bitField0_;
 
-      private boolean success_ ;
+      private java.lang.Object productName_ = "";
       /**
-       * <code>required bool success = 1;</code>
+       * <code>required string productName = 1;</code>
        */
-      public boolean hasSuccess() {
+      public boolean hasProductName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required bool success = 1;</code>
+       * <code>required string productName = 1;</code>
        */
-      public boolean getSuccess() {
-        return success_;
+      public java.lang.String getProductName() {
+        java.lang.Object ref = productName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            productName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>required bool success = 1;</code>
+       * <code>required string productName = 1;</code>
        */
-      public Builder setSuccess(boolean value) {
-        bitField0_ |= 0x00000001;
-        success_ = value;
+      public com.google.protobuf.ByteString
+          getProductNameBytes() {
+        java.lang.Object ref = productName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          productName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string productName = 1;</code>
+       */
+      public Builder setProductName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        productName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required bool success = 1;</code>
+       * <code>required string productName = 1;</code>
        */
-      public Builder clearSuccess() {
+      public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        success_ = false;
+        productName_ = getDefaultInstance().getProductName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string productName = 1;</code>
+       */
+      public Builder setProductNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        productName_ = value;
         onChanged();
         return this;
       }
@@ -4886,25 +1865,539 @@ public final class Protos {
         onChanged();
         return this;
       }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
 
-      private java.lang.Object productName_ = "";
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protos.NegotiationOver)
+    }
+
+    // @@protoc_insertion_point(class_scope:protos.NegotiationOver)
+    private static final protos.Protos.NegotiationOver DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new protos.Protos.NegotiationOver();
+    }
+
+    public static protos.Protos.NegotiationOver getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<NegotiationOver>
+        PARSER = new com.google.protobuf.AbstractParser<NegotiationOver>() {
+      @java.lang.Override
+      public NegotiationOver parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new NegotiationOver(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NegotiationOver> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NegotiationOver> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public protos.Protos.NegotiationOver getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GetProducerInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protos.GetProducerInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    boolean hasProducerName();
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    java.lang.String getProducerName();
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getProducerNameBytes();
+  }
+  /**
+   * Protobuf type {@code protos.GetProducerInfo}
+   */
+  public  static final class GetProducerInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protos.GetProducerInfo)
+      GetProducerInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetProducerInfo.newBuilder() to construct.
+    private GetProducerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetProducerInfo() {
+      producerName_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetProducerInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              producerName_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return protos.Protos.internal_static_protos_GetProducerInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              protos.Protos.GetProducerInfo.class, protos.Protos.GetProducerInfo.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int PRODUCERNAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object producerName_;
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    public boolean hasProducerName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    public java.lang.String getProducerName() {
+      java.lang.Object ref = producerName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          producerName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string producerName = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getProducerNameBytes() {
+      java.lang.Object ref = producerName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        producerName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasProducerName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, producerName_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, producerName_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof protos.Protos.GetProducerInfo)) {
+        return super.equals(obj);
+      }
+      protos.Protos.GetProducerInfo other = (protos.Protos.GetProducerInfo) obj;
+
+      boolean result = true;
+      result = result && (hasProducerName() == other.hasProducerName());
+      if (hasProducerName()) {
+        result = result && getProducerName()
+            .equals(other.getProducerName());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasProducerName()) {
+        hash = (37 * hash) + PRODUCERNAME_FIELD_NUMBER;
+        hash = (53 * hash) + getProducerName().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static protos.Protos.GetProducerInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.GetProducerInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GetProducerInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static protos.Protos.GetProducerInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(protos.Protos.GetProducerInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protos.GetProducerInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protos.GetProducerInfo)
+        protos.Protos.GetProducerInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return protos.Protos.internal_static_protos_GetProducerInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                protos.Protos.GetProducerInfo.class, protos.Protos.GetProducerInfo.Builder.class);
+      }
+
+      // Construct using protos.Protos.GetProducerInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        producerName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return protos.Protos.internal_static_protos_GetProducerInfo_descriptor;
+      }
+
+      @java.lang.Override
+      public protos.Protos.GetProducerInfo getDefaultInstanceForType() {
+        return protos.Protos.GetProducerInfo.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public protos.Protos.GetProducerInfo build() {
+        protos.Protos.GetProducerInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public protos.Protos.GetProducerInfo buildPartial() {
+        protos.Protos.GetProducerInfo result = new protos.Protos.GetProducerInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.producerName_ = producerName_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof protos.Protos.GetProducerInfo) {
+          return mergeFrom((protos.Protos.GetProducerInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(protos.Protos.GetProducerInfo other) {
+        if (other == protos.Protos.GetProducerInfo.getDefaultInstance()) return this;
+        if (other.hasProducerName()) {
+          bitField0_ |= 0x00000001;
+          producerName_ = other.producerName_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        if (!hasProducerName()) {
+          return false;
+        }
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        protos.Protos.GetProducerInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (protos.Protos.GetProducerInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object producerName_ = "";
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
-      public boolean hasProductName() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+      public boolean hasProducerName() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
-      public java.lang.String getProductName() {
-        java.lang.Object ref = productName_;
+      public java.lang.String getProducerName() {
+        java.lang.Object ref = producerName_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
-            productName_ = s;
+            producerName_ = s;
           }
           return s;
         } else {
@@ -4912,295 +2405,55 @@ public final class Protos {
         }
       }
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getProductNameBytes() {
-        java.lang.Object ref = productName_;
+          getProducerNameBytes() {
+        java.lang.Object ref = producerName_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          productName_ = b;
+          producerName_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
-      public Builder setProductName(
+      public Builder setProducerName(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
-        productName_ = value;
+  bitField0_ |= 0x00000001;
+        producerName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
-      public Builder clearProductName() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        productName_ = getDefaultInstance().getProductName();
+      public Builder clearProducerName() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        producerName_ = getDefaultInstance().getProducerName();
         onChanged();
         return this;
       }
       /**
-       * <code>required string productName = 3;</code>
+       * <code>required string producerName = 1;</code>
        */
-      public Builder setProductNameBytes(
+      public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
-        productName_ = value;
+  bitField0_ |= 0x00000001;
+        producerName_ = value;
         onChanged();
         return this;
-      }
-
-      private java.util.List<protos.Protos.SaleInfo> sales_ =
-        java.util.Collections.emptyList();
-      private void ensureSalesIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-          sales_ = new java.util.ArrayList<protos.Protos.SaleInfo>(sales_);
-          bitField0_ |= 0x00000008;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          protos.Protos.SaleInfo, protos.Protos.SaleInfo.Builder, protos.Protos.SaleInfoOrBuilder> salesBuilder_;
-
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public java.util.List<protos.Protos.SaleInfo> getSalesList() {
-        if (salesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(sales_);
-        } else {
-          return salesBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public int getSalesCount() {
-        if (salesBuilder_ == null) {
-          return sales_.size();
-        } else {
-          return salesBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public protos.Protos.SaleInfo getSales(int index) {
-        if (salesBuilder_ == null) {
-          return sales_.get(index);
-        } else {
-          return salesBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder setSales(
-          int index, protos.Protos.SaleInfo value) {
-        if (salesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSalesIsMutable();
-          sales_.set(index, value);
-          onChanged();
-        } else {
-          salesBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder setSales(
-          int index, protos.Protos.SaleInfo.Builder builderForValue) {
-        if (salesBuilder_ == null) {
-          ensureSalesIsMutable();
-          sales_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          salesBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder addSales(protos.Protos.SaleInfo value) {
-        if (salesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSalesIsMutable();
-          sales_.add(value);
-          onChanged();
-        } else {
-          salesBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder addSales(
-          int index, protos.Protos.SaleInfo value) {
-        if (salesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSalesIsMutable();
-          sales_.add(index, value);
-          onChanged();
-        } else {
-          salesBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder addSales(
-          protos.Protos.SaleInfo.Builder builderForValue) {
-        if (salesBuilder_ == null) {
-          ensureSalesIsMutable();
-          sales_.add(builderForValue.build());
-          onChanged();
-        } else {
-          salesBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder addSales(
-          int index, protos.Protos.SaleInfo.Builder builderForValue) {
-        if (salesBuilder_ == null) {
-          ensureSalesIsMutable();
-          sales_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          salesBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder addAllSales(
-          java.lang.Iterable<? extends protos.Protos.SaleInfo> values) {
-        if (salesBuilder_ == null) {
-          ensureSalesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, sales_);
-          onChanged();
-        } else {
-          salesBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder clearSales() {
-        if (salesBuilder_ == null) {
-          sales_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          salesBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public Builder removeSales(int index) {
-        if (salesBuilder_ == null) {
-          ensureSalesIsMutable();
-          sales_.remove(index);
-          onChanged();
-        } else {
-          salesBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public protos.Protos.SaleInfo.Builder getSalesBuilder(
-          int index) {
-        return getSalesFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public protos.Protos.SaleInfoOrBuilder getSalesOrBuilder(
-          int index) {
-        if (salesBuilder_ == null) {
-          return sales_.get(index);  } else {
-          return salesBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public java.util.List<? extends protos.Protos.SaleInfoOrBuilder> 
-           getSalesOrBuilderList() {
-        if (salesBuilder_ != null) {
-          return salesBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(sales_);
-        }
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public protos.Protos.SaleInfo.Builder addSalesBuilder() {
-        return getSalesFieldBuilder().addBuilder(
-            protos.Protos.SaleInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public protos.Protos.SaleInfo.Builder addSalesBuilder(
-          int index) {
-        return getSalesFieldBuilder().addBuilder(
-            index, protos.Protos.SaleInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .protos.SaleInfo sales = 4;</code>
-       */
-      public java.util.List<protos.Protos.SaleInfo.Builder> 
-           getSalesBuilderList() {
-        return getSalesFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          protos.Protos.SaleInfo, protos.Protos.SaleInfo.Builder, protos.Protos.SaleInfoOrBuilder> 
-          getSalesFieldBuilder() {
-        if (salesBuilder_ == null) {
-          salesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              protos.Protos.SaleInfo, protos.Protos.SaleInfo.Builder, protos.Protos.SaleInfoOrBuilder>(
-                  sales_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
-                  getParentForChildren(),
-                  isClean());
-          sales_ = null;
-        }
-        return salesBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -5215,71 +2468,61 @@ public final class Protos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:protos.DealerTimeout)
+      // @@protoc_insertion_point(builder_scope:protos.GetProducerInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:protos.DealerTimeout)
-    private static final protos.Protos.DealerTimeout DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:protos.GetProducerInfo)
+    private static final protos.Protos.GetProducerInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new protos.Protos.DealerTimeout();
+      DEFAULT_INSTANCE = new protos.Protos.GetProducerInfo();
     }
 
-    public static protos.Protos.DealerTimeout getDefaultInstance() {
+    public static protos.Protos.GetProducerInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<DealerTimeout>
-        PARSER = new com.google.protobuf.AbstractParser<DealerTimeout>() {
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProducerInfo>
+        PARSER = new com.google.protobuf.AbstractParser<GetProducerInfo>() {
       @java.lang.Override
-      public DealerTimeout parsePartialFrom(
+      public GetProducerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DealerTimeout(input, extensionRegistry);
+        return new GetProducerInfo(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<DealerTimeout> parser() {
+    public static com.google.protobuf.Parser<GetProducerInfo> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<DealerTimeout> getParserForType() {
+    public com.google.protobuf.Parser<GetProducerInfo> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public protos.Protos.DealerTimeout getDefaultInstanceForType() {
+    public protos.Protos.GetProducerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_Transaction_descriptor;
+    internal_static_protos_NewNegotiation_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_Transaction_fieldAccessorTable;
+      internal_static_protos_NewNegotiation_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_Produce_descriptor;
+    internal_static_protos_NegotiationOver_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_Produce_fieldAccessorTable;
+      internal_static_protos_NegotiationOver_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_Import_descriptor;
+    internal_static_protos_GetProducerInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_Import_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_SaleInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_SaleInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_protos_DealerTimeout_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_protos_DealerTimeout_fieldAccessorTable;
+      internal_static_protos_GetProducerInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5290,20 +2533,13 @@ public final class Protos {
   static {
     java.lang.String[] descriptorData = {
       "\n!src/main/java/protos/protos.proto\022\006pro" +
-      "tos\"Z\n\013Transaction\022\"\n\007produce\030\001 \001(\0132\017.pr" +
-      "otos.ProduceH\000\022 \n\006import\030\002 \001(\0132\016.protos." +
-      "ImportH\000B\005\n\003txn\"\232\001\n\007Produce\022\023\n\013productNa" +
-      "me\030\001 \002(\t\022\024\n\014producerName\030\002 \002(\t\022\025\n\rminimu" +
-      "mAmount\030\003 \002(\003\022\025\n\rmaximumAmount\030\004 \002(\003\022\033\n\023" +
-      "minimumUnitaryPrice\030\005 \002(\003\022\031\n\021negotiation" +
-      "Period\030\006 \002(\003\"m\n\006Import\022\020\n\010username\030\001 \002(\t" +
-      "\022\023\n\013productName\030\002 \002(\t\022\024\n\014producerName\030\003 " +
-      "\002(\t\022\020\n\010quantity\030\004 \002(\003\022\024\n\014unitaryPrice\030\005 " +
-      "\002(\003\"=\n\010SaleInfo\022\020\n\010username\030\001 \002(\t\022\020\n\010qua" +
-      "ntity\030\002 \002(\003\022\r\n\005price\030\003 \002(\003\"l\n\rDealerTime" +
-      "out\022\017\n\007success\030\001 \002(\010\022\024\n\014producerName\030\002 \002" +
-      "(\t\022\023\n\013productName\030\003 \002(\t\022\037\n\005sales\030\004 \003(\0132\020" +
-      ".protos.SaleInfo"
+      "tos\"\241\001\n\016NewNegotiation\022\023\n\013productName\030\001 " +
+      "\002(\t\022\024\n\014producerName\030\002 \002(\t\022\025\n\rminimumAmou" +
+      "nt\030\003 \002(\003\022\025\n\rmaximumAmount\030\004 \002(\003\022\033\n\023minim" +
+      "umUnitaryPrice\030\005 \002(\003\022\031\n\021negotiationPerio" +
+      "d\030\006 \002(\003\"<\n\017NegotiationOver\022\023\n\013productNam" +
+      "e\030\001 \002(\t\022\024\n\014producerName\030\002 \002(\t\"\'\n\017GetProd" +
+      "ucerInfo\022\024\n\014producerName\030\001 \002(\t"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5317,36 +2553,24 @@ public final class Protos {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_protos_Transaction_descriptor =
+    internal_static_protos_NewNegotiation_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_protos_Transaction_fieldAccessorTable = new
+    internal_static_protos_NewNegotiation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_Transaction_descriptor,
-        new java.lang.String[] { "Produce", "Import", "Txn", });
-    internal_static_protos_Produce_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_protos_Produce_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_Produce_descriptor,
+        internal_static_protos_NewNegotiation_descriptor,
         new java.lang.String[] { "ProductName", "ProducerName", "MinimumAmount", "MaximumAmount", "MinimumUnitaryPrice", "NegotiationPeriod", });
-    internal_static_protos_Import_descriptor =
+    internal_static_protos_NegotiationOver_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_protos_NegotiationOver_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protos_NegotiationOver_descriptor,
+        new java.lang.String[] { "ProductName", "ProducerName", });
+    internal_static_protos_GetProducerInfo_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_protos_Import_fieldAccessorTable = new
+    internal_static_protos_GetProducerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_Import_descriptor,
-        new java.lang.String[] { "Username", "ProductName", "ProducerName", "Quantity", "UnitaryPrice", });
-    internal_static_protos_SaleInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_protos_SaleInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_SaleInfo_descriptor,
-        new java.lang.String[] { "Username", "Quantity", "Price", });
-    internal_static_protos_DealerTimeout_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_protos_DealerTimeout_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_protos_DealerTimeout_descriptor,
-        new java.lang.String[] { "Success", "ProducerName", "ProductName", "Sales", });
+        internal_static_protos_GetProducerInfo_descriptor,
+        new java.lang.String[] { "ProducerName", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
