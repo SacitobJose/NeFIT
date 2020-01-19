@@ -6,15 +6,13 @@
 -import(client, [client/1]).
 -import(negotiator, [negotiator/3]).
 
--include("protos.hrl").
-
 % Inicialização do servidor
 server() ->
     % Inicia o handler para os users, o loginHandler para controlo de acessos de clientes e o negotiatorsHandler para o tratar dos negociadores
     register(server, self()),
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
-    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
+    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, 0}, {reuseaddr, true}]),
     negotiatorsConnect(LSock, [], 1),
     io:format("Server started~n", []),
     acceptor(LSock).
@@ -41,6 +39,7 @@ negotiatorsConnect(LSock, Negotiators, N) ->
 negotiators(Map, Negotiators, N) ->
     receive
         {new_producer, Product, Username, PID, Data} ->
+            io:format("~p~n", [Data]),
             case maps:find(Product, Map) of
                 {ok, Value} ->
                     Value ! {new_producer, Username, PID, Data};

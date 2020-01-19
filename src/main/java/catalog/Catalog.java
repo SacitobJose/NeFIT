@@ -20,6 +20,6 @@ public class Catalog {
         poller.start();
 
         // Start the DropWizard server
-
+        
     }
 }

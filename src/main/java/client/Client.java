@@ -110,7 +110,7 @@ class ClientToSocket extends Thread {
             switch (escolha) {
             case 1:
                 StringBuilder transaction = new StringBuilder();
-                transaction.append("Transaction:");
+                transaction.append("Transaction_");
 
                 Transaction.Builder txn = Transaction.newBuilder();
                 Import.Builder prod = Import.newBuilder();
@@ -122,7 +122,7 @@ class ClientToSocket extends Thread {
                 prod.setProductName(productName);
                 transaction.append(productName);
 
-                transaction.append(":");
+                transaction.append("_");
 
                 System.out.print("Nome de produtor: ");
                 System.out.flush();
@@ -201,7 +201,7 @@ class ClientToSocket extends Thread {
             switch (escolha) {
             case 1:
                 StringBuilder transaction = new StringBuilder();
-                transaction.append("Transaction:");
+                transaction.append("Transaction_");
 
                 Transaction.Builder txn = Transaction.newBuilder();
                 Produce.Builder prod = Produce.newBuilder();
@@ -212,7 +212,7 @@ class ClientToSocket extends Thread {
                 prod.setProductName(productName);
                 transaction.append(productName);
 
-                transaction.append(":");
+                transaction.append("_");
 
                 prod.setProducerName(username);
 
@@ -258,7 +258,7 @@ class ClientToSocket extends Thread {
             String role;
             while (true) {
                 StringBuilder auth = new StringBuilder();
-                auth.append("Authentication:");
+                auth.append("Authentication_");
 
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 System.out.flush();
@@ -272,7 +272,7 @@ class ClientToSocket extends Thread {
                     continue;
                 }
 
-                auth.append(":");
+                auth.append("_");
 
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 System.out.flush();
@@ -286,14 +286,14 @@ class ClientToSocket extends Thread {
                     continue;
                 }
 
-                auth.append(":");
+                auth.append("_");
 
                 System.out.print("Nome de utilizador: ");
                 System.out.flush();
                 String username = stdin.readLine();
                 auth.append(username);
 
-                auth.append(":");
+                auth.append("_");
 
                 System.out.print("Palavra-passe: ");
                 System.out.flush();
@@ -305,7 +305,7 @@ class ClientToSocket extends Thread {
 
                 // Receive authentication confirmation
                 String response = this.is.readLine();
-                String[] res = response.split(":");
+                String[] res = response.split("_");
                 if (res[1].equals("0")) {
                     if (method.equals("l"))
                         System.out.println("O nome de utilizador não existe ou a palavra passe está incorreta.");
@@ -370,7 +370,7 @@ class SocketToClient extends Thread {
                         this.canWrite.wait();
                 }
 
-                String[] parts = line.split(":");
+                String[] parts = line.split("_");
                 if (parts[0].equals("Import")) {
                     String producerName = parts[1];
                     String productName = parts[2];

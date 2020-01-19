@@ -4,12 +4,10 @@
 
 -export([importer/2]).
 
--include("protos.hrl").
-
 importer(Sock, Username) ->
     receive 
         {tcp, _, Data} ->
-            Message = string:split(string:trim(Data), ":", all),
+            Message = string:split(string:trim(Data), "_", all),
             Product = lists:nth(2, Message),
             Protobuf = lists:nth(3, Message),
             negotiatorsHandler ! {new_importer, Product, Username, self(), Protobuf};

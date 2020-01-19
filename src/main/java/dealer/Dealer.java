@@ -47,11 +47,12 @@ public class Dealer {
                 String line = is.readLine();
                 System.out.println("Li do socket, nova mensagem\n");
 
-                String[] parts = line.split(":");
-                System.out.printf("%s %s\n", parts[0], parts[1]);
+                String[] parts = line.split("_");
+                String aaa = parts[1].substring(3, parts[1].length()-3);
+                System.out.printf("%s %s\n", parts[0], aaa);
 
-                Transaction transaction = Transaction.parseFrom(parts[1].getBytes());
-                System.out.println("Tenho uma transaction\n");
+
+                Transaction transaction = Transaction.parseFrom(aaa.getBytes());
 
                 switch (transaction.getTxnCase()) {
                 case PRODUCE:
@@ -175,19 +176,19 @@ class TimeoutThread extends Thread {
 
             // Send the response to server
             StringBuilder timeout = new StringBuilder();
-            timeout.append("DealerTimeout:");
+            timeout.append("DealerTimeout_");
 
             DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
             boolean success = buyers.size() > 0;
             dealerTimeout.setSuccess(success);
             timeout.append(String.valueOf(success));
 
-            timeout.append(":");
+            timeout.append("_");
 
             dealerTimeout.setProducerName(this.producerName);
             timeout.append(this.producerName);
 
-            timeout.append(":");
+            timeout.append("_");
 
             dealerTimeout.setProductName(this.productName);
             timeout.append(this.productName);
@@ -195,7 +196,7 @@ class TimeoutThread extends Thread {
             for (int index : buyers) {
                 Import import1 = importers.get(index);
 
-                timeout.append(":");
+                timeout.append("_");
                 String username = import1.getProducerName();
                 SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
                 saleInfo.setUsername(username);
@@ -204,11 +205,11 @@ class TimeoutThread extends Thread {
 
                 dealerTimeout.addSales(saleInfo.build());
                 timeout.append(username);
-                timeout.append(":");
+                timeout.append("_");
                 timeout.append(saleInfo.build());
             }
 
-            timeout.append(":");
+            timeout.append("_");
             timeout.append(dealerTimeout.build());
 
             this.os.println(timeout.toString());
