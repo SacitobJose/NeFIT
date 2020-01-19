@@ -5,14 +5,29 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
+
+import java.util.Comparator;
 
 import protos.Protos.DealerTimeout;
 import protos.Protos.Import;
 import protos.Protos.Produce;
 import protos.Protos.SaleInfo;
 import protos.Protos.Transaction;
+
+/**
+ * Comparator for sorting the importers by (quantity * unitaryPrice)
+ */
+class ImportComparator implements Comparator<Import> {
+    public int compare(Import i1, Import i2) {
+        long total1 = i1.getQuantity() * i1.getUnitaryPrice();
+        long total2 = i2.getQuantity() * i2.getUnitaryPrice();
+
+        return total1 > total2 ? -1 : (total1 < total2 ? 1 : 0);
+    }
+}
 
 /**
  * Dealer
@@ -39,8 +54,9 @@ public class Dealer {
                     negotiations.put(new SimpleEntry<>(produce.getProducerName(), produce.getProductName()),
                             new ArrayList<>());
 
-                    Thread timeout = new TimeoutThread(produce.getNegotiationPeriod(), negotiations,
-                            produce.getProducerName(), produce.getProductName(), os);
+                    Thread timeout = new TimeoutThread(negotiations, produce.getProductName(),
+                            produce.getProducerName(), produce.getMinimumAmount(), produce.getMaximumAmount(),
+                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), os);
                     timeout.start();
 
                     break;
@@ -73,16 +89,23 @@ public class Dealer {
  */
 class TimeoutThread extends Thread {
     private HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations;
-    private String producerName;
     private String productName;
+    private String producerName;
+    private long minimumAmount;
+    private long maximumAmount;
+    private long minimumUnitaryPrice;
     private long time;
     private PrintWriter os;
 
-    public TimeoutThread(long sec, HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations,
-            String producerName, String productName, PrintWriter os) {
+    public TimeoutThread(HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String productName,
+            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec,
+            PrintWriter os) {
         this.negotiations = negotiations;
-        this.producerName = producerName;
         this.productName = productName;
+        this.producerName = producerName;
+        this.minimumAmount = minimumAmount;
+        this.maximumAmount = maximumAmount;
+        this.minimumUnitaryPrice = minimumUnitaryPrice;
         this.time = sec;
         this.os = os;
     }
@@ -96,16 +119,9 @@ class TimeoutThread extends Thread {
 
             ///////////// CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS //////////////
 
-            int index = 0; // Chosen Import index in "importers"
-            long biggestPriceTotal = 0;
-            for (int i = 0; i < importers.size(); i++) {
-                long total = importers.get(i).getQuantity() * importers.get(i).getUnitaryPrice();
-                if (total > biggestPriceTotal) {
-                    biggestPriceTotal = total;
-                    index = i;
-                }
-            }
-            Import chosenOne = importers.get(index);
+            // Sorted "importers" by declared comparator
+            ImportComparator ic = new ImportComparator();
+            importers.sort(ic);
 
             ///////////// ---------------------------------------------- //////////////
 
