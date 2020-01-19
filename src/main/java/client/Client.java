@@ -90,7 +90,8 @@ class ClientToSocket extends Thread {
             main.append("1 - Oferta de encomenda\n");
             main.append("2 - Subscrever notificações\n");
             main.append("3 - Cancelar notificações\n");
-            main.append("4 - Exit\n");
+            main.append("4 - Atualizações\n");
+            main.append("5 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -98,7 +99,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 4);
+            } while (escolha < 1 || escolha > 5);
 
             switch (escolha) {
             case 1:
@@ -132,6 +133,8 @@ class ClientToSocket extends Thread {
                 txn.setImport(prod.build());
 
                 transaction.append(txn.build());
+     
+                waitConfirmation();
                 break;
             case 2: {
                 System.out.print("Fabricante: ");
@@ -150,12 +153,13 @@ class ClientToSocket extends Thread {
                 break;
             }
             case 4:
+                break;
+            case 5:
                 clearTerminal();
                 context.close();
                 System.exit(1);
                 break;
             }
-            waitConfirmation();
         }
     }
 
@@ -170,7 +174,8 @@ class ClientToSocket extends Thread {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
             main.append("1 - Oferta de produção\n");
-            main.append("2 - Exit\n");
+            main.append("2 - Atualizações\n");
+            main.append("3 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -178,7 +183,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 2);
+            } while (escolha < 1 || escolha > 3);
 
             switch (escolha) {
             case 1:
@@ -219,13 +224,16 @@ class ClientToSocket extends Thread {
                 transaction.append(txn.build());
 
                 this.os.println(transaction.toString());
+
+                waitConfirmation();
                 break;
             case 2:
+                break;
+            case 3:
                 clearTerminal();
                 System.exit(1);
                 break;
             }
-            waitConfirmation();
         }
     }
 

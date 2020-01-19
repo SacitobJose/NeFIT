@@ -106,6 +106,34 @@
 	\subsubsection{\texttt{negotiator.erl}}
 	Existirá um ator deste tipo para cada negociador (quantidade pré-definida).
 
+	\subsection{Cliente}
+	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em Java. Para além de todas as classes nativas, foram ainda usadas funcionalidades das bibliotecas JeroMQ, uma implementação em Java da ferramenta ZeroMQ para envio/receção de mensagens assíncronas, e Protocol Buffers, um formato de serialização de dados desenvolvido pela Google. Posto isto, passaremos ao detalhe do funcionamento do cliente.
+	
+	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma thread adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra thread, responsável por receber updates do catálogo quanto a produtores que o utilizador subscreveu.
+	
+	De seguida, após toda esta configuração inicial, é mostrado um dos seguintes menus com as operações indicadas:
+	
+	Importador:
+	\begin{itemize}
+		\item Oferta de encomenda;
+		\item Subscrever notificações;
+		\item Cancelar notificações.
+		\item Atualizações.
+	\end{itemize}
+
+	Fornecedor:
+	\begin{itemize}
+		\item Oferta de produção;
+		\item Atualizações.
+	\end{itemize}
+
+	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor, bastando indicar o nome desse produtor.
+	
+	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos).
+	
+	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, tendo em conta que o utilizador não está a realizar nenhuma operação ou quando este clica na opção "Atualizações".
+	
+	Em ambos os casos, é dada a opção ao utilizador para sair da interface.
 \chapter{Conclusão}
 
 \chapter{Webgrafia}
