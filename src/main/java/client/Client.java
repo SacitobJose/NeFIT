@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
@@ -35,6 +36,10 @@ class ClientToSocket extends Thread {
     String username;
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
+    AtomicBoolean wantPrintSubscriptions = new AtomicBoolean(false);
+    AtomicBoolean wantPrintUpdates = new AtomicBoolean(false);
+    AtomicBoolean canPrint = new AtomicBoolean(false);
+
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
         is = new BufferedReader(new InputStreamReader(cli.getInputStream()));
@@ -63,15 +68,23 @@ class ClientToSocket extends Thread {
         }
     }
 
-    private void importerMenu() throws IOException {
+    private void importerMenu() throws Exception {
         ZContext context = new ZContext();
         ZMQ.Socket subSocket = context.createSocket(SocketType.SUB);
         subSocket.connect("tcp://localhost:7777");
 
-        Thread s = new Subscriptions(subSocket);
+        Thread s = new Subscriptions(subSocket, wantPrintSubscriptions, canPrint, stdin);
         s.start();
 
         while (true) {
+            this.canPrint.set(true);
+            this.canPrint.notify();
+            while (wantPrintSubscriptions.get())
+                wantPrintSubscriptions.wait();
+            while (wantPrintUpdates.get())
+                wantPrintUpdates.wait();
+            this.canPrint.set(false);
+
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
             main.append("1 - Oferta de encomenda\n");
@@ -146,8 +159,14 @@ class ClientToSocket extends Thread {
         }
     }
 
-    private void producerMenu() throws IOException {
+    private void producerMenu() throws Exception {
         while (true) {
+            this.canPrint.set(true);
+            this.canPrint.notify();
+            while (wantPrintUpdates.get())
+                wantPrintUpdates.wait();
+            this.canPrint.set(false);
+
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
             main.append("1 - Oferta de produção\n");
@@ -212,8 +231,9 @@ class ClientToSocket extends Thread {
 
     public void run() {
         try {
-            String role;
+            clearTerminal();
 
+            String role;
             while (true) {
                 StringBuilder auth = new StringBuilder();
                 auth.append("Authentication:");
@@ -282,7 +302,7 @@ class ClientToSocket extends Thread {
             waitConfirmation();
 
             // Iniciar thread para ler do socket para o terminal
-            Thread stc = new SocketToClient(is);
+            Thread stc = new SocketToClient(is, wantPrintUpdates, canPrint, stdin);
             stc.start();
 
             if (role.equals("f"))
@@ -297,15 +317,33 @@ class ClientToSocket extends Thread {
 
 class SocketToClient extends Thread {
     BufferedReader is;
+    AtomicBoolean canWrite;
+    AtomicBoolean wantPrintUpdates;
+    BufferedReader stdin;
 
-    public SocketToClient(BufferedReader is) throws IOException {
+    public SocketToClient(BufferedReader is, AtomicBoolean wantPrintUpdates, AtomicBoolean canWrite, BufferedReader stdin)
+            throws IOException {
         this.is = is;
+        this.canWrite = canWrite;
+        this.wantPrintUpdates = wantPrintUpdates;
+        this.stdin = stdin;
+    }
+
+    private void waitConfirmation() throws IOException {
+        System.out.print("\nClique no ENTER para continuar...");
+        System.out.flush();
+        this.stdin.readLine();
     }
 
     public void run() {
         try {
             while (true) {
                 String line = this.is.readLine();
+
+                this.wantPrintUpdates.set(true);
+                while (!this.canWrite.get())
+                    this.canWrite.wait();
+
                 String[] parts = line.split(":");
                 if (parts[0].equals("Import")) {
                     String producerName = parts[1];
@@ -326,30 +364,64 @@ class SocketToClient extends Thread {
                         System.out.println("\tProduto: " + productName);
                         System.out.println("\tCompradores:");
                         timeout.getSalesList().forEach((sale) -> {
-                            System.out.println("\t\t" + sale.getUsername() + ": " + Long.toString(sale.getQuantity()) + "x a " + Long.toString(sale.getPrice()) + "/unidade");
+                            System.out.println("\t\t" + sale.getUsername() + ": " + Long.toString(sale.getQuantity())
+                                    + "x a " + Long.toString(sale.getPrice()) + "/unidade");
                         });
                     } else {
                         System.out.println("Venda de " + productName + "recusada");
                     }
                 }
+
+                this.waitConfirmation();
+
+                this.wantPrintUpdates.set(false);
+                this.wantPrintUpdates.notify();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(-1);
         }
     }
 }
 
 class Subscriptions extends Thread {
     ZMQ.Socket subSocket;
+    AtomicBoolean wantWriteSubscriptions;
+    AtomicBoolean canWrite;
+    BufferedReader stdin;
 
-    public Subscriptions(ZMQ.Socket subSocket) throws IOException {
+    public Subscriptions(ZMQ.Socket subSocket, AtomicBoolean wantWriteSubscriptions, AtomicBoolean canWrite, BufferedReader stdin)
+            throws IOException {
         this.subSocket = subSocket;
+        this.wantWriteSubscriptions = wantWriteSubscriptions;
+        this.canWrite = canWrite;
+        this.stdin = stdin;
+    }
+
+    private void waitConfirmation() throws IOException {
+        System.out.print("\nClique no ENTER para continuar...");
+        System.out.flush();
+        this.stdin.readLine();
     }
 
     public void run() {
-        while (true) {
-            byte[] b = this.subSocket.recv();
-            System.out.println(new String(b));
+        try {
+            while (true) {
+                byte[] b = this.subSocket.recv();
+                this.wantWriteSubscriptions.set(true);
+                while (!this.canWrite.get()) {
+                    this.canWrite.wait();
+                }
+
+                System.out.println(new String(b));
+
+                this.waitConfirmation();
+
+                this.wantWriteSubscriptions.set(false);
+                this.wantWriteSubscriptions.notify();
+            }
+        } catch (Exception e) {
+            System.exit(-1);
         }
     }
 }
