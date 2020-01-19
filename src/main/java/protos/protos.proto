@@ -12,17 +12,19 @@ message Transaction {
 
 message Produce {
   required string productName = 1;
-  required int64 minimumAmount = 2;
-  required int64 maximumAmount = 3;
-  required int64 minimumUnitaryPrice = 4;
-  required int64 negotiationPeriod = 5;
+  required string producerName = 2;
+  required int64 minimumAmount = 3;
+  required int64 maximumAmount = 4;
+  required int64 minimumUnitaryPrice = 5;
+  required int64 negotiationPeriod = 6;
 }
 
 message Import {
-  required string productName = 1;
-  required string producerName = 2;
-  required int64 quantity = 3;
-  required int64 unitaryPrice = 4;
+  required string username = 1;
+  required string productName = 2;
+  required string producerName = 3;
+  required int64 quantity = 4;
+  required int64 unitaryPrice = 5;
 }
 
 message SaleInfo {

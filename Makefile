@@ -12,3 +12,6 @@ runClient:
 
 runDealer:
 	mvn exec:java -Dexec.mainClass="dealer.Dealer"
+
+runCatalog:
+	mvn exec:java -Dexec.mainClass="catalog.Catalog"

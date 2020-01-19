@@ -6,22 +6,22 @@ import io.dropwizard.setup.Environment;
 
 import catalog.health.TemplateHealthCheck;
 
-public class CompanyApplication extends Application<CompanyConfiguration> {
+public class CatalogApplication extends Application<CatalogConfiguration> {
     public static void main(String[] args) throws Exception {
-        new CompanyApplication().run(args);
+        new CatalogApplication().run(args);
     }
 
     @Override
-    public String getName() { return "Company"; }
+    public String getName() { return "Catalog"; }
 
     @Override
-    public void initialize(Bootstrap<CompanyConfiguration> bootstrap) { }
+    public void initialize(Bootstrap<CatalogConfiguration> bootstrap) { }
 
     @Override
-    public void run(CompanyConfiguration configuration,
+    public void run(CatalogConfiguration configuration,
                     Environment environment) {
         environment.jersey().register(
-            new CompanyConfiguration(configuration.template, configuration.defaultName));
+            new CatalogConfiguration(configuration.template, configuration.defaultName));
         environment.healthChecks().register("template",
             new TemplateHealthCheck(configuration.template));
     }

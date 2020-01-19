@@ -87,8 +87,8 @@
 
 	\section{Implementação}
 	
-	\subsection{Servidor \textit{front-end}}
-	A implementação do servidor foi feita em Erlang. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
+	\subsection{Servidor}
+	A implementação do servidor foi feita em \textit{Erlang}. O servidor divide-se em diversos ficheiros, cada um dos quais corresponde a um tipo de ator, que se dividem em seis tipos:
 	\begin{itemize}
 		\item Servidor;
 		\item \texttt{loginHandler};
@@ -105,8 +105,8 @@
 	\subsubsection{\texttt{loginHandler}}
 	Este ator é registado e criado pelo anterior. É o responsável pela autenticação e registo dos clientes, guardando todas as informações nesse sentido.
 
-	\subsubsection{Clientes}
-	Ator criado a cada nova conexão. Espera a receção de uma comunicação TCP com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
+	\subsubsection{\texttt{client.erl}}
+	Ator criado a cada nova conexão. Espera a receção de uma comunicação \textit{TCP} com a autenticação do cliente e usando o \texttt{loginHandler} para confirmar a sua identificação.
 	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
 
 	\subsubsection{Importadores e Produtores}
@@ -131,6 +131,50 @@
 	\subsection{Catálogo}
 
 
+	\subsection{Cliente}
+	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades das bibliotecas \textit{ZeroMQ}, uma implementação em \textit{Java} da ferramenta \textit{ZeroMQ} para envio/receção de mensagens assíncronas, e \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google}. Posto isto, passaremos ao detalhe do funcionamento do cliente.
+	
+	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a produtores que o utilizador subscreveu.
+	
+	De seguida, após toda esta configuração inicial, é mostrado um dos seguintes menus com as operações indicadas:
+	
+	\begin{enumerate}
+		\item \textbf{Importador}:
+		\begin{itemize}
+			\item Oferta de encomenda;
+			\item Subscrever notificações;
+			\item Cancelar notificações.
+			\item Atualizações.
+		\end{itemize}
+
+		\item \textbf{Fornecedor}:
+		\begin{itemize}
+			\item Oferta de produção;
+			\item Atualizações.
+		\end{itemize}
+	\end{enumerate}
+
+	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor, bastando indicar o nome desse produtor.
+	
+	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos).
+	
+	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, tendo em conta que o utilizador não está a realizar nenhuma operação ou quando este clica na opção "Atualizações".
+	
+	Em ambos os casos, é dada a opção ao utilizador para sair da interface.
+
+	\subsection{Negociador}
+	No que toca ao desenvolvimento do negociador, este foi implementado em \textit{Java} com recurso à linguagem neutra \textit{Protocol Buffers} para efetuar a serialização de dados envolvidos nos processos de comunicação. 
+	
+	Por forma a satisfazer os requisitos impostos, foram declaradas duas variáveis relativas às negociações em curso no sistema e, ainda, aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
+	De forma a instanciar o negociador em causa, foi declarado um \textit{socket} que irá comunicar com o servidor, processando vários pedidos em simultâneo.
+	
+	O negociador presente neste protótipo, ao receber pedidos do servidor, consegue processar se o mesmo corresponde a um pedido proveniente de um produtor ou de um importador.
+	Caso este seja de um produtor, é aberto um período limitado de negociação para determinar quais os importadores que serão escolhidos para proceder à produção de um determinado produto. O critério adotado nestas situações 
+	é escolher qual o importador que possui o maior valor total de encomenda para o artigo em questão.
+	Por outro lado, se o pedido for de um importador, é verificado se o mesmo está associado à produção de um determinado tipo de artigo. Em caso afirmativo, é atualizada, com essa informação, a variável relativa às negociações
+	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
+
+	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
 \chapter{Conclusão}
 
 \chapter{Webgrafia}
