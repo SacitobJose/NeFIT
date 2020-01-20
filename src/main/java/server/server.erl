@@ -12,10 +12,9 @@ server() ->
     register(server, self()),
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
-    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, 0}, {reuseaddr, true}]),
-    negotiatorsConnect(LSock, [], 1),
+    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
     io:format("Server started~n", []),
-    acceptor(LSock).
+    negotiatorsConnect(LSock, [], 1).
 
 % Ligações ao servidor
 acceptor(LSock) ->
@@ -26,35 +25,38 @@ acceptor(LSock) ->
     % Nova conexão
     client(Sock).
 
-negotiatorsConnect(_, Negotiators, 0) ->
-    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, length(Negotiators)) end));
+negotiatorsConnect(LSock, Negotiators, 0) ->
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 1) end)),
+    acceptor(LSock);
 
 negotiatorsConnect(LSock, Negotiators, N) ->
     % estabelecer conexão ao socket do negociador
     {ok, Sock} = gen_tcp:accept(LSock),
     io:format("Negotiator connected~n", []),
-    PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
-    negotiatorsConnect(LSock, Negotiators ++ [PID], N-1).
+    PID = self(),
+    spawn(fun() -> negotiatorsConnect(LSock, Negotiators ++ [PID], N-1) end),
+    negotiator(Sock, #{}, #{}).
 
 negotiators(Map, Negotiators, N) ->
     receive
-        {new_producer, Product, Username, PID, Data} ->
-            io:format("~p~n", [Data]),
+        {new_producer, Username, PID, Product, Data} ->
             case maps:find(Product, Map) of
                 {ok, Value} ->
-                    Value ! {new_producer, Username, PID, Data};
+                    Value ! {new_producer, Username, PID, Product, Data},
+                    negotiators(Map, Negotiators, N);
                 _ ->
-                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map),
-                    lists:nth(N, Negotiators) ! {new_producer, Username, PID, Data},
+                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map), 
+                    lists:nth(N, Negotiators) ! {new_producer, Username, PID, Product, Data},
                     negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end;
-        {new_importer, Product, Username, PID, Data} ->
+        {new_importer, Username, PID, Product, Data} ->
             case maps:find(Product, Map) of
                 {ok, Value} ->
-                    Value ! {new_importer, Username, PID, Data};
+                    Value ! {new_importer, Username, PID, Product, Data},
+                    negotiators(Map, Negotiators, N);
                 _ ->
                     NewMap = maps:put(Product, lists:nth(N, Negotiators), Map),
-                    lists:nth(N, Negotiators) ! {new_importer, Username, PID, Data},
+                    lists:nth(N, Negotiators) ! {new_importer, Username, PID, Product, Data},
                     negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end
     end.

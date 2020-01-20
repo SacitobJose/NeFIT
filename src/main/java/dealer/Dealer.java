@@ -8,13 +8,56 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
+import protos.Protos.POSTNegotiation;
+import protos.Protos.POSTNegotiationOver;
+import protos.Protos.CatalogRequest;
+
 import java.util.Comparator;
 
-import protos.Protos.DealerTimeout;
-import protos.Protos.Import;
-import protos.Protos.Produce;
-import protos.Protos.SaleInfo;
-import protos.Protos.Transaction;
+class Import {
+    public String username;
+    public String productName;
+    public String producerName;
+    public int quantity;
+    public int unitaryPrice;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getUnitaryPrice() {
+        return unitaryPrice;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getProducerName() {
+        return producerName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public Import(String username, String productName, String producerName, int quantity, int unitaryPrice) {
+        this.username = username;
+        this.productName = productName;
+        this.producerName = producerName;
+        this.quantity = quantity;
+        this.unitaryPrice = unitaryPrice;
+    }
+
+    public boolean equals(Object o) {
+        Import i = (Import) o;
+        return this.username.equals(i.getUsername())
+                && this.productName.equals(i.getProductName())
+                && this.producerName.equals(i.getProducerName())
+                && this.quantity == i.getQuantity()
+                && this.unitaryPrice == i.getUnitaryPrice();
+    }
+}
 
 /**
  * Comparator for sorting the importers by (quantity * unitaryPrice)
@@ -39,63 +82,62 @@ public class Dealer {
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("localhost", 1234);
-            System.out.println("Conectado!");
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter os = new PrintWriter(socket.getOutputStream());
 
             while (true) {
                 String line = is.readLine();
-                System.out.println("Li do socket, nova mensagem\n");
-
                 String[] parts = line.split("_");
-                String aaa = parts[1].substring(3, parts[1].length()-3);
-                System.out.printf("%s %s\n", parts[0], aaa);
-
-
-                Transaction transaction = Transaction.parseFrom(aaa.getBytes());
-
-                switch (transaction.getTxnCase()) {
-                case PRODUCE:
-                    System.out.println("Nova oferta de produtor\n");
+                if (parts[0].equals("Produce")) {
                     // Produce
-                    Produce produce = transaction.getProduce();
-                    String producer = produce.getProducerName();
-                    String product = produce.getProductName();
-                    negotiations.put(new SimpleEntry<>(producer, product), new ArrayList<>());
+                    String producer = parts[1];
+                    String product = parts[2];
+                    int minimumQuantity = Integer.parseInt(parts[3]);
+                    int maximumQuantity = Integer.parseInt(parts[4]);
+                    int minimumPrice = Integer.parseInt(parts[5]);
+                    int negotiationPeriod = Integer.parseInt(parts[6]);
+                    ArrayList<Import> arr = new ArrayList<>();
+                    negotiations.put(new SimpleEntry<>(producer, product), arr);
 
                     for (Import i : unmatchImports) {
-                        ArrayList<Import> importers = new ArrayList<>();
                         String producerI = i.getProducerName();
                         String productI = i.getProductName();
 
                         if (producerI.equals(producer) && productI.equals(product)) {
-                            importers.add(i);
+                            arr.add(i);
+                            unmatchImports.remove(i);
                         }
-
-                        negotiations.put(new SimpleEntry<>(producer, product), importers);
                     }
 
-                    Thread timeout = new TimeoutThread(negotiations, produce.getProductName(),
-                            produce.getProducerName(), produce.getMinimumAmount(), produce.getMaximumAmount(),
-                            produce.getMinimumUnitaryPrice(), produce.getNegotiationPeriod(), os);
+                    Thread timeout = new TimeoutThread(negotiations, unmatchImports, product, producer, minimumQuantity,
+                            maximumQuantity, minimumPrice, negotiationPeriod, os);
                     timeout.start();
 
-                    break;
-                case IMPORT:
+                    POSTNegotiation.Builder pn = POSTNegotiation.newBuilder();
+                    pn.setProducerName(producer);
+                    pn.setProductName(product);
+                    pn.setMinimumAmount(minimumQuantity);
+                    pn.setMaximumAmount(maximumQuantity);
+                    pn.setMinimumUnitaryPrice(minimumPrice);
+                    pn.setNegotiationPeriod(negotiationPeriod);
+
+                    Socket catalog = new Socket("localhost", 9999);
+                    CatalogRequest.Builder cr = CatalogRequest.newBuilder();
+                    cr.setNn(pn.build());
+                    cr.build().writeDelimitedTo(catalog.getOutputStream());
+                } else {
                     // Import
-                    Import imp = transaction.getImport();
+                    String importer = parts[1];
+                    String product = parts[2];
+                    String producer = parts[3];
+                    int quantity = Integer.parseInt(parts[4]);
+                    int pricePerProduct = Integer.parseInt(parts[5]);
 
-                    ArrayList<Import> orders = negotiations
-                            .get(new SimpleEntry<>(imp.getProducerName(), imp.getProductName()));
+                    ArrayList<Import> orders = negotiations.get(new SimpleEntry<>(producer, product));
                     if (orders != null)
-                        orders.add(imp);
+                        orders.add(new Import(importer, product, producer, quantity, pricePerProduct));
                     else
-                        unmatchImports.add(imp);
-
-                    break;
-                default:
-                    System.out.println("Não entrei no case !!!");
-                    break;
+                        unmatchImports.add(new Import(importer, product, producer, quantity, pricePerProduct));
                 }
             }
         } catch (Exception e) {
@@ -109,6 +151,7 @@ public class Dealer {
  */
 class TimeoutThread extends Thread {
     private HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations;
+    public ArrayList<Import> unmatchImports = new ArrayList<>();
     private String productName;
     private String producerName;
     private long minimumAmount;
@@ -117,9 +160,9 @@ class TimeoutThread extends Thread {
     private long time;
     private PrintWriter os;
 
-    public TimeoutThread(HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations, String productName,
-            String producerName, long minimumAmount, long maximumAmount, long minimumUnitaryPrice, long sec,
-            PrintWriter os) {
+    public TimeoutThread(HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations,
+            ArrayList<Import> unmatchImports, String productName, String producerName, long minimumAmount,
+            long maximumAmount, long minimumUnitaryPrice, long sec, PrintWriter os) {
         this.negotiations = negotiations;
         this.productName = productName;
         this.producerName = producerName;
@@ -128,13 +171,20 @@ class TimeoutThread extends Thread {
         this.minimumUnitaryPrice = minimumUnitaryPrice;
         this.time = sec;
         this.os = os;
+        this.unmatchImports = unmatchImports;
     }
 
     public void run() {
         try {
             Thread.sleep(this.time * 1000);
 
-            System.out.println("Timeout\n");
+            Socket catalog = new Socket("localhost", 9999);
+            POSTNegotiationOver.Builder no = POSTNegotiationOver.newBuilder();
+            no.setProductName(this.productName);
+            no.setProducerName(this.producerName);
+            CatalogRequest.Builder cr = CatalogRequest.newBuilder();
+            cr.setNo(no);
+            cr.build().writeDelimitedTo(catalog.getOutputStream());
 
             // Time is up, wrap up the sale
             ArrayList<Import> importers = this.negotiations.get(new SimpleEntry<>(this.producerName, this.productName));
@@ -147,29 +197,20 @@ class TimeoutThread extends Thread {
 
             // Get product quantity
             long total = 0;
-            ArrayList<Integer> buyers = new ArrayList<>();
+            ArrayList<Import> buyers = new ArrayList<>();
             for (Import imp : importers) {
-                if (imp.getQuantity() + total < this.maximumAmount
+                System.out.println(imp.getUsername());
+                if (imp.getQuantity() + total <= this.maximumAmount
                         && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
                     total += imp.getQuantity();
-                    buyers.add(importers.indexOf(imp));
+                    buyers.add(imp);
                 } else if (imp.getUnitaryPrice() < this.minimumUnitaryPrice) {
                     break;
                 }
             }
 
-            // Kill
             if (total < this.minimumAmount) {
                 buyers.clear();
-            }
-
-            // Remove data from importers selected
-            for (int index : buyers) {
-                importers.remove(index);
-            }
-
-            synchronized (negotiations) {
-                negotiations.put(new SimpleEntry<>(this.producerName, this.productName), importers);
             }
 
             /* -------------------------------------------------------------------- */
@@ -178,46 +219,40 @@ class TimeoutThread extends Thread {
             StringBuilder timeout = new StringBuilder();
             timeout.append("DealerTimeout_");
 
-            DealerTimeout.Builder dealerTimeout = DealerTimeout.newBuilder();
-            boolean success = buyers.size() > 0;
-            dealerTimeout.setSuccess(success);
-            timeout.append(String.valueOf(success));
-
+            timeout.append(String.valueOf(buyers.size() > 0));
             timeout.append("_");
 
-            dealerTimeout.setProducerName(this.producerName);
             timeout.append(this.producerName);
-
             timeout.append("_");
 
-            dealerTimeout.setProductName(this.productName);
             timeout.append(this.productName);
 
-            for (int index : buyers) {
-                Import import1 = importers.get(index);
+            for (Import import1 : buyers) {
+                importers.remove(import1);
 
                 timeout.append("_");
-                String username = import1.getProducerName();
-                SaleInfo.Builder saleInfo = SaleInfo.newBuilder();
-                saleInfo.setUsername(username);
-                saleInfo.setQuantity(import1.getQuantity());
-                saleInfo.setPrice(import1.getUnitaryPrice());
 
-                dealerTimeout.addSales(saleInfo.build());
-                timeout.append(username);
+                timeout.append(import1.getUsername());
                 timeout.append("_");
-                timeout.append(saleInfo.build());
+
+                timeout.append(import1.getQuantity());
+                timeout.append("_");
+
+                timeout.append(import1.getUnitaryPrice());
             }
 
-            timeout.append("_");
-            timeout.append(dealerTimeout.build());
+            synchronized (negotiations) {
+                synchronized (unmatchImports) {
+                    negotiations.remove(new SimpleEntry<>(this.producerName, this.productName));
+                    unmatchImports.addAll(importers);
+                }
+            }
 
-            this.os.println(timeout.toString());
+            this.os.println(timeout);
             this.os.flush();
+        } catch (
 
-            System.out.println("Resultado enviado para o servidor\n");
-
-        } catch (Exception e) {
+        Exception e) {
             e.printStackTrace();
         }
     }

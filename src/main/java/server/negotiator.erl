@@ -3,30 +3,54 @@
 -export([negotiator/3]).
 
 negotiator(Sock, Importers, Producers) ->
-    io:format("Negotiator actor initiated~n", []),
     receive
       {new_producer, Username, PID, ProductName, Data} ->
 		gen_tcp:send(Sock, Data),
-		NewProducers = maps:put(ProductName, {Username, PID}, Producers),
-		negotiator(Sock, Importers, NewProducers);
+		case maps:find(ProductName, Producers) of
+			{ok, ProducersProduct} ->
+				NewProducersProduct = maps:put(Username, PID, ProducersProduct),
+				NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
+				negotiator(Sock, Importers, NewProducers);
+			_ ->
+				Map = maps:new(),
+				NewProducersProduct = maps:put(Username, PID, Map),
+				NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
+				negotiator(Sock, Importers, NewProducers)
+		end;
       {new_importer, Username, PID, ProductName, Data} ->
 		gen_tcp:send(Sock, Data),
-		NewImporters = maps:put(ProductName, {Username, PID}, Importers),
-		negotiator(Sock, NewImporters, Producers);
+		case maps:find(ProductName, Importers) of
+			{ok, ImportersProduct} ->
+				NewImportersProduct = maps:put(Username, PID, ImportersProduct),
+				NewImporters = maps:put(ProductName, NewImportersProduct, Importers),
+				negotiator(Sock, NewImporters, Producers);
+			_ ->
+				Map = maps:new(),
+				NewImportersProduct = maps:put(Username, PID, Map),
+				NewImporters = maps:put(ProductName, NewImportersProduct, Producers),
+				negotiator(Sock, NewImporters, Producers)
+		end;
       {tcp, _, Data} ->
+		io:format("Recebi do Dealer~n", []),
 		% decode data
 		Map_Data = decode(Data),
-		% send info to producer
-		{ok, ProducerName} = maps:find(producerName, Map_Data),
-		{ok, Producer} = maps:find(ProducerName, Producers),
-		Producer ! {timeout, negotiatorsHandler, Data},
 		% get product name
 		{ok, ProductName} = maps:find(productName, Map_Data),
-		% extract importers' usernames, send them the producer's info and remove them from their map
+		% send info to producer
+		{ok, ProducerName} = maps:find(producerName, Map_Data),
+		{ok, ProducersProduct} = maps:find(ProductName, Producers),
+		{ok, Producer} = maps:find(ProducerName, ProducersProduct),
+		Producer ! {timeout, negotiatorsHandler, io_lib:format("Producer_~s~n", [binary_to_list(string:trim(Data))])},
+		NewProducers = maps:remove(ProducerName, ProducersProduct),
+		% extract importers' usernames, send them the info needed
 		{ok, ImportersBuying} = maps:find(importers, Map_Data),
-		NewImporters = sendImporters(ImportersProduct, ImportersBuying),
-		negotiator(Sock, NewImporters,
-				maps:remove(ProducerName, Producers))
+		case maps:find(ProductName, Importers) of
+			{ok, ImportersProduct} ->
+				NewImporters = sendImporters(ImportersProduct, ImportersBuying, binary_to_list(ProducerName), binary_to_list(ProductName)),
+				negotiator(Sock, maps:put(ProductName, NewImporters, Importers), maps:put(ProductName, NewProducers, Producers));
+			_ ->
+				negotiator(Sock, Importers, maps:put(ProductName, NewProducers, Producers))
+		end
     end.
 
 % Decode what came from the negotiator
@@ -40,10 +64,13 @@ decode(Data) ->
     Importers = lists:nthtail(4, Message),
     maps:put(importers, Importers, Map3).
 
-
 % Sends producer's username and product to each importer and extract them from importers' map
-sendImporters(Importers, []) -> Importers;
-sendImporters(Importers, [H|T]) ->
-    {ok, PID} = maps:find(H, Importers),
-    PID ! {producer, negotiatorsHandler, io:format("Success~n", [])},
-    sendImporters(maps:remove(H, Importers), T).
+sendImporters(Importers, [], _, _) -> 
+	Importers;
+sendImporters(Importers, Buying, Producer, Product) ->
+	Username = lists:nth(1,Buying),
+	Quantity = binary_to_list(lists:nth(2,Buying)),
+	Price = binary_to_list(lists:nth(3,Buying)),
+    {ok, PID} = maps:find(Username, Importers),
+    PID ! {producer, negotiatorsHandler, io_lib:format("Importer_~s_~s_~s_~s~n", [Producer, Product, Quantity, Price])},
+    sendImporters(maps:remove(Username, Importers), lists:nthtail(3, Buying), Producer, Product).

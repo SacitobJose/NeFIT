@@ -62,7 +62,7 @@
 
 \chapter{Introdução} \label{intro} {
 	Neste trabalho prático é requerido o desenvolvimento de um protótipo de uma plataforma de negociação entre fabricantes e importadores de produtos. 
-	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo, de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
+	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
 	cada um deles desempenhará sempre ou o papel de fabricante ou de importador. Cada fabricante indicará a disponibilidade para produzir um determinado artigo, numa quantidade mínima e máxima, 
 	a um preço mínimo (unitário), bem como o período de tempo durante o qual os importadores poderão fazer ofertas de encomenda (período de negociação). Por sua vez, cada importador indica a quantidade 
 	e valor unitário a que está disposto a pagar por um determinado artigo de um fabricante. Os clientes autenticam-se no servidor de \textit{front-end}, o qual encaminha as suas ordens para um (de entre vários) 
@@ -86,6 +86,7 @@
 
 	Por fim, o catálogo apresenta uma interface \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
 
+	Por forma a facilitar a execução de todas as entidades envolvidas, é incluído, junto à implementação deste trabalho, um ficheiro \textbf{\textit{Makefile}} com todas as intruções necessárias para garantir o arranque correto do sistema.
 
 	\section{Implementação}
 	
@@ -128,7 +129,6 @@
 	\subsubsection{Negociadores}
 	Existirá um ator deste tipo para cada negociador (quantidade pré-definida). Um negociador é responsável por um certo número de produtos, tratando de todas as ofertas e encomendas desse produto.
 	Quando um cliente faz uma oferta ou encomenda, a mesma acaba por chegar ao ator (negociador) responsável pelo produto, fazendo-a depois chegar ao negociador propriamente dito (exterior ao servidor).
-
 
 	\subsection{Cliente}
 	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades das bibliotecas \textit{ZeroMQ}, uma implementação em \textit{Java} da ferramenta \textit{ZeroMQ} para envio/receção de mensagens assíncronas, e \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google}. Posto isto, passaremos ao detalhe do funcionamento do cliente.
@@ -175,12 +175,23 @@
 
 	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
 
-
 	\section{Catálogo}
+	Relativamente ao catálogo presente neste sistema, este é um componente onde se guarda informação útil acerca dos fabricantes e negociações em curso. Esta entidade do protótipo pode ser vista como um ficheiro de \textit{logs}, que é 
+	atualizado e acedido sempre que for necessário. Isto possibilita guardar um histórico do estado momentâneo do funcionamento da aplicação.
+
+	Sobre este componente podem ser exercidos 3 tipos distintos de operação:
+	\begin{enumerate}
+		\item \textbf{POSTNegotiation}: inserção da informação relativa à iniciação de um novo periodo de negociação;
+		\item \textbf{POSTNegotiationOver}: inserção da informação relativa à cessão da negociação em vigor;
+		\item \textbf{GETProducerInfo}: obtenção da informação relativa ao produtor.
+	\end{enumerate}
+	
 
 \chapter{Conclusão}
-
-A realização deste trabalho mostrou-nos a dificuldade de integrar diferentes linguagens e tecnologias, bem como os desafios da construção de um sistema distribuído com entidades tão diferentes.
+Após a realização deste projeto prático, foi possível identificar e especificar as entidades principais que intervêem neste protótipo, e, ainda, as suas respetivas caraterísticas. Para cada uma destas, impôs-se um desafio 
+de implementação na medida em que as linguagens de programação adotadas são heterógeneas entre si.
+Para além disso, foi possível constatar a dificuldade de integrar diferentes linguagens com diferentes paradigmas, bem como os desafios da construção de um sistema distribuído deste tipo.
+Os elementos que compõem este grupo depararam-se com algumas adversidades na utilização da linguagem neutra \textit{Protocol Buffers} para a implementação do servidor.
 
 
 \chapter{Webgrafia}

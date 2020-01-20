@@ -8,13 +8,14 @@ producer(Sock, Username) ->
     receive
       {tcp, _, Data} ->
         Message = string:split(string:trim(Data), "_", all),
-        Product = lists:nth(2, Message),
-        Protobuf = lists:nth(3, Message),
-        negotiatorsHandler ! {new_producer, Product, Username, self(), Protobuf};
+        Product = lists:nth(3, Message),
+        negotiatorsHandler ! {new_producer, Username, self(), Product, Data},
+        producer(Sock, Username);
       {tcp_closed, _} ->
         logout(Username);
       {tcp_error, _} ->
         logout(Username);
       {timeout, negotiatorsHandler, ToSend} ->
-	    gen_tcp:send(Sock, ToSend)
+	      gen_tcp:send(Sock, ToSend),
+        producer(Sock, Username)
     end.
