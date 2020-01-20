@@ -166,7 +166,7 @@ class ClientToSocket extends Thread {
 
                 GETEntitiesResponse gerp = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
                 for (String e : gerp.getEntitiesList()) {
-                    System.out.println("\tEntidades:");
+                    System.out.println("Fabricantes:");
                     System.out.println("\t" + e);
                 }
 
@@ -182,7 +182,7 @@ class ClientToSocket extends Thread {
 
                 GETEntitiesResponse geri = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
                 for (String e : geri.getEntitiesList()) {
-                    System.out.println("\tEntidades:");
+                    System.out.println("Importadores:");
                     System.out.println("\t" + e);
                 }
 

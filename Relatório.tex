@@ -84,7 +84,7 @@
 	Um negociador é responsável por intermediar as negociações entre importadores e fabricantes, fazendo corresponder ofertas e encomendas que satisfaçam os requisitos de ambas.
 	Quando uma negociação chega ao fim do seu tempo, envia as informações de fabricante, importadores e respetivas quantidades e preços para o servidor.
 
-	Por fim, o catálogo apresenta uma interface \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, desenvolvido pelo grupo em Java, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
+	Por fim, o catálogo apresenta uma interface que se assemelha a uma \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, desenvolvido pelo grupo em Java, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
 
 	Por forma a facilitar a execução de todas as entidades envolvidas, é incluído, junto à implementação deste trabalho, um ficheiro \textbf{\textit{Makefile}} com todas as intruções necessárias para garantir o arranque correto do sistema.
 
@@ -118,7 +118,7 @@
 	Ator criado a cada nova conexão. Espera a receção de uma comunicação \textit{TCP} com a autenticação do cliente e, usando o \texttt{loginHandler}, confirma a sua identificação.
 	Segue-se a criação de novo ator, importador ou fabricante, que fica responsável pela comunicação com esse cliente. O ator atual é substituído pelo novo.
 
-	\subsubsection{Importadores e Produtores}
+	\subsubsection{Importadores e Fabricantes}
 	Ator criado pelo anterior, sempre que um cliente, do tipo importador ou fabricante, se autentica com sucesso. 
 	Fica então responsável pela comunicação com o cliente, recebendo as suas encomendas/ofertas e fazendo com que as mesmas cheguem ao respetivo negociador, através do \texttt{negotiatorsHandler}.
 
@@ -133,7 +133,7 @@
 	\subsection{Cliente}
 	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades da biblioteca \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google}. Posto isto, passaremos ao detalhe do funcionamento do cliente.
 	
-	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a produtores que o utilizador subscreveu.
+	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a fabricantes que o utilizador subscreveu.
 	
 	De seguida, após toda esta configuração inicial, é mostrado um dos seguintes menus com as operações indicadas:
 	
@@ -148,7 +148,7 @@
 			\item Atualizações de subscrições.
 		\end{itemize}
 
-		\item \textbf{Fornecedor}:
+		\item \textbf{Fabricante}:
 		\begin{itemize}
 			\item Oferta de produção;
 			\item Obter lista de importadores/fabricantes;
@@ -158,7 +158,7 @@
 
 	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor e produto, obtendo atualizações dessas subscrições na opção correspondente.
 	
-	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos), obter uma lista dos importadores/produtores e verificar se tem atualizações pendentes.
+	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos), obter uma lista dos importadores/fabricantes e verificar se tem atualizações pendentes.
 	
 	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, tendo em conta que o utilizador clica na opção "Atualizações".
 	
@@ -170,11 +170,11 @@
 	Por forma a satisfazer os requisitos impostos, foram declaradas duas variáveis relativas às negociações em curso no sistema e, ainda, aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
 	De forma a instanciar o negociador em causa, foi declarado um \textit{socket} que irá comunicar com o servidor, processando vários pedidos em simultâneo.
 	
-	O negociador presente neste protótipo, ao receber pedidos do servidor, consegue processar se o mesmo corresponde a um pedido proveniente de um produtor ou de um importador.
-	Caso este seja de um produtor, é aberto um período limitado de negociação para determinar quais os importadores que serão escolhidos para proceder à produção de um determinado produto. O critério adotado nestas situações 
+	O negociador presente neste protótipo, ao receber pedidos do servidor, consegue processar se o mesmo corresponde a um pedido proveniente de um fabricante ou de um importador.
+	Caso este seja de um fabricante, é aberto um período limitado de negociação para determinar quais os importadores que serão escolhidos para proceder à produção de um determinado produto. O critério adotado nestas situações 
 	é escolher qual o importador que possui o maior valor total de encomenda para o artigo em questão.
 	Por outro lado, se o pedido for de um importador, é verificado se o mesmo está associado à produção de um determinado tipo de artigo. Em caso afirmativo, é atualizada, com essa informação, a variável relativa às negociações
-	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
+	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de fabricantes associado. 
 
 	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
 
@@ -186,7 +186,7 @@
 	\begin{itemize}
 		\item \textbf{negociations}: variável com os dados das negociações vigentes;
 		\item \textbf{importers}: variável correspondente ao conjunto dos importadores;
-		\item \textbf{producers}: variável correspondente ao conjunto dos produtores;
+		\item \textbf{producers}: variável correspondente ao conjunto dos fabricantes;
 		\item \textbf{subscriptions}: variável com os dados das subscrições registadas.
 	\end{itemize}
 	Sobre este componente podem ser exercidos 6 tipos distintos de operações:
