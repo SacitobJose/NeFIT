@@ -5,8 +5,11 @@ package protos;
 message CatalogRequest {
   oneof request {
     POSTNegotiation nn = 1;
-    POSTNegotiationOver no = 2;
+    DELETENegotiation no = 2;
     GETProducerInfo gpi = 3;
+    GETEntities ge = 4;
+    Subscribe sub = 5;
+    Unsubscribe unsub = 6;
   }
 }
 
@@ -19,8 +22,25 @@ message POSTNegotiation {
   required int64 negotiationPeriod = 6;
 }
 
-message POSTNegotiationOver {
+message DELETENegotiation {
   required string productName = 1;
+  required string producerName = 2;
+}
+
+message GETEntities {
+  enum Type {
+    PRODUCERS = 0;
+    IMPORTERS = 1;
+  }
+  required Type Entities = 1;
+}
+
+message GETEntitiesResponse {
+  repeated string entities = 1;
+}
+
+message GETProducerInfo {
+  required string username = 1;
   required string producerName = 2;
 }
 
@@ -28,6 +48,14 @@ message GETProducerInfoResponse {
   repeated POSTNegotiation negotiations = 1;
 }
 
-message GETProducerInfo {
-  required string producerName = 1;
+message Subscribe {
+  required string username = 1;
+  required string producerName = 2;
+  required string productName = 3;
+}
+
+message Unsubscribe {
+  required string username = 1;
+  required string producerName = 2;
+  required string productName = 3;
 }

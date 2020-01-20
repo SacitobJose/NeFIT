@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
 import protos.Protos.POSTNegotiation;
-import protos.Protos.POSTNegotiationOver;
+import protos.Protos.DELETENegotiation;
 import protos.Protos.CatalogRequest;
 
 import java.util.Comparator;
@@ -192,7 +192,7 @@ class TimeoutThread extends Thread {
             Thread.sleep(this.time * 1000);
 
             Socket catalog = new Socket("localhost", 9999);
-            POSTNegotiationOver.Builder no = POSTNegotiationOver.newBuilder();
+            DELETENegotiation.Builder no = DELETENegotiation.newBuilder();
             no.setProductName(this.productName);
             no.setProducerName(this.producerName);
             CatalogRequest.Builder cr = CatalogRequest.newBuilder();

@@ -10,7 +10,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.POSTNegotiation;
+import protos.Protos.Subscribe;
+import protos.Protos.Unsubscribe;
 import protos.Protos.CatalogRequest;
+import protos.Protos.GETEntities;
+import protos.Protos.GETEntitiesResponse;
 
 public class Client {
     public static void main(String[] args) {
@@ -33,6 +37,8 @@ class ClientToSocket extends Thread {
 
     AtomicBoolean wantPrintUpdates = new AtomicBoolean(false);
     AtomicBoolean canPrint = new AtomicBoolean(false);
+
+    Socket catalog;
 
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
@@ -67,9 +73,13 @@ class ClientToSocket extends Thread {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
             main.append("1 - Oferta de encomenda\n");
-            main.append("2 - Obter informações\n");
-            main.append("3 - Atualizações\n");
-            main.append("4 - Sair\n");
+            main.append("2 - Obter negociações em curso\n");
+            main.append("3 - Obter fabricantes\n");
+            main.append("4 - Obter importadores\n");
+            main.append("5 - Efetuar subscrição\n");
+            main.append("6 - Cancelar subscrição\n");
+            main.append("7 - Atualizações\n");
+            main.append("8 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -77,7 +87,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 4);
+            } while (escolha < 1 || escolha > 8);
 
             switch (escolha) {
             case 1:
@@ -93,7 +103,7 @@ class ClientToSocket extends Thread {
 
                 transaction.append("_");
 
-                System.out.print("Nome de produtor: ");
+                System.out.print("Nome de fabricante: ");
                 System.out.flush();
                 transaction.append(this.stdin.readLine());
 
@@ -120,6 +130,7 @@ class ClientToSocket extends Thread {
 
                 String producer = this.stdin.readLine();
                 GETProducerInfo.Builder gpi = GETProducerInfo.newBuilder();
+                gpi.setUsername(username);
                 gpi.setProducerName(producer);
                 CatalogRequest.Builder cr = CatalogRequest.newBuilder();
                 cr.setGpi(gpi);
@@ -129,16 +140,85 @@ class ClientToSocket extends Thread {
 
                 GETProducerInfoResponse gpir = GETProducerInfoResponse.parseDelimitedFrom(catalog.getInputStream());
                 for (POSTNegotiation pn : gpir.getNegotiationsList()) {
-                    System.out.println("Produto: " + pn.getProductName());
-                    System.out.println("Quantidade máxima: " + pn.getMaximumAmount());
-                    System.out.println("Quantidade mínima: " + pn.getMinimumAmount());
-                    System.out.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
-                    System.out.println("Período de negociação: " + pn.getNegotiationPeriod());
+                    System.out.println("\tProduto: " + pn.getProductName());
+                    System.out.println("\tQuantidade máxima: " + pn.getMaximumAmount());
+                    System.out.println("\tQuantidade mínima: " + pn.getMinimumAmount());
+                    System.out.println("\tPreço mínimo: " + pn.getMinimumUnitaryPrice());
+                    System.out.println("\tPeríodo de negociação: " + pn.getNegotiationPeriod());
+                    System.out.println();
                 }
 
                 waitConfirmation();
                 break;
             case 3:
+                GETEntities.Builder gip = GETEntities.newBuilder();
+                gip.setEntities(GETEntities.Type.PRODUCERS);
+
+                CatalogRequest.Builder crgip = CatalogRequest.newBuilder();
+                crgip.setGe(gip);
+                crgip.build().writeDelimitedTo(this.catalog.getOutputStream());
+
+                GETEntitiesResponse gerp = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
+                for (String e : gerp.getEntitiesList()) {
+                    System.out.println("\tEntidades:");
+                    System.out.println("\t" + e);
+                }
+
+                waitConfirmation();
+                break;
+            case 4:
+                GETEntities.Builder gii = GETEntities.newBuilder();
+                gii.setEntities(GETEntities.Type.IMPORTERS);
+
+                CatalogRequest.Builder crgii = CatalogRequest.newBuilder();
+                crgii.setGe(gii);
+                crgii.build().writeDelimitedTo(this.catalog.getOutputStream());
+
+                GETEntitiesResponse geri = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
+                for (String e : geri.getEntitiesList()) {
+                    System.out.println("\tEntidades:");
+                    System.out.println("\t" + e);
+                }
+
+                waitConfirmation();
+                break;
+            case 5:
+                System.out.print("Fabricante: ");
+                System.out.flush();
+
+                String producer1 = this.stdin.readLine();
+
+                System.out.print("Produto: ");
+                System.out.flush();
+
+                String product1 = this.stdin.readLine();
+
+                Subscribe.Builder sub = Subscribe.newBuilder();
+                sub.setUsername(username);
+                sub.setProducerName(producer1);
+                sub.setProductName(product1);
+
+                sub.build().writeDelimitedTo(this.catalog.getOutputStream());
+                break;
+            case 6:
+                System.out.print("Fabricante: ");
+                System.out.flush();
+
+                String producer2 = this.stdin.readLine();
+
+                System.out.print("Produto: ");
+                System.out.flush();
+
+                String product2 = this.stdin.readLine();
+
+                Unsubscribe.Builder unsub = Unsubscribe.newBuilder();
+                unsub.setUsername(username);
+                unsub.setProducerName(producer2);
+                unsub.setProductName(product2);
+
+                unsub.build().writeDelimitedTo(this.catalog.getOutputStream());
+                break;
+            case 7:
                 this.canPrint.set(true);
                 synchronized (canPrint) {
                     this.canPrint.notify();
@@ -149,7 +229,7 @@ class ClientToSocket extends Thread {
                 }
                 this.canPrint.set(false);
                 break;
-            case 4:
+            case 8:
                 clearTerminal();
                 System.exit(1);
                 break;
@@ -162,8 +242,10 @@ class ClientToSocket extends Thread {
             StringBuilder main = new StringBuilder();
             main.append("O que queres fazer?\n");
             main.append("1 - Oferta de produção\n");
-            main.append("2 - Atualizações\n");
-            main.append("3 - Sair\n");
+            main.append("2 - Obter fabricantes\n");
+            main.append("3 - Obter importadores\n");
+            main.append("4 - Atualizações\n");
+            main.append("5 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -171,7 +253,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 3);
+            } while (escolha < 1 || escolha > 5);
 
             switch (escolha) {
             case 1:
@@ -216,6 +298,38 @@ class ClientToSocket extends Thread {
                 waitConfirmation();
                 break;
             case 2:
+                GETEntities.Builder gip = GETEntities.newBuilder();
+                gip.setEntities(GETEntities.Type.PRODUCERS);
+
+                CatalogRequest.Builder crgip = CatalogRequest.newBuilder();
+                crgip.setGe(gip);
+                crgip.build().writeDelimitedTo(this.catalog.getOutputStream());
+
+                GETEntitiesResponse gerp = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
+                for (String e : gerp.getEntitiesList()) {
+                    System.out.println("Fabricantes:");
+                    System.out.println("\t" + e);
+                }
+
+                waitConfirmation();
+                break;
+            case 3:
+                GETEntities.Builder gii = GETEntities.newBuilder();
+                gii.setEntities(GETEntities.Type.IMPORTERS);
+
+                CatalogRequest.Builder crgii = CatalogRequest.newBuilder();
+                crgii.setGe(gii);
+                crgii.build().writeDelimitedTo(this.catalog.getOutputStream());
+
+                GETEntitiesResponse geri = GETEntitiesResponse.parseDelimitedFrom(this.catalog.getInputStream());
+                for (String e : geri.getEntitiesList()) {
+                    System.out.println("Importadores:");
+                    System.out.println("\t" + e);
+                }
+
+                waitConfirmation();
+                break;
+            case 4:
                 this.canPrint.set(true);
                 synchronized (canPrint) {
                     this.canPrint.notify();
@@ -226,7 +340,7 @@ class ClientToSocket extends Thread {
                 }
                 this.canPrint.set(false);
                 break;
-            case 3:
+            case 5:
                 clearTerminal();
                 System.exit(1);
                 break;
@@ -306,6 +420,8 @@ class ClientToSocket extends Thread {
 
             waitConfirmation();
 
+            this.catalog = new Socket("localhost", 9999);
+
             // Iniciar thread para ler do socket para o terminal
             Thread stc = new SocketToClient(is, wantPrintUpdates, canPrint, stdin);
             stc.start();
@@ -356,11 +472,11 @@ class SocketToClient extends Thread {
                     String productName = parts[2];
                     int quantity = Integer.parseInt(parts[3]);
                     int price = Integer.parseInt(parts[4]);
-    
+
                     System.out.println("Encomenda efetuada:");
                     System.out.println("\tProduto: " + quantity + " unidades de " + productName);
                     System.out.println("\tPreço por unidade: " + price + "€");
-                    System.out.println("\tProdutor: " + producerName);
+                    System.out.println("\tFabricante: " + producerName);
                 } else {
                     Boolean success = Boolean.parseBoolean(parts[2]);
                     if (success) {
@@ -369,8 +485,8 @@ class SocketToClient extends Thread {
                         System.out.println("\tProduto: " + productName);
                         System.out.println("\tCompradores:");
                         for (int i = 5; i < parts.length; i += 3) {
-                            System.out.println("\t\t" + parts[i] + ": " + parts[i+1]
-                                    + " unidades a " + parts[i+2] + "€/unidade");
+                            System.out.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a " + parts[i + 2]
+                                    + "€/unidade");
                         }
                     } else {
                         System.out.println("Venda de " + parts[4] + " recusada");
