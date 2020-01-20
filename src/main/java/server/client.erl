@@ -8,7 +8,6 @@ client(Sock) ->
     % recebe uma conexão, verifica a autenticação e chama importer(Sock, Username) ou producer(Sock, Username, TimeOut)
     receive
         {tcp, _, Data} ->
-            
             Message = string:split(string:trim(Data), "_", all),
             Fazer = lists:nth(2, Message),
 

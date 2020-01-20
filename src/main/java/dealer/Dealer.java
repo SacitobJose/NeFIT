@@ -49,13 +49,22 @@ class Import {
         this.unitaryPrice = unitaryPrice;
     }
 
+    @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof Import)) return false;
         Import i = (Import) o;
         return this.username.equals(i.getUsername())
                 && this.productName.equals(i.getProductName())
                 && this.producerName.equals(i.getProducerName())
                 && this.quantity == i.getQuantity()
                 && this.unitaryPrice == i.getUnitaryPrice();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.username.hashCode();
     }
 }
 
@@ -75,15 +84,14 @@ class ImportComparator implements Comparator<Import> {
  * Dealer
  */
 public class Dealer {
-    // <ProducerName, ProductName> => [Import]
-    public static HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>();
-    public static ArrayList<Import> unmatchImports = new ArrayList<>();
-
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("localhost", 1234);
             BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter os = new PrintWriter(socket.getOutputStream());
+
+            HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>();
+            ArrayList<Import> unmatchImports = new ArrayList<>();
 
             while (true) {
                 String line = is.readLine();
@@ -99,15 +107,20 @@ public class Dealer {
                     ArrayList<Import> arr = new ArrayList<>();
                     negotiations.put(new SimpleEntry<>(producer, product), arr);
 
-                    for (Import i : unmatchImports) {
-                        String producerI = i.getProducerName();
-                        String productI = i.getProductName();
+                    ArrayList<Import> newUnmatchImports = new ArrayList<>();
+                    
+                    for (int i = unmatchImports.size()-1; i >= 0 ; i--) {
+                        Import imp = unmatchImports.get(i);
+                        String producerI = imp.getProducerName();
+                        String productI = imp.getProductName();
 
                         if (producerI.equals(producer) && productI.equals(product)) {
-                            arr.add(i);
-                            unmatchImports.remove(i);
+                            arr.add(imp);
+                        } else {
+                            newUnmatchImports.add(imp);
                         }
                     }
+                    unmatchImports = newUnmatchImports;
 
                     Thread timeout = new TimeoutThread(negotiations, unmatchImports, product, producer, minimumQuantity,
                             maximumQuantity, minimumPrice, negotiationPeriod, os);
@@ -199,7 +212,6 @@ class TimeoutThread extends Thread {
             long total = 0;
             ArrayList<Import> buyers = new ArrayList<>();
             for (Import imp : importers) {
-                System.out.println(imp.getUsername());
                 if (imp.getQuantity() + total <= this.maximumAmount
                         && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
                     total += imp.getQuantity();
