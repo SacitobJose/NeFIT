@@ -179,13 +179,23 @@
 	Relativamente ao catálogo presente neste sistema, este é um componente onde se guarda informação útil acerca dos fabricantes e negociações em curso. Esta entidade do protótipo pode ser vista como um ficheiro de \textit{logs}, que é 
 	atualizado e acedido sempre que for necessário. Isto possibilita guardar um histórico do estado momentâneo do funcionamento da aplicação.
 
-	Sobre este componente podem ser exercidos 3 tipos distintos de operação:
+	Para tal, foram declaradas 4 variáveis na classe deste componente por forma a armazenar toda a informação pertinente:
+	\begin{itemize}
+		\item \textbf{negociations}: variável com os dados das negociações vigentes;
+		\item \textbf{importers}: variável correspondente ao conjunto dos importadores;
+		\item \textbf{producers}: variável correspondente ao conjunto dos produtores;
+		\item \textbf{subscriptions}: variável com os dados das subscrições registadas.
+	\end{itemize}
+	Sobre este componente podem ser exercidos 6 tipos distintos de operações:
 	\begin{enumerate}
 		\item \textbf{POSTNegotiation}: inserção da informação relativa à iniciação de um novo periodo de negociação;
-		\item \textbf{POSTNegotiationOver}: inserção da informação relativa à cessão da negociação em vigor;
-		\item \textbf{GETProducerInfo}: obtenção da informação relativa ao produtor.
+		\item \textbf{DELETENegotiation}: remoção da informação relativa à negociação em vigor;
+		\item \textbf{GETProducerInfo}: obtenção da informação relativa ao produtor;
+		\item \textbf{GETEntities}: obtenção dos dados de todas as entidades (importador e produtor);
+		\item \textbf{Subscribe}: operação relativa à subscrição de atualizações de um produto de um produtor;
+		\item \textbf{Unsubscribe}: operação que permite cancelar uma subscrição de novas atualizações de um determinado produto de um pordutor.
 	\end{enumerate}
-	
+	Com estas operações é possível reconhecer o estado atual do funcionamento do sistema implementado, acedendo e alterando o mesmo consoante o desenrolar da execução do protótipo.
 
 \chapter{Conclusão}
 Após a realização deste projeto prático, foi possível identificar e especificar as entidades principais que intervêem neste protótipo, e, ainda, as suas respetivas caraterísticas. Para cada uma destas, impôs-se um desafio 
