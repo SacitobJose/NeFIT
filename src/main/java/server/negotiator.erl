@@ -31,7 +31,6 @@ negotiator(Sock, Importers, Producers) ->
 				negotiator(Sock, NewImporters, Producers)
 		end;
       {tcp, _, Data} ->
-		io:format("Recebi do Dealer~n", []),
 		% decode data
 		Map_Data = decode(Data),
 		% get product name

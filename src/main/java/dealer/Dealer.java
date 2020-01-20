@@ -154,7 +154,7 @@ public class Dealer {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Não foi possível conectar ao negociador.");
+            e.printStackTrace();
         }
     }
 }

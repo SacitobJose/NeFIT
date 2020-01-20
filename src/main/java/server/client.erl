@@ -52,7 +52,6 @@ client(Sock) ->
                             case Res of
                                 ok ->
                                     gen_tcp:send(Sock, io_lib:format("ServerResponse_1~n", [])),
-                                    io:format("New Register~n", []),
                                     case Kind of
                                         <<"0">> ->
                                             producer(Sock, Username);
@@ -69,7 +68,7 @@ client(Sock) ->
                     end
             end;
         {tcp_closed, _} ->
-            io:format("user disconnected ~n");
+            io:format("User disconnected ~n");
         {tcp_error, _, _} ->
-            io:format("user disconnected due to error ~n")
+            io:format("User disconnected due to error ~n")
     end.
