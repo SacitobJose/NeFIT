@@ -2,6 +2,7 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -38,7 +39,11 @@ class ClientToSocket extends Thread {
     AtomicBoolean wantPrintUpdates = new AtomicBoolean(false);
     AtomicBoolean canPrint = new AtomicBoolean(false);
 
+    AtomicBoolean wantPrintSubscriptions = new AtomicBoolean(false);
+    AtomicBoolean canPrintSubscriptions = new AtomicBoolean(false);
+
     Socket catalog;
+    Socket subscriptions;
 
     public ClientToSocket(Socket cli) throws IOException {
         this.socket = cli;
@@ -79,7 +84,8 @@ class ClientToSocket extends Thread {
             main.append("5 - Efetuar subscrição\n");
             main.append("6 - Cancelar subscrição\n");
             main.append("7 - Atualizações\n");
-            main.append("8 - Sair\n");
+            main.append("8 - Atualizações de subscrições\n");
+            main.append("9 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -87,7 +93,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 8);
+            } while (escolha < 1 || escolha > 9);
 
             switch (escolha) {
             case 1:
@@ -198,7 +204,9 @@ class ClientToSocket extends Thread {
                 sub.setProducerName(producer1);
                 sub.setProductName(product1);
 
-                sub.build().writeDelimitedTo(this.catalog.getOutputStream());
+                CatalogRequest.Builder crsub = CatalogRequest.newBuilder();
+                crsub.setSub(sub);
+                crsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
                 break;
             case 6:
                 System.out.print("Fabricante: ");
@@ -216,7 +224,9 @@ class ClientToSocket extends Thread {
                 unsub.setProducerName(producer2);
                 unsub.setProductName(product2);
 
-                unsub.build().writeDelimitedTo(this.catalog.getOutputStream());
+                CatalogRequest.Builder crunsub = CatalogRequest.newBuilder();
+                crunsub.setUnsub(unsub);
+                crunsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
                 break;
             case 7:
                 this.canPrint.set(true);
@@ -230,6 +240,17 @@ class ClientToSocket extends Thread {
                 this.canPrint.set(false);
                 break;
             case 8:
+                this.canPrintSubscriptions.set(true);
+                synchronized (canPrintSubscriptions) {
+                    this.canPrintSubscriptions.notify();
+                }
+                synchronized (wantPrintSubscriptions) {
+                    while (wantPrintSubscriptions.get())
+                        wantPrintSubscriptions.wait();
+                }
+                this.canPrintSubscriptions.set(false);
+                break;
+            case 9:
                 clearTerminal();
                 System.exit(1);
                 break;
@@ -421,14 +442,21 @@ class ClientToSocket extends Thread {
             waitConfirmation();
 
             this.catalog = new Socket("localhost", 9999);
+            this.subscriptions = new Socket("localhost", 9999);
 
             // Iniciar thread para ler do socket para o terminal
             Thread stc = new SocketToClient(is, wantPrintUpdates, canPrint, stdin);
             stc.start();
             if (role.equals("f"))
                 producerMenu();
-            else
+            else {
+                // Iniciar thread para ler das subscrições para o terminal
+                Thread subToC = new SubscriptionsToClient(this.subscriptions.getInputStream(), wantPrintSubscriptions,
+                        canPrintSubscriptions, stdin);
+                subToC.start();
+
                 importerMenu();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -497,6 +525,57 @@ class SocketToClient extends Thread {
                 synchronized (wantPrintUpdates) {
                     this.wantPrintUpdates.set(false);
                     this.wantPrintUpdates.notify();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+}
+
+class SubscriptionsToClient extends Thread {
+    InputStream is;
+    AtomicBoolean canPrintSubscriptions;
+    AtomicBoolean wantPrintSubscriptions;
+    BufferedReader stdin;
+
+    public SubscriptionsToClient(InputStream is, AtomicBoolean wantPrintSubscriptions,
+            AtomicBoolean canPrintSubscriptions, BufferedReader stdin) throws IOException {
+        this.is = is;
+        this.canPrintSubscriptions = canPrintSubscriptions;
+        this.wantPrintSubscriptions = wantPrintSubscriptions;
+        this.stdin = stdin;
+    }
+
+    private void waitConfirmation() throws IOException {
+        System.out.print("\nClique no ENTER para continuar...");
+        System.out.flush();
+        this.stdin.readLine();
+    }
+
+    public void run() {
+        try {
+            while (true) {
+                POSTNegotiation pn = POSTNegotiation.parseDelimitedFrom(this.is);
+
+                this.wantPrintSubscriptions.set(true);
+                synchronized (this.canPrintSubscriptions) {
+                    while (!this.canPrintSubscriptions.get())
+                        this.canPrintSubscriptions.wait();
+                }
+
+                System.out.println("Produtor: " + pn.getProducerName());
+                System.out.println("Produto: " + pn.getProductName());
+                System.out.println("Quantidade máxima: " + pn.getMaximumAmount());
+                System.out.println("Quantidade mínima: " + pn.getMinimumAmount());
+                System.out.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
+                System.out.println("Período de negociação: " + pn.getNegotiationPeriod());
+
+                this.waitConfirmation();
+                synchronized (wantPrintSubscriptions) {
+                    this.wantPrintSubscriptions.set(false);
+                    this.wantPrintSubscriptions.notify();
                 }
             }
         } catch (Exception e) {

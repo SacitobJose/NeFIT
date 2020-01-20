@@ -69,6 +69,12 @@ class CHandler extends Thread {
                         this.producers.add(producerName1);
                     }
 
+                    HashSet<Socket> toUpdate = subscriptions.get(new SimpleEntry<>(productName1, producerName1));
+                    if (toUpdate != null) {
+                        for (Socket socket : toUpdate)
+                            nn.writeDelimitedTo(socket.getOutputStream());
+                    }
+
                     negotiations.put(new SimpleEntry<>(productName1, producerName1), nn);
                     break;
 
