@@ -8,7 +8,7 @@ compileJava:
 	mvn compile
 
 runClient:
-	mvn exec:java -Dexec.mainClass="client.Client"
+	mvn exec:java -Dexec.mainClass="client.Client" -Dexec.args="${PID}"
 
 runDealer:
 	mvn exec:java -Dexec.mainClass="dealer.Dealer"

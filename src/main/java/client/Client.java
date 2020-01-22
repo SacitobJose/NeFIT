@@ -1,12 +1,12 @@
 package client;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
@@ -19,9 +19,13 @@ import protos.Protos.GETEntitiesResponse;
 
 public class Client {
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Indique o PID do terminal para output.");
+            System.exit(-1);
+        }
         try {
             Socket s = new Socket("localhost", 1234);
-            Thread cts = new ClientToSocket(s);
+            Thread cts = new ClientToSocket(s, args[0]);
             cts.start();
         } catch (Exception e) {
             System.out.println("Não foi possível conectar ao servidor.");
@@ -36,20 +40,17 @@ class ClientToSocket extends Thread {
     String username;
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-    AtomicBoolean wantPrintUpdates = new AtomicBoolean(false);
-    AtomicBoolean canPrint = new AtomicBoolean(false);
-
-    AtomicBoolean wantPrintSubscriptions = new AtomicBoolean(false);
-    AtomicBoolean canPrintSubscriptions = new AtomicBoolean(false);
+    String outputPID;
 
     Socket catalog;
     Socket subscriptions;
 
-    public ClientToSocket(Socket cli) throws IOException {
+    public ClientToSocket(Socket cli, String outputPID) throws IOException {
         this.socket = cli;
         is = new BufferedReader(new InputStreamReader(cli.getInputStream()));
         os = new PrintWriter(cli.getOutputStream());
         this.username = null;
+        this.outputPID = outputPID;
     }
 
     private void clearTerminal() {
@@ -83,9 +84,7 @@ class ClientToSocket extends Thread {
             main.append("4 - Obter importadores\n");
             main.append("5 - Efetuar subscrição\n");
             main.append("6 - Cancelar subscrição\n");
-            main.append("7 - Atualizações\n");
-            main.append("8 - Atualizações de subscrições\n");
-            main.append("9 - Sair\n");
+            main.append("7 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -93,7 +92,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 9);
+            } while (escolha < 1 || escolha > 7);
 
             switch (escolha) {
             case 1:
@@ -229,28 +228,6 @@ class ClientToSocket extends Thread {
                 crunsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
                 break;
             case 7:
-                this.canPrint.set(true);
-                synchronized (canPrint) {
-                    this.canPrint.notify();
-                }
-                synchronized (wantPrintUpdates) {
-                    while (wantPrintUpdates.get())
-                        wantPrintUpdates.wait();
-                }
-                this.canPrint.set(false);
-                break;
-            case 8:
-                this.canPrintSubscriptions.set(true);
-                synchronized (canPrintSubscriptions) {
-                    this.canPrintSubscriptions.notify();
-                }
-                synchronized (wantPrintSubscriptions) {
-                    while (wantPrintSubscriptions.get())
-                        wantPrintSubscriptions.wait();
-                }
-                this.canPrintSubscriptions.set(false);
-                break;
-            case 9:
                 clearTerminal();
                 System.exit(1);
                 break;
@@ -265,8 +242,7 @@ class ClientToSocket extends Thread {
             main.append("1 - Oferta de produção\n");
             main.append("2 - Obter fabricantes\n");
             main.append("3 - Obter importadores\n");
-            main.append("4 - Atualizações\n");
-            main.append("5 - Sair\n");
+            main.append("4 - Sair\n");
 
             clearTerminal();
             System.out.println(main);
@@ -274,7 +250,7 @@ class ClientToSocket extends Thread {
             int escolha;
             do {
                 escolha = readInt();
-            } while (escolha < 1 || escolha > 5);
+            } while (escolha < 1 || escolha > 4);
 
             switch (escolha) {
             case 1:
@@ -351,17 +327,6 @@ class ClientToSocket extends Thread {
                 waitConfirmation();
                 break;
             case 4:
-                this.canPrint.set(true);
-                synchronized (canPrint) {
-                    this.canPrint.notify();
-                }
-                synchronized (wantPrintUpdates) {
-                    while (wantPrintUpdates.get())
-                        wantPrintUpdates.wait();
-                }
-                this.canPrint.set(false);
-                break;
-            case 5:
                 clearTerminal();
                 System.exit(1);
                 break;
@@ -444,15 +409,16 @@ class ClientToSocket extends Thread {
             this.catalog = new Socket("localhost", 9999);
             this.subscriptions = new Socket("localhost", 9999);
 
+            PrintWriter outputTerminal = new PrintWriter(new File("/proc/" + outputPID + "/fd/1"));
+
             // Iniciar thread para ler do socket para o terminal
-            Thread stc = new SocketToClient(is, wantPrintUpdates, canPrint, stdin);
+            Thread stc = new SocketToClient(is, outputTerminal);
             stc.start();
             if (role.equals("f"))
                 producerMenu();
             else {
                 // Iniciar thread para ler das subscrições para o terminal
-                Thread subToC = new SubscriptionsToClient(this.subscriptions.getInputStream(), wantPrintSubscriptions,
-                        canPrintSubscriptions, stdin);
+                Thread subToC = new SubscriptionsToClient(this.subscriptions.getInputStream(), outputTerminal);
                 subToC.start();
 
                 importerMenu();
@@ -465,34 +431,17 @@ class ClientToSocket extends Thread {
 
 class SocketToClient extends Thread {
     BufferedReader is;
-    AtomicBoolean canPrint;
-    AtomicBoolean wantPrintUpdates;
-    BufferedReader stdin;
+    PrintWriter outputTerminal;
 
-    public SocketToClient(BufferedReader is, AtomicBoolean wantPrintUpdates, AtomicBoolean canPrint,
-            BufferedReader stdin) throws IOException {
+    public SocketToClient(BufferedReader is, PrintWriter outputTerminal) {
         this.is = is;
-        this.canPrint = canPrint;
-        this.wantPrintUpdates = wantPrintUpdates;
-        this.stdin = stdin;
-    }
-
-    private void waitConfirmation() throws IOException {
-        System.out.print("\nClique no ENTER para continuar...");
-        System.out.flush();
-        this.stdin.readLine();
+        this.outputTerminal = outputTerminal;
     }
 
     public void run() {
         try {
             while (true) {
                 String line = this.is.readLine();
-
-                this.wantPrintUpdates.set(true);
-                synchronized (this.canPrint) {
-                    while (!this.canPrint.get())
-                        this.canPrint.wait();
-                }
 
                 String[] parts = line.split("_");
                 if (parts[0].equals("Importer")) {
@@ -501,31 +450,31 @@ class SocketToClient extends Thread {
                     int quantity = Integer.parseInt(parts[3]);
                     int price = Integer.parseInt(parts[4]);
 
-                    System.out.println("Encomenda efetuada:");
-                    System.out.println("\tProduto: " + quantity + " unidades de " + productName);
-                    System.out.println("\tPreço por unidade: " + price + "€");
-                    System.out.println("\tFabricante: " + producerName);
+                    outputTerminal.println("Encomenda efetuada:");
+                    outputTerminal.println("\tProduto: " + quantity + " unidades de " + productName);
+                    outputTerminal.println("\tPreço por unidade: " + price + "€");
+                    outputTerminal.println("\tFabricante: " + producerName);
                 } else {
                     Boolean success = Boolean.parseBoolean(parts[2]);
                     if (success) {
                         String productName = parts[4];
-                        System.out.println("Venda efetuada:");
-                        System.out.println("\tProduto: " + productName);
-                        System.out.println("\tCompradores:");
+                        outputTerminal.println("Venda efetuada:");
+                        outputTerminal.println("\tProduto: " + productName);
+                        outputTerminal.println("\tCompradores:");
                         for (int i = 5; i < parts.length; i += 3) {
-                            System.out.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a " + parts[i + 2]
+                            outputTerminal.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a " + parts[i + 2]
                                     + "€/unidade");
                         }
                     } else {
-                        System.out.println("Venda de " + parts[4] + " recusada");
+                        outputTerminal.println("Venda de " + parts[4] + " recusada");
                     }
                 }
 
-                this.waitConfirmation();
-                synchronized (wantPrintUpdates) {
-                    this.wantPrintUpdates.set(false);
-                    this.wantPrintUpdates.notify();
-                }
+                outputTerminal.println();
+                outputTerminal.println("-----------------");
+                outputTerminal.println();
+
+                outputTerminal.flush();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -536,22 +485,11 @@ class SocketToClient extends Thread {
 
 class SubscriptionsToClient extends Thread {
     InputStream is;
-    AtomicBoolean canPrintSubscriptions;
-    AtomicBoolean wantPrintSubscriptions;
-    BufferedReader stdin;
+    PrintWriter outputTerminal; 
 
-    public SubscriptionsToClient(InputStream is, AtomicBoolean wantPrintSubscriptions,
-            AtomicBoolean canPrintSubscriptions, BufferedReader stdin) throws IOException {
+    public SubscriptionsToClient(InputStream is, PrintWriter outputTerminal) {
         this.is = is;
-        this.canPrintSubscriptions = canPrintSubscriptions;
-        this.wantPrintSubscriptions = wantPrintSubscriptions;
-        this.stdin = stdin;
-    }
-
-    private void waitConfirmation() throws IOException {
-        System.out.print("\nClique no ENTER para continuar...");
-        System.out.flush();
-        this.stdin.readLine();
+        this.outputTerminal = outputTerminal;
     }
 
     public void run() {
@@ -559,24 +497,18 @@ class SubscriptionsToClient extends Thread {
             while (true) {
                 POSTNegotiation pn = POSTNegotiation.parseDelimitedFrom(this.is);
 
-                this.wantPrintSubscriptions.set(true);
-                synchronized (this.canPrintSubscriptions) {
-                    while (!this.canPrintSubscriptions.get())
-                        this.canPrintSubscriptions.wait();
-                }
+                outputTerminal.println("Produtor: " + pn.getProducerName());
+                outputTerminal.println("Produto: " + pn.getProductName());
+                outputTerminal.println("Quantidade máxima: " + pn.getMaximumAmount());
+                outputTerminal.println("Quantidade mínima: " + pn.getMinimumAmount());
+                outputTerminal.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
+                outputTerminal.println("Período de negociação: " + pn.getNegotiationPeriod());
+                
+                outputTerminal.println();
+                outputTerminal.println("-----------------");
+                outputTerminal.println();
 
-                System.out.println("Produtor: " + pn.getProducerName());
-                System.out.println("Produto: " + pn.getProductName());
-                System.out.println("Quantidade máxima: " + pn.getMaximumAmount());
-                System.out.println("Quantidade mínima: " + pn.getMinimumAmount());
-                System.out.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
-                System.out.println("Período de negociação: " + pn.getNegotiationPeriod());
-
-                this.waitConfirmation();
-                synchronized (wantPrintSubscriptions) {
-                    this.wantPrintSubscriptions.set(false);
-                    this.wantPrintSubscriptions.notify();
-                }
+                outputTerminal.flush();
             }
         } catch (Exception e) {
             e.printStackTrace();
