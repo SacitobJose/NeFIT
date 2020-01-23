@@ -3,6 +3,7 @@
 -import(login, [create_account/2, cancel_register/2, login/2, logout/1]).
 -import(importer, [importer/2]).
 -import(producer, [producer/2]).
+-import(server, [padding/1]).
 
 -include("protos.hrl").
 
@@ -16,7 +17,7 @@ client(Sock) ->
             case Res of
                 ok ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     case TipoCliente of
@@ -27,19 +28,19 @@ client(Sock) ->
                     end;
                 wrong_user ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     client(Sock);
                 already_loggedin ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     client(Sock);
                 wrong_password ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     client(Sock)
@@ -49,7 +50,7 @@ client(Sock) ->
             case Res of
                 ok ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     case TipoCliente of
@@ -60,7 +61,7 @@ client(Sock) ->
                     end;
                 user_exists ->
                     ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    X = padding(binary:encode_unsigned(byte_size(ServerResponse))),
                     Response = <<X/binary, ServerResponse/binary>>,
                     gen_tcp:send(Sock, Response),
                     client(Sock)

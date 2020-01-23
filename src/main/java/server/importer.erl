@@ -11,16 +11,16 @@ importer(Sock, Username) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _} = protos:decode_msg(DataImport, 'Import'),
-    Handler ! {new_importer, Username, Product, <<Length, Data/binary>>},
+    {_, Product, _, _, _, _} = DataImport,
+    Handler ! {new_importer, Username, Product, <<Length/binary, Data/binary>>},
     importer(Sock, Username, Handler, 0).
 
 importer(Sock, Username, Handler, 0) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _} = protos:decode_msg(DataImport, 'Import'),
-    Handler ! {new_importer, Username, Product, <<Length, Data/binary>>},
+    {_, Product, _, _, _, _} = DataImport,
+    Handler ! {new_importer, Username, Product, <<Length/binary, Data/binary>>},
     importer(Sock, Username, Handler, 0).
 
 importer(Sock, Username, 0) ->
