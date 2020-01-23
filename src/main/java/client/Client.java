@@ -7,12 +7,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.POSTNegotiation;
+import protos.Protos.ServerResponse;
 import protos.Protos.Subscribe;
 import protos.Protos.Unsubscribe;
+import protos.Protos.Authentication;
 import protos.Protos.CatalogRequest;
 import protos.Protos.GETEntities;
 import protos.Protos.GETEntitiesResponse;
@@ -340,56 +343,51 @@ class ClientToSocket extends Thread {
 
             String role;
             while (true) {
-                StringBuilder auth = new StringBuilder();
-                auth.append("Authentication_");
+                Authentication.Builder auth = Authentication.newBuilder();
 
                 System.out.print("Deseja fazer (l)ogin ou (r)egistar-se? ");
                 System.out.flush();
                 String method = stdin.readLine();
                 if (method.equals("r"))
-                    auth.append(1);
+                    auth.setType(Authentication.AuthType.REGISTER);
                 else if (method.equals("l"))
-                    auth.append(0);
+                    auth.setType(Authentication.AuthType.LOGIN);
                 else {
                     System.out.println("Não é nenhum dos métodos válidos.");
                     continue;
                 }
 
-                auth.append("_");
-
                 System.out.print("É um (f)abricante ou um (i)mportador? ");
                 System.out.flush();
                 role = stdin.readLine();
                 if (role.equals("f"))
-                    auth.append(0);
+                    auth.setUserType(Authentication.UserType.PRODUCER);
                 else if (role.equals("i"))
-                    auth.append(1);
+                    auth.setUserType(Authentication.UserType.IMPORTER);
                 else {
                     System.out.println("Não é nenhum dos papéis válidos.");
                     continue;
                 }
 
-                auth.append("_");
-
                 System.out.print("Nome de utilizador: ");
                 System.out.flush();
                 String username = stdin.readLine();
-                auth.append(username);
-
-                auth.append("_");
+                auth.setUsername(username);
 
                 System.out.print("Palavra-passe: ");
                 System.out.flush();
-                auth.append(stdin.readLine());
+                auth.setPassword(stdin.readLine());
 
                 // Try to authenticate
-                this.os.println(auth.toString());
-                this.os.flush();
+                Authentication authToSend = auth.build();
+                byte[] size = ByteBuffer.allocate(4).putInt(authToSend.getSerializedSize()).array();
+                this.socket.getOutputStream().write(size);
+                authToSend.writeTo(socket.getOutputStream());
+                this.socket.getOutputStream().flush();
 
                 // Receive authentication confirmation
-                String response = this.is.readLine();
-                String[] res = response.split("_");
-                if (res[1].equals("0")) {
+                ServerResponse response = ServerResponse.parseFrom(socket.getInputStream());
+                if (!response.getSuccess()) {
                     if (method.equals("l"))
                         System.out.println("O nome de utilizador não existe ou a palavra passe está incorreta.");
                     else
@@ -462,8 +460,8 @@ class SocketToClient extends Thread {
                         outputTerminal.println("\tProduto: " + productName);
                         outputTerminal.println("\tCompradores:");
                         for (int i = 5; i < parts.length; i += 3) {
-                            outputTerminal.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a " + parts[i + 2]
-                                    + "€/unidade");
+                            outputTerminal.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a "
+                                    + parts[i + 2] + "€/unidade");
                         }
                     } else {
                         outputTerminal.println("Venda de " + parts[4] + " recusada");
@@ -485,7 +483,7 @@ class SocketToClient extends Thread {
 
 class SubscriptionsToClient extends Thread {
     InputStream is;
-    PrintWriter outputTerminal; 
+    PrintWriter outputTerminal;
 
     public SubscriptionsToClient(InputStream is, PrintWriter outputTerminal) {
         this.is = is;
@@ -503,7 +501,7 @@ class SubscriptionsToClient extends Thread {
                 outputTerminal.println("Quantidade mínima: " + pn.getMinimumAmount());
                 outputTerminal.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
                 outputTerminal.println("Período de negociação: " + pn.getNegotiationPeriod());
-                
+
                 outputTerminal.println();
                 outputTerminal.println("-----------------");
                 outputTerminal.println();
