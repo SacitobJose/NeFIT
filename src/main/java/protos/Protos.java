@@ -20,56 +20,46 @@ public final class Protos {
 
     /**
      * <code>required .protos.Authentication.AuthType type = 1;</code>
-     * @return Whether the type field is set.
      */
     boolean hasType();
     /**
      * <code>required .protos.Authentication.AuthType type = 1;</code>
-     * @return The type.
      */
     protos.Protos.Authentication.AuthType getType();
 
     /**
      * <code>required .protos.Authentication.UserType userType = 2;</code>
-     * @return Whether the userType field is set.
      */
     boolean hasUserType();
     /**
      * <code>required .protos.Authentication.UserType userType = 2;</code>
-     * @return The userType.
      */
     protos.Protos.Authentication.UserType getUserType();
 
     /**
      * <code>required string username = 3;</code>
-     * @return Whether the username field is set.
      */
     boolean hasUsername();
     /**
      * <code>required string username = 3;</code>
-     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>required string username = 3;</code>
-     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>required string password = 4;</code>
-     * @return Whether the password field is set.
      */
     boolean hasPassword();
     /**
      * <code>required string password = 4;</code>
-     * @return The password.
      */
     java.lang.String getPassword();
     /**
      * <code>required string password = 4;</code>
-     * @return The bytes for password.
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
@@ -91,13 +81,6 @@ public final class Protos {
       userType_ = 0;
       username_ = "";
       password_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Authentication();
     }
 
     @java.lang.Override
@@ -222,8 +205,6 @@ public final class Protos {
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -231,10 +212,6 @@ public final class Protos {
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static AuthType forNumber(int value) {
         switch (value) {
           case 0: return REGISTER;
@@ -318,8 +295,6 @@ public final class Protos {
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -327,10 +302,6 @@ public final class Protos {
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static UserType forNumber(int value) {
         switch (value) {
           case 0: return PRODUCER;
@@ -389,14 +360,12 @@ public final class Protos {
     private int type_;
     /**
      * <code>required .protos.Authentication.AuthType type = 1;</code>
-     * @return Whether the type field is set.
      */
     public boolean hasType() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .protos.Authentication.AuthType type = 1;</code>
-     * @return The type.
      */
     public protos.Protos.Authentication.AuthType getType() {
       @SuppressWarnings("deprecation")
@@ -408,14 +377,12 @@ public final class Protos {
     private int userType_;
     /**
      * <code>required .protos.Authentication.UserType userType = 2;</code>
-     * @return Whether the userType field is set.
      */
     public boolean hasUserType() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required .protos.Authentication.UserType userType = 2;</code>
-     * @return The userType.
      */
     public protos.Protos.Authentication.UserType getUserType() {
       @SuppressWarnings("deprecation")
@@ -427,14 +394,12 @@ public final class Protos {
     private volatile java.lang.Object username_;
     /**
      * <code>required string username = 3;</code>
-     * @return Whether the username field is set.
      */
     public boolean hasUsername() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string username = 3;</code>
-     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -452,7 +417,6 @@ public final class Protos {
     }
     /**
      * <code>required string username = 3;</code>
-     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -472,14 +436,12 @@ public final class Protos {
     private volatile java.lang.Object password_;
     /**
      * <code>required string password = 4;</code>
-     * @return Whether the password field is set.
      */
     public boolean hasPassword() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required string password = 4;</code>
-     * @return The password.
      */
     public java.lang.String getPassword() {
       java.lang.Object ref = password_;
@@ -497,7 +459,6 @@ public final class Protos {
     }
     /**
      * <code>required string password = 4;</code>
-     * @return The bytes for password.
      */
     public com.google.protobuf.ByteString
         getPasswordBytes() {
@@ -543,16 +504,16 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeEnum(1, type_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeEnum(2, userType_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, username_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, password_);
       }
       unknownFields.writeTo(output);
@@ -564,18 +525,18 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, type_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, userType_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, username_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, password_);
       }
       size += unknownFields.getSerializedSize();
@@ -593,26 +554,27 @@ public final class Protos {
       }
       protos.Protos.Authentication other = (protos.Protos.Authentication) obj;
 
-      if (hasType() != other.hasType()) return false;
+      boolean result = true;
+      result = result && (hasType() == other.hasType());
       if (hasType()) {
-        if (type_ != other.type_) return false;
+        result = result && type_ == other.type_;
       }
-      if (hasUserType() != other.hasUserType()) return false;
+      result = result && (hasUserType() == other.hasUserType());
       if (hasUserType()) {
-        if (userType_ != other.userType_) return false;
+        result = result && userType_ == other.userType_;
       }
-      if (hasUsername() != other.hasUsername()) return false;
+      result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
-        if (!getUsername()
-            .equals(other.getUsername())) return false;
+        result = result && getUsername()
+            .equals(other.getUsername());
       }
-      if (hasPassword() != other.hasPassword()) return false;
+      result = result && (hasPassword() == other.hasPassword());
       if (hasPassword()) {
-        if (!getPassword()
-            .equals(other.getPassword())) return false;
+        result = result && getPassword()
+            .equals(other.getPassword());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -807,19 +769,19 @@ public final class Protos {
         protos.Protos.Authentication result = new protos.Protos.Authentication(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.type_ = type_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.userType_ = userType_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.username_ = username_;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
         result.password_ = password_;
@@ -830,35 +792,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -933,14 +895,12 @@ public final class Protos {
       private int type_ = 0;
       /**
        * <code>required .protos.Authentication.AuthType type = 1;</code>
-       * @return Whether the type field is set.
        */
       public boolean hasType() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .protos.Authentication.AuthType type = 1;</code>
-       * @return The type.
        */
       public protos.Protos.Authentication.AuthType getType() {
         @SuppressWarnings("deprecation")
@@ -949,8 +909,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.Authentication.AuthType type = 1;</code>
-       * @param value The type to set.
-       * @return This builder for chaining.
        */
       public Builder setType(protos.Protos.Authentication.AuthType value) {
         if (value == null) {
@@ -963,7 +921,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.Authentication.AuthType type = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -975,14 +932,12 @@ public final class Protos {
       private int userType_ = 0;
       /**
        * <code>required .protos.Authentication.UserType userType = 2;</code>
-       * @return Whether the userType field is set.
        */
       public boolean hasUserType() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required .protos.Authentication.UserType userType = 2;</code>
-       * @return The userType.
        */
       public protos.Protos.Authentication.UserType getUserType() {
         @SuppressWarnings("deprecation")
@@ -991,8 +946,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.Authentication.UserType userType = 2;</code>
-       * @param value The userType to set.
-       * @return This builder for chaining.
        */
       public Builder setUserType(protos.Protos.Authentication.UserType value) {
         if (value == null) {
@@ -1005,7 +958,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.Authentication.UserType userType = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUserType() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1017,14 +969,12 @@ public final class Protos {
       private java.lang.Object username_ = "";
       /**
        * <code>required string username = 3;</code>
-       * @return Whether the username field is set.
        */
       public boolean hasUsername() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string username = 3;</code>
-       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -1042,7 +992,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 3;</code>
-       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -1059,8 +1008,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 3;</code>
-       * @param value The username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -1074,7 +1021,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1084,8 +1030,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 3;</code>
-       * @param value The bytes for username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -1101,14 +1045,12 @@ public final class Protos {
       private java.lang.Object password_ = "";
       /**
        * <code>required string password = 4;</code>
-       * @return Whether the password field is set.
        */
       public boolean hasPassword() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required string password = 4;</code>
-       * @return The password.
        */
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
@@ -1126,7 +1068,6 @@ public final class Protos {
       }
       /**
        * <code>required string password = 4;</code>
-       * @return The bytes for password.
        */
       public com.google.protobuf.ByteString
           getPasswordBytes() {
@@ -1143,8 +1084,6 @@ public final class Protos {
       }
       /**
        * <code>required string password = 4;</code>
-       * @param value The password to set.
-       * @return This builder for chaining.
        */
       public Builder setPassword(
           java.lang.String value) {
@@ -1158,7 +1097,6 @@ public final class Protos {
       }
       /**
        * <code>required string password = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPassword() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -1168,8 +1106,6 @@ public final class Protos {
       }
       /**
        * <code>required string password = 4;</code>
-       * @param value The bytes for password to set.
-       * @return This builder for chaining.
        */
       public Builder setPasswordBytes(
           com.google.protobuf.ByteString value) {
@@ -1240,12 +1176,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.Produce produce = 1;</code>
-     * @return Whether the produce field is set.
      */
     boolean hasProduce();
     /**
      * <code>optional .protos.Produce produce = 1;</code>
-     * @return The produce.
      */
     protos.Protos.Produce getProduce();
     /**
@@ -1255,12 +1189,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.Import import = 2;</code>
-     * @return Whether the import field is set.
      */
     boolean hasImport();
     /**
      * <code>optional .protos.Import import = 2;</code>
-     * @return The import.
      */
     protos.Protos.Import getImport();
     /**
@@ -1283,13 +1215,6 @@ public final class Protos {
       super(builder);
     }
     private Transaction() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Transaction();
     }
 
     @java.lang.Override
@@ -1380,8 +1305,7 @@ public final class Protos {
     private int txnCase_ = 0;
     private java.lang.Object txn_;
     public enum TxnCase
-        implements com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+        implements com.google.protobuf.Internal.EnumLite {
       PRODUCE(1),
       IMPORT(2),
       TXN_NOT_SET(0);
@@ -1390,8 +1314,6 @@ public final class Protos {
         this.value = value;
       }
       /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -1421,14 +1343,12 @@ public final class Protos {
     public static final int PRODUCE_FIELD_NUMBER = 1;
     /**
      * <code>optional .protos.Produce produce = 1;</code>
-     * @return Whether the produce field is set.
      */
     public boolean hasProduce() {
       return txnCase_ == 1;
     }
     /**
      * <code>optional .protos.Produce produce = 1;</code>
-     * @return The produce.
      */
     public protos.Protos.Produce getProduce() {
       if (txnCase_ == 1) {
@@ -1449,14 +1369,12 @@ public final class Protos {
     public static final int IMPORT_FIELD_NUMBER = 2;
     /**
      * <code>optional .protos.Import import = 2;</code>
-     * @return Whether the import field is set.
      */
     public boolean hasImport() {
       return txnCase_ == 2;
     }
     /**
      * <code>optional .protos.Import import = 2;</code>
-     * @return The import.
      */
     public protos.Protos.Import getImport() {
       if (txnCase_ == 2) {
@@ -1538,21 +1456,24 @@ public final class Protos {
       }
       protos.Protos.Transaction other = (protos.Protos.Transaction) obj;
 
-      if (!getTxnCase().equals(other.getTxnCase())) return false;
+      boolean result = true;
+      result = result && getTxnCase().equals(
+          other.getTxnCase());
+      if (!result) return false;
       switch (txnCase_) {
         case 1:
-          if (!getProduce()
-              .equals(other.getProduce())) return false;
+          result = result && getProduce()
+              .equals(other.getProduce());
           break;
         case 2:
-          if (!getImport()
-              .equals(other.getImport())) return false;
+          result = result && getImport()
+              .equals(other.getImport());
           break;
         case 0:
         default:
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -1759,35 +1680,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1873,14 +1794,12 @@ public final class Protos {
           protos.Protos.Produce, protos.Protos.Produce.Builder, protos.Protos.ProduceOrBuilder> produceBuilder_;
       /**
        * <code>optional .protos.Produce produce = 1;</code>
-       * @return Whether the produce field is set.
        */
       public boolean hasProduce() {
         return txnCase_ == 1;
       }
       /**
        * <code>optional .protos.Produce produce = 1;</code>
-       * @return The produce.
        */
       public protos.Protos.Produce getProduce() {
         if (produceBuilder_ == null) {
@@ -2011,14 +1930,12 @@ public final class Protos {
           protos.Protos.Import, protos.Protos.Import.Builder, protos.Protos.ImportOrBuilder> importBuilder_;
       /**
        * <code>optional .protos.Import import = 2;</code>
-       * @return Whether the import field is set.
        */
       public boolean hasImport() {
         return txnCase_ == 2;
       }
       /**
        * <code>optional .protos.Import import = 2;</code>
-       * @return The import.
        */
       public protos.Protos.Import getImport() {
         if (importBuilder_ == null) {
@@ -2203,79 +2120,65 @@ public final class Protos {
 
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return Whether the minimumAmount field is set.
      */
     boolean hasMinimumAmount();
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return The minimumAmount.
      */
     long getMinimumAmount();
 
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return Whether the maximumAmount field is set.
      */
     boolean hasMaximumAmount();
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return The maximumAmount.
      */
     long getMaximumAmount();
 
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return Whether the minimumUnitaryPrice field is set.
      */
     boolean hasMinimumUnitaryPrice();
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return The minimumUnitaryPrice.
      */
     long getMinimumUnitaryPrice();
 
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return Whether the negotiationPeriod field is set.
      */
     boolean hasNegotiationPeriod();
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return The negotiationPeriod.
      */
     long getNegotiationPeriod();
   }
@@ -2294,13 +2197,10 @@ public final class Protos {
     private Produce() {
       productName_ = "";
       producerName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Produce();
+      minimumAmount_ = 0L;
+      maximumAmount_ = 0L;
+      minimumUnitaryPrice_ = 0L;
+      negotiationPeriod_ = 0L;
     }
 
     @java.lang.Override
@@ -2396,14 +2296,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -2421,7 +2319,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -2441,14 +2338,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -2466,7 +2361,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -2486,14 +2380,12 @@ public final class Protos {
     private long minimumAmount_;
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return Whether the minimumAmount field is set.
      */
     public boolean hasMinimumAmount() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return The minimumAmount.
      */
     public long getMinimumAmount() {
       return minimumAmount_;
@@ -2503,14 +2395,12 @@ public final class Protos {
     private long maximumAmount_;
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return Whether the maximumAmount field is set.
      */
     public boolean hasMaximumAmount() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return The maximumAmount.
      */
     public long getMaximumAmount() {
       return maximumAmount_;
@@ -2520,14 +2410,12 @@ public final class Protos {
     private long minimumUnitaryPrice_;
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return Whether the minimumUnitaryPrice field is set.
      */
     public boolean hasMinimumUnitaryPrice() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return The minimumUnitaryPrice.
      */
     public long getMinimumUnitaryPrice() {
       return minimumUnitaryPrice_;
@@ -2537,14 +2425,12 @@ public final class Protos {
     private long negotiationPeriod_;
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return Whether the negotiationPeriod field is set.
      */
     public boolean hasNegotiationPeriod() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return The negotiationPeriod.
      */
     public long getNegotiationPeriod() {
       return negotiationPeriod_;
@@ -2588,22 +2474,22 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt64(3, minimumAmount_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt64(4, maximumAmount_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt64(5, minimumUnitaryPrice_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt64(6, negotiationPeriod_);
       }
       unknownFields.writeTo(output);
@@ -2615,25 +2501,25 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, minimumAmount_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, maximumAmount_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(5, minimumUnitaryPrice_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(6, negotiationPeriod_);
       }
@@ -2652,38 +2538,39 @@ public final class Protos {
       }
       protos.Protos.Produce other = (protos.Protos.Produce) obj;
 
-      if (hasProductName() != other.hasProductName()) return false;
+      boolean result = true;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasMinimumAmount() != other.hasMinimumAmount()) return false;
+      result = result && (hasMinimumAmount() == other.hasMinimumAmount());
       if (hasMinimumAmount()) {
-        if (getMinimumAmount()
-            != other.getMinimumAmount()) return false;
+        result = result && (getMinimumAmount()
+            == other.getMinimumAmount());
       }
-      if (hasMaximumAmount() != other.hasMaximumAmount()) return false;
+      result = result && (hasMaximumAmount() == other.hasMaximumAmount());
       if (hasMaximumAmount()) {
-        if (getMaximumAmount()
-            != other.getMaximumAmount()) return false;
+        result = result && (getMaximumAmount()
+            == other.getMaximumAmount());
       }
-      if (hasMinimumUnitaryPrice() != other.hasMinimumUnitaryPrice()) return false;
+      result = result && (hasMinimumUnitaryPrice() == other.hasMinimumUnitaryPrice());
       if (hasMinimumUnitaryPrice()) {
-        if (getMinimumUnitaryPrice()
-            != other.getMinimumUnitaryPrice()) return false;
+        result = result && (getMinimumUnitaryPrice()
+            == other.getMinimumUnitaryPrice());
       }
-      if (hasNegotiationPeriod() != other.hasNegotiationPeriod()) return false;
+      result = result && (hasNegotiationPeriod() == other.hasNegotiationPeriod());
       if (hasNegotiationPeriod()) {
-        if (getNegotiationPeriod()
-            != other.getNegotiationPeriod()) return false;
+        result = result && (getNegotiationPeriod()
+            == other.getNegotiationPeriod());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -2894,30 +2781,30 @@ public final class Protos {
         protos.Protos.Produce result = new protos.Protos.Produce(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.minimumAmount_ = minimumAmount_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.maximumAmount_ = maximumAmount_;
+        result.minimumAmount_ = minimumAmount_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.minimumUnitaryPrice_ = minimumUnitaryPrice_;
+        result.maximumAmount_ = maximumAmount_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.negotiationPeriod_ = negotiationPeriod_;
+        result.minimumUnitaryPrice_ = minimumUnitaryPrice_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
+        result.negotiationPeriod_ = negotiationPeriod_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2925,35 +2812,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3040,14 +2927,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 1;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -3065,7 +2950,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -3082,8 +2966,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -3097,7 +2979,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3107,8 +2988,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3124,14 +3003,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -3149,7 +3026,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -3166,8 +3042,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -3181,7 +3055,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3191,8 +3064,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3208,22 +3079,18 @@ public final class Protos {
       private long minimumAmount_ ;
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return Whether the minimumAmount field is set.
        */
       public boolean hasMinimumAmount() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return The minimumAmount.
        */
       public long getMinimumAmount() {
         return minimumAmount_;
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @param value The minimumAmount to set.
-       * @return This builder for chaining.
        */
       public Builder setMinimumAmount(long value) {
         bitField0_ |= 0x00000004;
@@ -3233,7 +3100,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMinimumAmount() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -3245,22 +3111,18 @@ public final class Protos {
       private long maximumAmount_ ;
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return Whether the maximumAmount field is set.
        */
       public boolean hasMaximumAmount() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return The maximumAmount.
        */
       public long getMaximumAmount() {
         return maximumAmount_;
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @param value The maximumAmount to set.
-       * @return This builder for chaining.
        */
       public Builder setMaximumAmount(long value) {
         bitField0_ |= 0x00000008;
@@ -3270,7 +3132,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMaximumAmount() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -3282,22 +3143,18 @@ public final class Protos {
       private long minimumUnitaryPrice_ ;
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return Whether the minimumUnitaryPrice field is set.
        */
       public boolean hasMinimumUnitaryPrice() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return The minimumUnitaryPrice.
        */
       public long getMinimumUnitaryPrice() {
         return minimumUnitaryPrice_;
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @param value The minimumUnitaryPrice to set.
-       * @return This builder for chaining.
        */
       public Builder setMinimumUnitaryPrice(long value) {
         bitField0_ |= 0x00000010;
@@ -3307,7 +3164,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMinimumUnitaryPrice() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -3319,22 +3175,18 @@ public final class Protos {
       private long negotiationPeriod_ ;
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return Whether the negotiationPeriod field is set.
        */
       public boolean hasNegotiationPeriod() {
-        return ((bitField0_ & 0x00000020) != 0);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return The negotiationPeriod.
        */
       public long getNegotiationPeriod() {
         return negotiationPeriod_;
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @param value The negotiationPeriod to set.
-       * @return This builder for chaining.
        */
       public Builder setNegotiationPeriod(long value) {
         bitField0_ |= 0x00000020;
@@ -3344,7 +3196,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearNegotiationPeriod() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -3411,74 +3262,61 @@ public final class Protos {
 
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required string importerName = 3;</code>
-     * @return Whether the importerName field is set.
      */
     boolean hasImporterName();
     /**
      * <code>required string importerName = 3;</code>
-     * @return The importerName.
      */
     java.lang.String getImporterName();
     /**
      * <code>required string importerName = 3;</code>
-     * @return The bytes for importerName.
      */
     com.google.protobuf.ByteString
         getImporterNameBytes();
 
     /**
      * <code>required int64 quantity = 4;</code>
-     * @return Whether the quantity field is set.
      */
     boolean hasQuantity();
     /**
      * <code>required int64 quantity = 4;</code>
-     * @return The quantity.
      */
     long getQuantity();
 
     /**
      * <code>required int64 unitaryPrice = 5;</code>
-     * @return Whether the unitaryPrice field is set.
      */
     boolean hasUnitaryPrice();
     /**
      * <code>required int64 unitaryPrice = 5;</code>
-     * @return The unitaryPrice.
      */
     long getUnitaryPrice();
   }
@@ -3498,13 +3336,8 @@ public final class Protos {
       productName_ = "";
       producerName_ = "";
       importerName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Import();
+      quantity_ = 0L;
+      unitaryPrice_ = 0L;
     }
 
     @java.lang.Override
@@ -3596,14 +3429,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -3621,7 +3452,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -3641,14 +3471,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -3666,7 +3494,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -3686,14 +3513,12 @@ public final class Protos {
     private volatile java.lang.Object importerName_;
     /**
      * <code>required string importerName = 3;</code>
-     * @return Whether the importerName field is set.
      */
     public boolean hasImporterName() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string importerName = 3;</code>
-     * @return The importerName.
      */
     public java.lang.String getImporterName() {
       java.lang.Object ref = importerName_;
@@ -3711,7 +3536,6 @@ public final class Protos {
     }
     /**
      * <code>required string importerName = 3;</code>
-     * @return The bytes for importerName.
      */
     public com.google.protobuf.ByteString
         getImporterNameBytes() {
@@ -3731,14 +3555,12 @@ public final class Protos {
     private long quantity_;
     /**
      * <code>required int64 quantity = 4;</code>
-     * @return Whether the quantity field is set.
      */
     public boolean hasQuantity() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required int64 quantity = 4;</code>
-     * @return The quantity.
      */
     public long getQuantity() {
       return quantity_;
@@ -3748,14 +3570,12 @@ public final class Protos {
     private long unitaryPrice_;
     /**
      * <code>required int64 unitaryPrice = 5;</code>
-     * @return Whether the unitaryPrice field is set.
      */
     public boolean hasUnitaryPrice() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>required int64 unitaryPrice = 5;</code>
-     * @return The unitaryPrice.
      */
     public long getUnitaryPrice() {
       return unitaryPrice_;
@@ -3795,19 +3615,19 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, importerName_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt64(4, quantity_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt64(5, unitaryPrice_);
       }
       unknownFields.writeTo(output);
@@ -3819,20 +3639,20 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, importerName_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, quantity_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(5, unitaryPrice_);
       }
@@ -3851,33 +3671,34 @@ public final class Protos {
       }
       protos.Protos.Import other = (protos.Protos.Import) obj;
 
-      if (hasProductName() != other.hasProductName()) return false;
+      boolean result = true;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasImporterName() != other.hasImporterName()) return false;
+      result = result && (hasImporterName() == other.hasImporterName());
       if (hasImporterName()) {
-        if (!getImporterName()
-            .equals(other.getImporterName())) return false;
+        result = result && getImporterName()
+            .equals(other.getImporterName());
       }
-      if (hasQuantity() != other.hasQuantity()) return false;
+      result = result && (hasQuantity() == other.hasQuantity());
       if (hasQuantity()) {
-        if (getQuantity()
-            != other.getQuantity()) return false;
+        result = result && (getQuantity()
+            == other.getQuantity());
       }
-      if (hasUnitaryPrice() != other.hasUnitaryPrice()) return false;
+      result = result && (hasUnitaryPrice() == other.hasUnitaryPrice());
       if (hasUnitaryPrice()) {
-        if (getUnitaryPrice()
-            != other.getUnitaryPrice()) return false;
+        result = result && (getUnitaryPrice()
+            == other.getUnitaryPrice());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -4080,26 +3901,26 @@ public final class Protos {
         protos.Protos.Import result = new protos.Protos.Import(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.importerName_ = importerName_;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.unitaryPrice_ = unitaryPrice_;
+        result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
+        result.unitaryPrice_ = unitaryPrice_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -4107,35 +3928,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -4218,14 +4039,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 1;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -4243,7 +4062,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -4260,8 +4078,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -4275,7 +4091,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -4285,8 +4100,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -4302,14 +4115,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -4327,7 +4138,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -4344,8 +4154,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -4359,7 +4167,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4369,8 +4176,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -4386,14 +4191,12 @@ public final class Protos {
       private java.lang.Object importerName_ = "";
       /**
        * <code>required string importerName = 3;</code>
-       * @return Whether the importerName field is set.
        */
       public boolean hasImporterName() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string importerName = 3;</code>
-       * @return The importerName.
        */
       public java.lang.String getImporterName() {
         java.lang.Object ref = importerName_;
@@ -4411,7 +4214,6 @@ public final class Protos {
       }
       /**
        * <code>required string importerName = 3;</code>
-       * @return The bytes for importerName.
        */
       public com.google.protobuf.ByteString
           getImporterNameBytes() {
@@ -4428,8 +4230,6 @@ public final class Protos {
       }
       /**
        * <code>required string importerName = 3;</code>
-       * @param value The importerName to set.
-       * @return This builder for chaining.
        */
       public Builder setImporterName(
           java.lang.String value) {
@@ -4443,7 +4243,6 @@ public final class Protos {
       }
       /**
        * <code>required string importerName = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearImporterName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -4453,8 +4252,6 @@ public final class Protos {
       }
       /**
        * <code>required string importerName = 3;</code>
-       * @param value The bytes for importerName to set.
-       * @return This builder for chaining.
        */
       public Builder setImporterNameBytes(
           com.google.protobuf.ByteString value) {
@@ -4470,22 +4267,18 @@ public final class Protos {
       private long quantity_ ;
       /**
        * <code>required int64 quantity = 4;</code>
-       * @return Whether the quantity field is set.
        */
       public boolean hasQuantity() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required int64 quantity = 4;</code>
-       * @return The quantity.
        */
       public long getQuantity() {
         return quantity_;
       }
       /**
        * <code>required int64 quantity = 4;</code>
-       * @param value The quantity to set.
-       * @return This builder for chaining.
        */
       public Builder setQuantity(long value) {
         bitField0_ |= 0x00000008;
@@ -4495,7 +4288,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 quantity = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearQuantity() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -4507,22 +4299,18 @@ public final class Protos {
       private long unitaryPrice_ ;
       /**
        * <code>required int64 unitaryPrice = 5;</code>
-       * @return Whether the unitaryPrice field is set.
        */
       public boolean hasUnitaryPrice() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>required int64 unitaryPrice = 5;</code>
-       * @return The unitaryPrice.
        */
       public long getUnitaryPrice() {
         return unitaryPrice_;
       }
       /**
        * <code>required int64 unitaryPrice = 5;</code>
-       * @param value The unitaryPrice to set.
-       * @return This builder for chaining.
        */
       public Builder setUnitaryPrice(long value) {
         bitField0_ |= 0x00000010;
@@ -4532,7 +4320,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 unitaryPrice = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUnitaryPrice() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -4599,12 +4386,10 @@ public final class Protos {
 
     /**
      * <code>required bool success = 1;</code>
-     * @return Whether the success field is set.
      */
     boolean hasSuccess();
     /**
      * <code>required bool success = 1;</code>
-     * @return The success.
      */
     boolean getSuccess();
   }
@@ -4621,13 +4406,7 @@ public final class Protos {
       super(builder);
     }
     private ServerResponse() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ServerResponse();
+      success_ = false;
     }
 
     @java.lang.Override
@@ -4696,14 +4475,12 @@ public final class Protos {
     private boolean success_;
     /**
      * <code>required bool success = 1;</code>
-     * @return Whether the success field is set.
      */
     public boolean hasSuccess() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required bool success = 1;</code>
-     * @return The success.
      */
     public boolean getSuccess() {
       return success_;
@@ -4727,7 +4504,7 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBool(1, success_);
       }
       unknownFields.writeTo(output);
@@ -4739,7 +4516,7 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, success_);
       }
@@ -4758,13 +4535,14 @@ public final class Protos {
       }
       protos.Protos.ServerResponse other = (protos.Protos.ServerResponse) obj;
 
-      if (hasSuccess() != other.hasSuccess()) return false;
+      boolean result = true;
+      result = result && (hasSuccess() == other.hasSuccess());
       if (hasSuccess()) {
-        if (getSuccess()
-            != other.getSuccess()) return false;
+        result = result && (getSuccess()
+            == other.getSuccess());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -4942,10 +4720,10 @@ public final class Protos {
         protos.Protos.ServerResponse result = new protos.Protos.ServerResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.success_ = success_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.success_ = success_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -4953,35 +4731,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5034,22 +4812,18 @@ public final class Protos {
       private boolean success_ ;
       /**
        * <code>required bool success = 1;</code>
-       * @return Whether the success field is set.
        */
       public boolean hasSuccess() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required bool success = 1;</code>
-       * @return The success.
        */
       public boolean getSuccess() {
         return success_;
       }
       /**
        * <code>required bool success = 1;</code>
-       * @param value The success to set.
-       * @return This builder for chaining.
        */
       public Builder setSuccess(boolean value) {
         bitField0_ |= 0x00000001;
@@ -5059,7 +4833,6 @@ public final class Protos {
       }
       /**
        * <code>required bool success = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSuccess() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5126,40 +4899,33 @@ public final class Protos {
 
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     boolean hasUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>required int64 quantity = 2;</code>
-     * @return Whether the quantity field is set.
      */
     boolean hasQuantity();
     /**
      * <code>required int64 quantity = 2;</code>
-     * @return The quantity.
      */
     long getQuantity();
 
     /**
      * <code>required int64 price = 3;</code>
-     * @return Whether the price field is set.
      */
     boolean hasPrice();
     /**
      * <code>required int64 price = 3;</code>
-     * @return The price.
      */
     long getPrice();
   }
@@ -5177,13 +4943,8 @@ public final class Protos {
     }
     private SaleInfo() {
       username_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new SaleInfo();
+      quantity_ = 0L;
+      price_ = 0L;
     }
 
     @java.lang.Override
@@ -5263,14 +5024,12 @@ public final class Protos {
     private volatile java.lang.Object username_;
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -5288,7 +5047,6 @@ public final class Protos {
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -5308,14 +5066,12 @@ public final class Protos {
     private long quantity_;
     /**
      * <code>required int64 quantity = 2;</code>
-     * @return Whether the quantity field is set.
      */
     public boolean hasQuantity() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required int64 quantity = 2;</code>
-     * @return The quantity.
      */
     public long getQuantity() {
       return quantity_;
@@ -5325,14 +5081,12 @@ public final class Protos {
     private long price_;
     /**
      * <code>required int64 price = 3;</code>
-     * @return Whether the price field is set.
      */
     public boolean hasPrice() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required int64 price = 3;</code>
-     * @return The price.
      */
     public long getPrice() {
       return price_;
@@ -5364,13 +5118,13 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt64(2, quantity_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt64(3, price_);
       }
       unknownFields.writeTo(output);
@@ -5382,14 +5136,14 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, quantity_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, price_);
       }
@@ -5408,23 +5162,24 @@ public final class Protos {
       }
       protos.Protos.SaleInfo other = (protos.Protos.SaleInfo) obj;
 
-      if (hasUsername() != other.hasUsername()) return false;
+      boolean result = true;
+      result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
-        if (!getUsername()
-            .equals(other.getUsername())) return false;
+        result = result && getUsername()
+            .equals(other.getUsername());
       }
-      if (hasQuantity() != other.hasQuantity()) return false;
+      result = result && (hasQuantity() == other.hasQuantity());
       if (hasQuantity()) {
-        if (getQuantity()
-            != other.getQuantity()) return false;
+        result = result && (getQuantity()
+            == other.getQuantity());
       }
-      if (hasPrice() != other.hasPrice()) return false;
+      result = result && (hasPrice() == other.hasPrice());
       if (hasPrice()) {
-        if (getPrice()
-            != other.getPrice()) return false;
+        result = result && (getPrice()
+            == other.getPrice());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -5615,18 +5370,18 @@ public final class Protos {
         protos.Protos.SaleInfo result = new protos.Protos.SaleInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.price_ = price_;
+        result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
+        result.price_ = price_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5634,35 +5389,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5729,14 +5484,12 @@ public final class Protos {
       private java.lang.Object username_ = "";
       /**
        * <code>required string username = 1;</code>
-       * @return Whether the username field is set.
        */
       public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -5754,7 +5507,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -5771,8 +5523,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -5786,7 +5536,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5796,8 +5545,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The bytes for username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -5813,22 +5560,18 @@ public final class Protos {
       private long quantity_ ;
       /**
        * <code>required int64 quantity = 2;</code>
-       * @return Whether the quantity field is set.
        */
       public boolean hasQuantity() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required int64 quantity = 2;</code>
-       * @return The quantity.
        */
       public long getQuantity() {
         return quantity_;
       }
       /**
        * <code>required int64 quantity = 2;</code>
-       * @param value The quantity to set.
-       * @return This builder for chaining.
        */
       public Builder setQuantity(long value) {
         bitField0_ |= 0x00000002;
@@ -5838,7 +5581,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 quantity = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearQuantity() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -5850,22 +5592,18 @@ public final class Protos {
       private long price_ ;
       /**
        * <code>required int64 price = 3;</code>
-       * @return Whether the price field is set.
        */
       public boolean hasPrice() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required int64 price = 3;</code>
-       * @return The price.
        */
       public long getPrice() {
         return price_;
       }
       /**
        * <code>required int64 price = 3;</code>
-       * @param value The price to set.
-       * @return This builder for chaining.
        */
       public Builder setPrice(long value) {
         bitField0_ |= 0x00000004;
@@ -5875,7 +5613,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 price = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPrice() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -5942,12 +5679,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.ImporterResponse importer = 1;</code>
-     * @return Whether the importer field is set.
      */
     boolean hasImporter();
     /**
      * <code>optional .protos.ImporterResponse importer = 1;</code>
-     * @return The importer.
      */
     protos.Protos.ImporterResponse getImporter();
     /**
@@ -5957,12 +5692,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.DealerTimeout producer = 2;</code>
-     * @return Whether the producer field is set.
      */
     boolean hasProducer();
     /**
      * <code>optional .protos.DealerTimeout producer = 2;</code>
-     * @return The producer.
      */
     protos.Protos.DealerTimeout getProducer();
     /**
@@ -5985,13 +5718,6 @@ public final class Protos {
       super(builder);
     }
     private Response() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Response();
     }
 
     @java.lang.Override
@@ -6082,8 +5808,7 @@ public final class Protos {
     private int resCase_ = 0;
     private java.lang.Object res_;
     public enum ResCase
-        implements com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+        implements com.google.protobuf.Internal.EnumLite {
       IMPORTER(1),
       PRODUCER(2),
       RES_NOT_SET(0);
@@ -6092,8 +5817,6 @@ public final class Protos {
         this.value = value;
       }
       /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -6123,14 +5846,12 @@ public final class Protos {
     public static final int IMPORTER_FIELD_NUMBER = 1;
     /**
      * <code>optional .protos.ImporterResponse importer = 1;</code>
-     * @return Whether the importer field is set.
      */
     public boolean hasImporter() {
       return resCase_ == 1;
     }
     /**
      * <code>optional .protos.ImporterResponse importer = 1;</code>
-     * @return The importer.
      */
     public protos.Protos.ImporterResponse getImporter() {
       if (resCase_ == 1) {
@@ -6151,14 +5872,12 @@ public final class Protos {
     public static final int PRODUCER_FIELD_NUMBER = 2;
     /**
      * <code>optional .protos.DealerTimeout producer = 2;</code>
-     * @return Whether the producer field is set.
      */
     public boolean hasProducer() {
       return resCase_ == 2;
     }
     /**
      * <code>optional .protos.DealerTimeout producer = 2;</code>
-     * @return The producer.
      */
     public protos.Protos.DealerTimeout getProducer() {
       if (resCase_ == 2) {
@@ -6240,21 +5959,24 @@ public final class Protos {
       }
       protos.Protos.Response other = (protos.Protos.Response) obj;
 
-      if (!getResCase().equals(other.getResCase())) return false;
+      boolean result = true;
+      result = result && getResCase().equals(
+          other.getResCase());
+      if (!result) return false;
       switch (resCase_) {
         case 1:
-          if (!getImporter()
-              .equals(other.getImporter())) return false;
+          result = result && getImporter()
+              .equals(other.getImporter());
           break;
         case 2:
-          if (!getProducer()
-              .equals(other.getProducer())) return false;
+          result = result && getProducer()
+              .equals(other.getProducer());
           break;
         case 0:
         default:
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -6461,35 +6183,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -6575,14 +6297,12 @@ public final class Protos {
           protos.Protos.ImporterResponse, protos.Protos.ImporterResponse.Builder, protos.Protos.ImporterResponseOrBuilder> importerBuilder_;
       /**
        * <code>optional .protos.ImporterResponse importer = 1;</code>
-       * @return Whether the importer field is set.
        */
       public boolean hasImporter() {
         return resCase_ == 1;
       }
       /**
        * <code>optional .protos.ImporterResponse importer = 1;</code>
-       * @return The importer.
        */
       public protos.Protos.ImporterResponse getImporter() {
         if (importerBuilder_ == null) {
@@ -6713,14 +6433,12 @@ public final class Protos {
           protos.Protos.DealerTimeout, protos.Protos.DealerTimeout.Builder, protos.Protos.DealerTimeoutOrBuilder> producerBuilder_;
       /**
        * <code>optional .protos.DealerTimeout producer = 2;</code>
-       * @return Whether the producer field is set.
        */
       public boolean hasProducer() {
         return resCase_ == 2;
       }
       /**
        * <code>optional .protos.DealerTimeout producer = 2;</code>
-       * @return The producer.
        */
       public protos.Protos.DealerTimeout getProducer() {
         if (producerBuilder_ == null) {
@@ -6905,57 +6623,47 @@ public final class Protos {
 
     /**
      * <code>required string producerName = 1;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 1;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 1;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required string productName = 2;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 2;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 2;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
      * <code>required int64 quantity = 3;</code>
-     * @return Whether the quantity field is set.
      */
     boolean hasQuantity();
     /**
      * <code>required int64 quantity = 3;</code>
-     * @return The quantity.
      */
     long getQuantity();
 
     /**
      * <code>required int64 price = 4;</code>
-     * @return Whether the price field is set.
      */
     boolean hasPrice();
     /**
      * <code>required int64 price = 4;</code>
-     * @return The price.
      */
     long getPrice();
   }
@@ -6974,13 +6682,8 @@ public final class Protos {
     private ImporterResponse() {
       producerName_ = "";
       productName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ImporterResponse();
+      quantity_ = 0L;
+      price_ = 0L;
     }
 
     @java.lang.Override
@@ -7066,14 +6769,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 1;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string producerName = 1;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -7091,7 +6792,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 1;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -7111,14 +6811,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 2;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string productName = 2;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -7136,7 +6834,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 2;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -7156,14 +6853,12 @@ public final class Protos {
     private long quantity_;
     /**
      * <code>required int64 quantity = 3;</code>
-     * @return Whether the quantity field is set.
      */
     public boolean hasQuantity() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required int64 quantity = 3;</code>
-     * @return The quantity.
      */
     public long getQuantity() {
       return quantity_;
@@ -7173,14 +6868,12 @@ public final class Protos {
     private long price_;
     /**
      * <code>required int64 price = 4;</code>
-     * @return Whether the price field is set.
      */
     public boolean hasPrice() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required int64 price = 4;</code>
-     * @return The price.
      */
     public long getPrice() {
       return price_;
@@ -7216,16 +6909,16 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, producerName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, productName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt64(3, quantity_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt64(4, price_);
       }
       unknownFields.writeTo(output);
@@ -7237,17 +6930,17 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, producerName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, productName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, quantity_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, price_);
       }
@@ -7266,28 +6959,29 @@ public final class Protos {
       }
       protos.Protos.ImporterResponse other = (protos.Protos.ImporterResponse) obj;
 
-      if (hasProducerName() != other.hasProducerName()) return false;
+      boolean result = true;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasProductName() != other.hasProductName()) return false;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (hasQuantity() != other.hasQuantity()) return false;
+      result = result && (hasQuantity() == other.hasQuantity());
       if (hasQuantity()) {
-        if (getQuantity()
-            != other.getQuantity()) return false;
+        result = result && (getQuantity()
+            == other.getQuantity());
       }
-      if (hasPrice() != other.hasPrice()) return false;
+      result = result && (hasPrice() == other.hasPrice());
       if (hasPrice()) {
-        if (getPrice()
-            != other.getPrice()) return false;
+        result = result && (getPrice()
+            == other.getPrice());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -7484,22 +7178,22 @@ public final class Protos {
         protos.Protos.ImporterResponse result = new protos.Protos.ImporterResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.price_ = price_;
+        result.quantity_ = quantity_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
+        result.price_ = price_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7507,35 +7201,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -7610,14 +7304,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 1;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string producerName = 1;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -7635,7 +7327,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 1;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -7652,8 +7343,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 1;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -7667,7 +7356,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -7677,8 +7365,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 1;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -7694,14 +7380,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 2;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string productName = 2;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -7719,7 +7403,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 2;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -7736,8 +7419,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 2;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -7751,7 +7432,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -7761,8 +7441,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 2;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -7778,22 +7456,18 @@ public final class Protos {
       private long quantity_ ;
       /**
        * <code>required int64 quantity = 3;</code>
-       * @return Whether the quantity field is set.
        */
       public boolean hasQuantity() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required int64 quantity = 3;</code>
-       * @return The quantity.
        */
       public long getQuantity() {
         return quantity_;
       }
       /**
        * <code>required int64 quantity = 3;</code>
-       * @param value The quantity to set.
-       * @return This builder for chaining.
        */
       public Builder setQuantity(long value) {
         bitField0_ |= 0x00000004;
@@ -7803,7 +7477,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 quantity = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearQuantity() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -7815,22 +7488,18 @@ public final class Protos {
       private long price_ ;
       /**
        * <code>required int64 price = 4;</code>
-       * @return Whether the price field is set.
        */
       public boolean hasPrice() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required int64 price = 4;</code>
-       * @return The price.
        */
       public long getPrice() {
         return price_;
       }
       /**
        * <code>required int64 price = 4;</code>
-       * @param value The price to set.
-       * @return This builder for chaining.
        */
       public Builder setPrice(long value) {
         bitField0_ |= 0x00000008;
@@ -7840,7 +7509,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 price = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPrice() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -7907,45 +7575,37 @@ public final class Protos {
 
     /**
      * <code>required bool success = 1;</code>
-     * @return Whether the success field is set.
      */
     boolean hasSuccess();
     /**
      * <code>required bool success = 1;</code>
-     * @return The success.
      */
     boolean getSuccess();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
@@ -7987,16 +7647,10 @@ public final class Protos {
       super(builder);
     }
     private DealerTimeout() {
+      success_ = false;
       producerName_ = "";
       productName_ = "";
       sales_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new DealerTimeout();
     }
 
     @java.lang.Override
@@ -8041,7 +7695,7 @@ public final class Protos {
               break;
             }
             case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 sales_ = new java.util.ArrayList<protos.Protos.SaleInfo>();
                 mutable_bitField0_ |= 0x00000008;
               }
@@ -8064,7 +7718,7 @@ public final class Protos {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) != 0)) {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           sales_ = java.util.Collections.unmodifiableList(sales_);
         }
         this.unknownFields = unknownFields.build();
@@ -8089,14 +7743,12 @@ public final class Protos {
     private boolean success_;
     /**
      * <code>required bool success = 1;</code>
-     * @return Whether the success field is set.
      */
     public boolean hasSuccess() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required bool success = 1;</code>
-     * @return The success.
      */
     public boolean getSuccess() {
       return success_;
@@ -8106,14 +7758,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -8131,7 +7781,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -8151,14 +7800,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -8176,7 +7823,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -8259,13 +7905,13 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBool(1, success_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, productName_);
       }
       for (int i = 0; i < sales_.size(); i++) {
@@ -8280,14 +7926,14 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, success_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, productName_);
       }
       for (int i = 0; i < sales_.size(); i++) {
@@ -8309,25 +7955,26 @@ public final class Protos {
       }
       protos.Protos.DealerTimeout other = (protos.Protos.DealerTimeout) obj;
 
-      if (hasSuccess() != other.hasSuccess()) return false;
+      boolean result = true;
+      result = result && (hasSuccess() == other.hasSuccess());
       if (hasSuccess()) {
-        if (getSuccess()
-            != other.getSuccess()) return false;
+        result = result && (getSuccess()
+            == other.getSuccess());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasProductName() != other.hasProductName()) return false;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (!getSalesList()
-          .equals(other.getSalesList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && getSalesList()
+          .equals(other.getSalesList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -8528,20 +8175,20 @@ public final class Protos {
         protos.Protos.DealerTimeout result = new protos.Protos.DealerTimeout(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.success_ = success_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.success_ = success_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.productName_ = productName_;
         if (salesBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
             sales_ = java.util.Collections.unmodifiableList(sales_);
             bitField0_ = (bitField0_ & ~0x00000008);
           }
@@ -8556,35 +8203,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -8684,22 +8331,18 @@ public final class Protos {
       private boolean success_ ;
       /**
        * <code>required bool success = 1;</code>
-       * @return Whether the success field is set.
        */
       public boolean hasSuccess() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required bool success = 1;</code>
-       * @return The success.
        */
       public boolean getSuccess() {
         return success_;
       }
       /**
        * <code>required bool success = 1;</code>
-       * @param value The success to set.
-       * @return This builder for chaining.
        */
       public Builder setSuccess(boolean value) {
         bitField0_ |= 0x00000001;
@@ -8709,7 +8352,6 @@ public final class Protos {
       }
       /**
        * <code>required bool success = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSuccess() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -8721,14 +8363,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -8746,7 +8386,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -8763,8 +8402,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -8778,7 +8415,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -8788,8 +8424,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -8805,14 +8439,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 3;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -8830,7 +8462,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -8847,8 +8478,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -8862,7 +8491,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -8872,8 +8500,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -8889,7 +8515,7 @@ public final class Protos {
       private java.util.List<protos.Protos.SaleInfo> sales_ =
         java.util.Collections.emptyList();
       private void ensureSalesIsMutable() {
-        if (!((bitField0_ & 0x00000008) != 0)) {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
           sales_ = new java.util.ArrayList<protos.Protos.SaleInfo>(sales_);
           bitField0_ |= 0x00000008;
          }
@@ -9118,7 +8744,7 @@ public final class Protos {
           salesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               protos.Protos.SaleInfo, protos.Protos.SaleInfo.Builder, protos.Protos.SaleInfoOrBuilder>(
                   sales_,
-                  ((bitField0_ & 0x00000008) != 0),
+                  ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
                   isClean());
           sales_ = null;
@@ -9184,12 +8810,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.POSTNegotiation nn = 1;</code>
-     * @return Whether the nn field is set.
      */
     boolean hasNn();
     /**
      * <code>optional .protos.POSTNegotiation nn = 1;</code>
-     * @return The nn.
      */
     protos.Protos.POSTNegotiation getNn();
     /**
@@ -9199,12 +8823,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.DELETENegotiation no = 2;</code>
-     * @return Whether the no field is set.
      */
     boolean hasNo();
     /**
      * <code>optional .protos.DELETENegotiation no = 2;</code>
-     * @return The no.
      */
     protos.Protos.DELETENegotiation getNo();
     /**
@@ -9214,12 +8836,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-     * @return Whether the gpi field is set.
      */
     boolean hasGpi();
     /**
      * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-     * @return The gpi.
      */
     protos.Protos.GETProducerInfo getGpi();
     /**
@@ -9229,12 +8849,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.GETEntities ge = 4;</code>
-     * @return Whether the ge field is set.
      */
     boolean hasGe();
     /**
      * <code>optional .protos.GETEntities ge = 4;</code>
-     * @return The ge.
      */
     protos.Protos.GETEntities getGe();
     /**
@@ -9244,12 +8862,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.Subscribe sub = 5;</code>
-     * @return Whether the sub field is set.
      */
     boolean hasSub();
     /**
      * <code>optional .protos.Subscribe sub = 5;</code>
-     * @return The sub.
      */
     protos.Protos.Subscribe getSub();
     /**
@@ -9259,12 +8875,10 @@ public final class Protos {
 
     /**
      * <code>optional .protos.Unsubscribe unsub = 6;</code>
-     * @return Whether the unsub field is set.
      */
     boolean hasUnsub();
     /**
      * <code>optional .protos.Unsubscribe unsub = 6;</code>
-     * @return The unsub.
      */
     protos.Protos.Unsubscribe getUnsub();
     /**
@@ -9287,13 +8901,6 @@ public final class Protos {
       super(builder);
     }
     private CatalogRequest() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CatalogRequest();
     }
 
     @java.lang.Override
@@ -9440,8 +9047,7 @@ public final class Protos {
     private int requestCase_ = 0;
     private java.lang.Object request_;
     public enum RequestCase
-        implements com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+        implements com.google.protobuf.Internal.EnumLite {
       NN(1),
       NO(2),
       GPI(3),
@@ -9454,8 +9060,6 @@ public final class Protos {
         this.value = value;
       }
       /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -9489,14 +9093,12 @@ public final class Protos {
     public static final int NN_FIELD_NUMBER = 1;
     /**
      * <code>optional .protos.POSTNegotiation nn = 1;</code>
-     * @return Whether the nn field is set.
      */
     public boolean hasNn() {
       return requestCase_ == 1;
     }
     /**
      * <code>optional .protos.POSTNegotiation nn = 1;</code>
-     * @return The nn.
      */
     public protos.Protos.POSTNegotiation getNn() {
       if (requestCase_ == 1) {
@@ -9517,14 +9119,12 @@ public final class Protos {
     public static final int NO_FIELD_NUMBER = 2;
     /**
      * <code>optional .protos.DELETENegotiation no = 2;</code>
-     * @return Whether the no field is set.
      */
     public boolean hasNo() {
       return requestCase_ == 2;
     }
     /**
      * <code>optional .protos.DELETENegotiation no = 2;</code>
-     * @return The no.
      */
     public protos.Protos.DELETENegotiation getNo() {
       if (requestCase_ == 2) {
@@ -9545,14 +9145,12 @@ public final class Protos {
     public static final int GPI_FIELD_NUMBER = 3;
     /**
      * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-     * @return Whether the gpi field is set.
      */
     public boolean hasGpi() {
       return requestCase_ == 3;
     }
     /**
      * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-     * @return The gpi.
      */
     public protos.Protos.GETProducerInfo getGpi() {
       if (requestCase_ == 3) {
@@ -9573,14 +9171,12 @@ public final class Protos {
     public static final int GE_FIELD_NUMBER = 4;
     /**
      * <code>optional .protos.GETEntities ge = 4;</code>
-     * @return Whether the ge field is set.
      */
     public boolean hasGe() {
       return requestCase_ == 4;
     }
     /**
      * <code>optional .protos.GETEntities ge = 4;</code>
-     * @return The ge.
      */
     public protos.Protos.GETEntities getGe() {
       if (requestCase_ == 4) {
@@ -9601,14 +9197,12 @@ public final class Protos {
     public static final int SUB_FIELD_NUMBER = 5;
     /**
      * <code>optional .protos.Subscribe sub = 5;</code>
-     * @return Whether the sub field is set.
      */
     public boolean hasSub() {
       return requestCase_ == 5;
     }
     /**
      * <code>optional .protos.Subscribe sub = 5;</code>
-     * @return The sub.
      */
     public protos.Protos.Subscribe getSub() {
       if (requestCase_ == 5) {
@@ -9629,14 +9223,12 @@ public final class Protos {
     public static final int UNSUB_FIELD_NUMBER = 6;
     /**
      * <code>optional .protos.Unsubscribe unsub = 6;</code>
-     * @return Whether the unsub field is set.
      */
     public boolean hasUnsub() {
       return requestCase_ == 6;
     }
     /**
      * <code>optional .protos.Unsubscribe unsub = 6;</code>
-     * @return The unsub.
      */
     public protos.Protos.Unsubscribe getUnsub() {
       if (requestCase_ == 6) {
@@ -9770,37 +9362,40 @@ public final class Protos {
       }
       protos.Protos.CatalogRequest other = (protos.Protos.CatalogRequest) obj;
 
-      if (!getRequestCase().equals(other.getRequestCase())) return false;
+      boolean result = true;
+      result = result && getRequestCase().equals(
+          other.getRequestCase());
+      if (!result) return false;
       switch (requestCase_) {
         case 1:
-          if (!getNn()
-              .equals(other.getNn())) return false;
+          result = result && getNn()
+              .equals(other.getNn());
           break;
         case 2:
-          if (!getNo()
-              .equals(other.getNo())) return false;
+          result = result && getNo()
+              .equals(other.getNo());
           break;
         case 3:
-          if (!getGpi()
-              .equals(other.getGpi())) return false;
+          result = result && getGpi()
+              .equals(other.getGpi());
           break;
         case 4:
-          if (!getGe()
-              .equals(other.getGe())) return false;
+          result = result && getGe()
+              .equals(other.getGe());
           break;
         case 5:
-          if (!getSub()
-              .equals(other.getSub())) return false;
+          result = result && getSub()
+              .equals(other.getSub());
           break;
         case 6:
-          if (!getUnsub()
-              .equals(other.getUnsub())) return false;
+          result = result && getUnsub()
+              .equals(other.getUnsub());
           break;
         case 0:
         default:
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -10051,35 +9646,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -10201,14 +9796,12 @@ public final class Protos {
           protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder> nnBuilder_;
       /**
        * <code>optional .protos.POSTNegotiation nn = 1;</code>
-       * @return Whether the nn field is set.
        */
       public boolean hasNn() {
         return requestCase_ == 1;
       }
       /**
        * <code>optional .protos.POSTNegotiation nn = 1;</code>
-       * @return The nn.
        */
       public protos.Protos.POSTNegotiation getNn() {
         if (nnBuilder_ == null) {
@@ -10339,14 +9932,12 @@ public final class Protos {
           protos.Protos.DELETENegotiation, protos.Protos.DELETENegotiation.Builder, protos.Protos.DELETENegotiationOrBuilder> noBuilder_;
       /**
        * <code>optional .protos.DELETENegotiation no = 2;</code>
-       * @return Whether the no field is set.
        */
       public boolean hasNo() {
         return requestCase_ == 2;
       }
       /**
        * <code>optional .protos.DELETENegotiation no = 2;</code>
-       * @return The no.
        */
       public protos.Protos.DELETENegotiation getNo() {
         if (noBuilder_ == null) {
@@ -10477,14 +10068,12 @@ public final class Protos {
           protos.Protos.GETProducerInfo, protos.Protos.GETProducerInfo.Builder, protos.Protos.GETProducerInfoOrBuilder> gpiBuilder_;
       /**
        * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-       * @return Whether the gpi field is set.
        */
       public boolean hasGpi() {
         return requestCase_ == 3;
       }
       /**
        * <code>optional .protos.GETProducerInfo gpi = 3;</code>
-       * @return The gpi.
        */
       public protos.Protos.GETProducerInfo getGpi() {
         if (gpiBuilder_ == null) {
@@ -10615,14 +10204,12 @@ public final class Protos {
           protos.Protos.GETEntities, protos.Protos.GETEntities.Builder, protos.Protos.GETEntitiesOrBuilder> geBuilder_;
       /**
        * <code>optional .protos.GETEntities ge = 4;</code>
-       * @return Whether the ge field is set.
        */
       public boolean hasGe() {
         return requestCase_ == 4;
       }
       /**
        * <code>optional .protos.GETEntities ge = 4;</code>
-       * @return The ge.
        */
       public protos.Protos.GETEntities getGe() {
         if (geBuilder_ == null) {
@@ -10753,14 +10340,12 @@ public final class Protos {
           protos.Protos.Subscribe, protos.Protos.Subscribe.Builder, protos.Protos.SubscribeOrBuilder> subBuilder_;
       /**
        * <code>optional .protos.Subscribe sub = 5;</code>
-       * @return Whether the sub field is set.
        */
       public boolean hasSub() {
         return requestCase_ == 5;
       }
       /**
        * <code>optional .protos.Subscribe sub = 5;</code>
-       * @return The sub.
        */
       public protos.Protos.Subscribe getSub() {
         if (subBuilder_ == null) {
@@ -10891,14 +10476,12 @@ public final class Protos {
           protos.Protos.Unsubscribe, protos.Protos.Unsubscribe.Builder, protos.Protos.UnsubscribeOrBuilder> unsubBuilder_;
       /**
        * <code>optional .protos.Unsubscribe unsub = 6;</code>
-       * @return Whether the unsub field is set.
        */
       public boolean hasUnsub() {
         return requestCase_ == 6;
       }
       /**
        * <code>optional .protos.Unsubscribe unsub = 6;</code>
-       * @return The unsub.
        */
       public protos.Protos.Unsubscribe getUnsub() {
         if (unsubBuilder_ == null) {
@@ -11083,79 +10666,65 @@ public final class Protos {
 
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return Whether the minimumAmount field is set.
      */
     boolean hasMinimumAmount();
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return The minimumAmount.
      */
     long getMinimumAmount();
 
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return Whether the maximumAmount field is set.
      */
     boolean hasMaximumAmount();
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return The maximumAmount.
      */
     long getMaximumAmount();
 
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return Whether the minimumUnitaryPrice field is set.
      */
     boolean hasMinimumUnitaryPrice();
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return The minimumUnitaryPrice.
      */
     long getMinimumUnitaryPrice();
 
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return Whether the negotiationPeriod field is set.
      */
     boolean hasNegotiationPeriod();
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return The negotiationPeriod.
      */
     long getNegotiationPeriod();
   }
@@ -11174,13 +10743,10 @@ public final class Protos {
     private POSTNegotiation() {
       productName_ = "";
       producerName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new POSTNegotiation();
+      minimumAmount_ = 0L;
+      maximumAmount_ = 0L;
+      minimumUnitaryPrice_ = 0L;
+      negotiationPeriod_ = 0L;
     }
 
     @java.lang.Override
@@ -11276,14 +10842,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -11301,7 +10865,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -11321,14 +10884,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -11346,7 +10907,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -11366,14 +10926,12 @@ public final class Protos {
     private long minimumAmount_;
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return Whether the minimumAmount field is set.
      */
     public boolean hasMinimumAmount() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required int64 minimumAmount = 3;</code>
-     * @return The minimumAmount.
      */
     public long getMinimumAmount() {
       return minimumAmount_;
@@ -11383,14 +10941,12 @@ public final class Protos {
     private long maximumAmount_;
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return Whether the maximumAmount field is set.
      */
     public boolean hasMaximumAmount() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required int64 maximumAmount = 4;</code>
-     * @return The maximumAmount.
      */
     public long getMaximumAmount() {
       return maximumAmount_;
@@ -11400,14 +10956,12 @@ public final class Protos {
     private long minimumUnitaryPrice_;
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return Whether the minimumUnitaryPrice field is set.
      */
     public boolean hasMinimumUnitaryPrice() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>required int64 minimumUnitaryPrice = 5;</code>
-     * @return The minimumUnitaryPrice.
      */
     public long getMinimumUnitaryPrice() {
       return minimumUnitaryPrice_;
@@ -11417,14 +10971,12 @@ public final class Protos {
     private long negotiationPeriod_;
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return Whether the negotiationPeriod field is set.
      */
     public boolean hasNegotiationPeriod() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>required int64 negotiationPeriod = 6;</code>
-     * @return The negotiationPeriod.
      */
     public long getNegotiationPeriod() {
       return negotiationPeriod_;
@@ -11468,22 +11020,22 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt64(3, minimumAmount_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt64(4, maximumAmount_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt64(5, minimumUnitaryPrice_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt64(6, negotiationPeriod_);
       }
       unknownFields.writeTo(output);
@@ -11495,25 +11047,25 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, minimumAmount_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, maximumAmount_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(5, minimumUnitaryPrice_);
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(6, negotiationPeriod_);
       }
@@ -11532,38 +11084,39 @@ public final class Protos {
       }
       protos.Protos.POSTNegotiation other = (protos.Protos.POSTNegotiation) obj;
 
-      if (hasProductName() != other.hasProductName()) return false;
+      boolean result = true;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasMinimumAmount() != other.hasMinimumAmount()) return false;
+      result = result && (hasMinimumAmount() == other.hasMinimumAmount());
       if (hasMinimumAmount()) {
-        if (getMinimumAmount()
-            != other.getMinimumAmount()) return false;
+        result = result && (getMinimumAmount()
+            == other.getMinimumAmount());
       }
-      if (hasMaximumAmount() != other.hasMaximumAmount()) return false;
+      result = result && (hasMaximumAmount() == other.hasMaximumAmount());
       if (hasMaximumAmount()) {
-        if (getMaximumAmount()
-            != other.getMaximumAmount()) return false;
+        result = result && (getMaximumAmount()
+            == other.getMaximumAmount());
       }
-      if (hasMinimumUnitaryPrice() != other.hasMinimumUnitaryPrice()) return false;
+      result = result && (hasMinimumUnitaryPrice() == other.hasMinimumUnitaryPrice());
       if (hasMinimumUnitaryPrice()) {
-        if (getMinimumUnitaryPrice()
-            != other.getMinimumUnitaryPrice()) return false;
+        result = result && (getMinimumUnitaryPrice()
+            == other.getMinimumUnitaryPrice());
       }
-      if (hasNegotiationPeriod() != other.hasNegotiationPeriod()) return false;
+      result = result && (hasNegotiationPeriod() == other.hasNegotiationPeriod());
       if (hasNegotiationPeriod()) {
-        if (getNegotiationPeriod()
-            != other.getNegotiationPeriod()) return false;
+        result = result && (getNegotiationPeriod()
+            == other.getNegotiationPeriod());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -11774,30 +11327,30 @@ public final class Protos {
         protos.Protos.POSTNegotiation result = new protos.Protos.POSTNegotiation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.minimumAmount_ = minimumAmount_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.maximumAmount_ = maximumAmount_;
+        result.minimumAmount_ = minimumAmount_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.minimumUnitaryPrice_ = minimumUnitaryPrice_;
+        result.maximumAmount_ = maximumAmount_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.negotiationPeriod_ = negotiationPeriod_;
+        result.minimumUnitaryPrice_ = minimumUnitaryPrice_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
+        result.negotiationPeriod_ = negotiationPeriod_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11805,35 +11358,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -11920,14 +11473,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 1;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -11945,7 +11496,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -11962,8 +11512,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -11977,7 +11525,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -11987,8 +11534,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -12004,14 +11549,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -12029,7 +11572,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -12046,8 +11588,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -12061,7 +11601,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -12071,8 +11610,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -12088,22 +11625,18 @@ public final class Protos {
       private long minimumAmount_ ;
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return Whether the minimumAmount field is set.
        */
       public boolean hasMinimumAmount() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return The minimumAmount.
        */
       public long getMinimumAmount() {
         return minimumAmount_;
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @param value The minimumAmount to set.
-       * @return This builder for chaining.
        */
       public Builder setMinimumAmount(long value) {
         bitField0_ |= 0x00000004;
@@ -12113,7 +11646,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 minimumAmount = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMinimumAmount() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -12125,22 +11657,18 @@ public final class Protos {
       private long maximumAmount_ ;
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return Whether the maximumAmount field is set.
        */
       public boolean hasMaximumAmount() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return The maximumAmount.
        */
       public long getMaximumAmount() {
         return maximumAmount_;
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @param value The maximumAmount to set.
-       * @return This builder for chaining.
        */
       public Builder setMaximumAmount(long value) {
         bitField0_ |= 0x00000008;
@@ -12150,7 +11678,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 maximumAmount = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMaximumAmount() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -12162,22 +11689,18 @@ public final class Protos {
       private long minimumUnitaryPrice_ ;
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return Whether the minimumUnitaryPrice field is set.
        */
       public boolean hasMinimumUnitaryPrice() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return The minimumUnitaryPrice.
        */
       public long getMinimumUnitaryPrice() {
         return minimumUnitaryPrice_;
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @param value The minimumUnitaryPrice to set.
-       * @return This builder for chaining.
        */
       public Builder setMinimumUnitaryPrice(long value) {
         bitField0_ |= 0x00000010;
@@ -12187,7 +11710,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 minimumUnitaryPrice = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMinimumUnitaryPrice() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -12199,22 +11721,18 @@ public final class Protos {
       private long negotiationPeriod_ ;
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return Whether the negotiationPeriod field is set.
        */
       public boolean hasNegotiationPeriod() {
-        return ((bitField0_ & 0x00000020) != 0);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return The negotiationPeriod.
        */
       public long getNegotiationPeriod() {
         return negotiationPeriod_;
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @param value The negotiationPeriod to set.
-       * @return This builder for chaining.
        */
       public Builder setNegotiationPeriod(long value) {
         bitField0_ |= 0x00000020;
@@ -12224,7 +11742,6 @@ public final class Protos {
       }
       /**
        * <code>required int64 negotiationPeriod = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearNegotiationPeriod() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -12291,34 +11808,28 @@ public final class Protos {
 
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
@@ -12338,13 +11849,6 @@ public final class Protos {
     private DELETENegotiation() {
       productName_ = "";
       producerName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new DELETENegotiation();
     }
 
     @java.lang.Override
@@ -12420,14 +11924,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 1;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -12445,7 +11947,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 1;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -12465,14 +11966,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -12490,7 +11989,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -12528,10 +12026,10 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
       unknownFields.writeTo(output);
@@ -12543,10 +12041,10 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productName_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
       size += unknownFields.getSerializedSize();
@@ -12564,18 +12062,19 @@ public final class Protos {
       }
       protos.Protos.DELETENegotiation other = (protos.Protos.DELETENegotiation) obj;
 
-      if (hasProductName() != other.hasProductName()) return false;
+      boolean result = true;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -12758,11 +12257,11 @@ public final class Protos {
         protos.Protos.DELETENegotiation result = new protos.Protos.DELETENegotiation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.productName_ = productName_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
@@ -12773,35 +12272,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -12864,14 +12363,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 1;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -12889,7 +12386,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -12906,8 +12402,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -12921,7 +12415,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -12931,8 +12424,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 1;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -12948,14 +12439,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -12973,7 +12462,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -12990,8 +12478,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -13005,7 +12491,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -13015,8 +12500,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -13087,12 +12570,10 @@ public final class Protos {
 
     /**
      * <code>required .protos.GETEntities.Type Entities = 1;</code>
-     * @return Whether the entities field is set.
      */
     boolean hasEntities();
     /**
      * <code>required .protos.GETEntities.Type Entities = 1;</code>
-     * @return The entities.
      */
     protos.Protos.GETEntities.Type getEntities();
   }
@@ -13110,13 +12591,6 @@ public final class Protos {
     }
     private GETEntities() {
       entities_ = 0;
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GETEntities();
     }
 
     @java.lang.Override
@@ -13217,8 +12691,6 @@ public final class Protos {
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -13226,10 +12698,6 @@ public final class Protos {
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static Type forNumber(int value) {
         switch (value) {
           case 0: return PRODUCERS;
@@ -13288,14 +12756,12 @@ public final class Protos {
     private int entities_;
     /**
      * <code>required .protos.GETEntities.Type Entities = 1;</code>
-     * @return Whether the entities field is set.
      */
     public boolean hasEntities() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .protos.GETEntities.Type Entities = 1;</code>
-     * @return The entities.
      */
     public protos.Protos.GETEntities.Type getEntities() {
       @SuppressWarnings("deprecation")
@@ -13321,7 +12787,7 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeEnum(1, entities_);
       }
       unknownFields.writeTo(output);
@@ -13333,7 +12799,7 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, entities_);
       }
@@ -13352,12 +12818,13 @@ public final class Protos {
       }
       protos.Protos.GETEntities other = (protos.Protos.GETEntities) obj;
 
-      if (hasEntities() != other.hasEntities()) return false;
+      boolean result = true;
+      result = result && (hasEntities() == other.hasEntities());
       if (hasEntities()) {
-        if (entities_ != other.entities_) return false;
+        result = result && entities_ == other.entities_;
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -13534,7 +13001,7 @@ public final class Protos {
         protos.Protos.GETEntities result = new protos.Protos.GETEntities(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.entities_ = entities_;
@@ -13545,35 +13012,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -13626,14 +13093,12 @@ public final class Protos {
       private int entities_ = 0;
       /**
        * <code>required .protos.GETEntities.Type Entities = 1;</code>
-       * @return Whether the entities field is set.
        */
       public boolean hasEntities() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .protos.GETEntities.Type Entities = 1;</code>
-       * @return The entities.
        */
       public protos.Protos.GETEntities.Type getEntities() {
         @SuppressWarnings("deprecation")
@@ -13642,8 +13107,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.GETEntities.Type Entities = 1;</code>
-       * @param value The entities to set.
-       * @return This builder for chaining.
        */
       public Builder setEntities(protos.Protos.GETEntities.Type value) {
         if (value == null) {
@@ -13656,7 +13119,6 @@ public final class Protos {
       }
       /**
        * <code>required .protos.GETEntities.Type Entities = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearEntities() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -13723,25 +13185,19 @@ public final class Protos {
 
     /**
      * <code>repeated string entities = 1;</code>
-     * @return A list containing the entities.
      */
     java.util.List<java.lang.String>
         getEntitiesList();
     /**
      * <code>repeated string entities = 1;</code>
-     * @return The count of entities.
      */
     int getEntitiesCount();
     /**
      * <code>repeated string entities = 1;</code>
-     * @param index The index of the element to return.
-     * @return The entities at the given index.
      */
     java.lang.String getEntities(int index);
     /**
      * <code>repeated string entities = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the entities at the given index.
      */
     com.google.protobuf.ByteString
         getEntitiesBytes(int index);
@@ -13760,13 +13216,6 @@ public final class Protos {
     }
     private GETEntitiesResponse() {
       entities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GETEntitiesResponse();
     }
 
     @java.lang.Override
@@ -13795,7 +13244,7 @@ public final class Protos {
               break;
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 entities_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -13817,7 +13266,7 @@ public final class Protos {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           entities_ = entities_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -13841,7 +13290,6 @@ public final class Protos {
     private com.google.protobuf.LazyStringList entities_;
     /**
      * <code>repeated string entities = 1;</code>
-     * @return A list containing the entities.
      */
     public com.google.protobuf.ProtocolStringList
         getEntitiesList() {
@@ -13849,23 +13297,18 @@ public final class Protos {
     }
     /**
      * <code>repeated string entities = 1;</code>
-     * @return The count of entities.
      */
     public int getEntitiesCount() {
       return entities_.size();
     }
     /**
      * <code>repeated string entities = 1;</code>
-     * @param index The index of the element to return.
-     * @return The entities at the given index.
      */
     public java.lang.String getEntities(int index) {
       return entities_.get(index);
     }
     /**
      * <code>repeated string entities = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the entities at the given index.
      */
     public com.google.protobuf.ByteString
         getEntitiesBytes(int index) {
@@ -13921,10 +13364,11 @@ public final class Protos {
       }
       protos.Protos.GETEntitiesResponse other = (protos.Protos.GETEntitiesResponse) obj;
 
-      if (!getEntitiesList()
-          .equals(other.getEntitiesList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getEntitiesList()
+          .equals(other.getEntitiesList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -14100,7 +13544,7 @@ public final class Protos {
       public protos.Protos.GETEntitiesResponse buildPartial() {
         protos.Protos.GETEntitiesResponse result = new protos.Protos.GETEntitiesResponse(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
           entities_ = entities_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -14111,35 +13555,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -14195,14 +13639,13 @@ public final class Protos {
 
       private com.google.protobuf.LazyStringList entities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureEntitiesIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           entities_ = new com.google.protobuf.LazyStringArrayList(entities_);
           bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @return A list containing the entities.
        */
       public com.google.protobuf.ProtocolStringList
           getEntitiesList() {
@@ -14210,23 +13653,18 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @return The count of entities.
        */
       public int getEntitiesCount() {
         return entities_.size();
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param index The index of the element to return.
-       * @return The entities at the given index.
        */
       public java.lang.String getEntities(int index) {
         return entities_.get(index);
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param index The index of the value to return.
-       * @return The bytes of the entities at the given index.
        */
       public com.google.protobuf.ByteString
           getEntitiesBytes(int index) {
@@ -14234,9 +13672,6 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The entities to set.
-       * @return This builder for chaining.
        */
       public Builder setEntities(
           int index, java.lang.String value) {
@@ -14250,8 +13685,6 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param value The entities to add.
-       * @return This builder for chaining.
        */
       public Builder addEntities(
           java.lang.String value) {
@@ -14265,8 +13698,6 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param values The entities to add.
-       * @return This builder for chaining.
        */
       public Builder addAllEntities(
           java.lang.Iterable<java.lang.String> values) {
@@ -14278,7 +13709,6 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearEntities() {
         entities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -14288,8 +13718,6 @@ public final class Protos {
       }
       /**
        * <code>repeated string entities = 1;</code>
-       * @param value The bytes of the entities to add.
-       * @return This builder for chaining.
        */
       public Builder addEntitiesBytes(
           com.google.protobuf.ByteString value) {
@@ -14360,34 +13788,28 @@ public final class Protos {
 
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     boolean hasUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
@@ -14407,13 +13829,6 @@ public final class Protos {
     private GETProducerInfo() {
       username_ = "";
       producerName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GETProducerInfo();
     }
 
     @java.lang.Override
@@ -14489,14 +13904,12 @@ public final class Protos {
     private volatile java.lang.Object username_;
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -14514,7 +13927,6 @@ public final class Protos {
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -14534,14 +13946,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -14559,7 +13969,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -14597,10 +14006,10 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
       unknownFields.writeTo(output);
@@ -14612,10 +14021,10 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
       size += unknownFields.getSerializedSize();
@@ -14633,18 +14042,19 @@ public final class Protos {
       }
       protos.Protos.GETProducerInfo other = (protos.Protos.GETProducerInfo) obj;
 
-      if (hasUsername() != other.hasUsername()) return false;
+      boolean result = true;
+      result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
-        if (!getUsername()
-            .equals(other.getUsername())) return false;
+        result = result && getUsername()
+            .equals(other.getUsername());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -14827,11 +14237,11 @@ public final class Protos {
         protos.Protos.GETProducerInfo result = new protos.Protos.GETProducerInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
@@ -14842,35 +14252,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -14933,14 +14343,12 @@ public final class Protos {
       private java.lang.Object username_ = "";
       /**
        * <code>required string username = 1;</code>
-       * @return Whether the username field is set.
        */
       public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -14958,7 +14366,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -14975,8 +14382,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -14990,7 +14395,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -15000,8 +14404,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The bytes for username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -15017,14 +14419,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -15042,7 +14442,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -15059,8 +14458,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -15074,7 +14471,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -15084,8 +14480,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -15195,13 +14589,6 @@ public final class Protos {
     }
 
     @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GETProducerInfoResponse();
-    }
-
-    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -15226,7 +14613,7 @@ public final class Protos {
               done = true;
               break;
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 negotiations_ = new java.util.ArrayList<protos.Protos.POSTNegotiation>();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -15249,7 +14636,7 @@ public final class Protos {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           negotiations_ = java.util.Collections.unmodifiableList(negotiations_);
         }
         this.unknownFields = unknownFields.build();
@@ -15355,10 +14742,11 @@ public final class Protos {
       }
       protos.Protos.GETProducerInfoResponse other = (protos.Protos.GETProducerInfoResponse) obj;
 
-      if (!getNegotiationsList()
-          .equals(other.getNegotiationsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getNegotiationsList()
+          .equals(other.getNegotiationsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -15540,7 +14928,7 @@ public final class Protos {
         protos.Protos.GETProducerInfoResponse result = new protos.Protos.GETProducerInfoResponse(this);
         int from_bitField0_ = bitField0_;
         if (negotiationsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             negotiations_ = java.util.Collections.unmodifiableList(negotiations_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -15554,35 +14942,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -15660,7 +15048,7 @@ public final class Protos {
       private java.util.List<protos.Protos.POSTNegotiation> negotiations_ =
         java.util.Collections.emptyList();
       private void ensureNegotiationsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           negotiations_ = new java.util.ArrayList<protos.Protos.POSTNegotiation>(negotiations_);
           bitField0_ |= 0x00000001;
          }
@@ -15889,7 +15277,7 @@ public final class Protos {
           negotiationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               protos.Protos.POSTNegotiation, protos.Protos.POSTNegotiation.Builder, protos.Protos.POSTNegotiationOrBuilder>(
                   negotiations_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           negotiations_ = null;
@@ -15955,51 +15343,42 @@ public final class Protos {
 
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     boolean hasUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
@@ -16020,13 +15399,6 @@ public final class Protos {
       username_ = "";
       producerName_ = "";
       productName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Subscribe();
     }
 
     @java.lang.Override
@@ -16108,14 +15480,12 @@ public final class Protos {
     private volatile java.lang.Object username_;
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -16133,7 +15503,6 @@ public final class Protos {
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -16153,14 +15522,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -16178,7 +15545,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -16198,14 +15564,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -16223,7 +15587,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -16265,13 +15628,13 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, productName_);
       }
       unknownFields.writeTo(output);
@@ -16283,13 +15646,13 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, productName_);
       }
       size += unknownFields.getSerializedSize();
@@ -16307,23 +15670,24 @@ public final class Protos {
       }
       protos.Protos.Subscribe other = (protos.Protos.Subscribe) obj;
 
-      if (hasUsername() != other.hasUsername()) return false;
+      boolean result = true;
+      result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
-        if (!getUsername()
-            .equals(other.getUsername())) return false;
+        result = result && getUsername()
+            .equals(other.getUsername());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasProductName() != other.hasProductName()) return false;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -16512,15 +15876,15 @@ public final class Protos {
         protos.Protos.Subscribe result = new protos.Protos.Subscribe(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.productName_ = productName_;
@@ -16531,35 +15895,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -16630,14 +15994,12 @@ public final class Protos {
       private java.lang.Object username_ = "";
       /**
        * <code>required string username = 1;</code>
-       * @return Whether the username field is set.
        */
       public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -16655,7 +16017,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -16672,8 +16033,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -16687,7 +16046,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -16697,8 +16055,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The bytes for username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -16714,14 +16070,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -16739,7 +16093,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -16756,8 +16109,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -16771,7 +16122,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -16781,8 +16131,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -16798,14 +16146,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 3;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -16823,7 +16169,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -16840,8 +16185,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -16855,7 +16198,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -16865,8 +16207,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -16937,51 +16277,42 @@ public final class Protos {
 
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     boolean hasUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     boolean hasProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     java.lang.String getProducerName();
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     com.google.protobuf.ByteString
         getProducerNameBytes();
 
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     boolean hasProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     java.lang.String getProductName();
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     com.google.protobuf.ByteString
         getProductNameBytes();
@@ -17002,13 +16333,6 @@ public final class Protos {
       username_ = "";
       producerName_ = "";
       productName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Unsubscribe();
     }
 
     @java.lang.Override
@@ -17090,14 +16414,12 @@ public final class Protos {
     private volatile java.lang.Object username_;
     /**
      * <code>required string username = 1;</code>
-     * @return Whether the username field is set.
      */
     public boolean hasUsername() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -17115,7 +16437,6 @@ public final class Protos {
     }
     /**
      * <code>required string username = 1;</code>
-     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -17135,14 +16456,12 @@ public final class Protos {
     private volatile java.lang.Object producerName_;
     /**
      * <code>required string producerName = 2;</code>
-     * @return Whether the producerName field is set.
      */
     public boolean hasProducerName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The producerName.
      */
     public java.lang.String getProducerName() {
       java.lang.Object ref = producerName_;
@@ -17160,7 +16479,6 @@ public final class Protos {
     }
     /**
      * <code>required string producerName = 2;</code>
-     * @return The bytes for producerName.
      */
     public com.google.protobuf.ByteString
         getProducerNameBytes() {
@@ -17180,14 +16498,12 @@ public final class Protos {
     private volatile java.lang.Object productName_;
     /**
      * <code>required string productName = 3;</code>
-     * @return Whether the productName field is set.
      */
     public boolean hasProductName() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The productName.
      */
     public java.lang.String getProductName() {
       java.lang.Object ref = productName_;
@@ -17205,7 +16521,6 @@ public final class Protos {
     }
     /**
      * <code>required string productName = 3;</code>
-     * @return The bytes for productName.
      */
     public com.google.protobuf.ByteString
         getProductNameBytes() {
@@ -17247,13 +16562,13 @@ public final class Protos {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, productName_);
       }
       unknownFields.writeTo(output);
@@ -17265,13 +16580,13 @@ public final class Protos {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, producerName_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, productName_);
       }
       size += unknownFields.getSerializedSize();
@@ -17289,23 +16604,24 @@ public final class Protos {
       }
       protos.Protos.Unsubscribe other = (protos.Protos.Unsubscribe) obj;
 
-      if (hasUsername() != other.hasUsername()) return false;
+      boolean result = true;
+      result = result && (hasUsername() == other.hasUsername());
       if (hasUsername()) {
-        if (!getUsername()
-            .equals(other.getUsername())) return false;
+        result = result && getUsername()
+            .equals(other.getUsername());
       }
-      if (hasProducerName() != other.hasProducerName()) return false;
+      result = result && (hasProducerName() == other.hasProducerName());
       if (hasProducerName()) {
-        if (!getProducerName()
-            .equals(other.getProducerName())) return false;
+        result = result && getProducerName()
+            .equals(other.getProducerName());
       }
-      if (hasProductName() != other.hasProductName()) return false;
+      result = result && (hasProductName() == other.hasProductName());
       if (hasProductName()) {
-        if (!getProductName()
-            .equals(other.getProductName())) return false;
+        result = result && getProductName()
+            .equals(other.getProductName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -17494,15 +16810,15 @@ public final class Protos {
         protos.Protos.Unsubscribe result = new protos.Protos.Unsubscribe(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.username_ = username_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.producerName_ = producerName_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.productName_ = productName_;
@@ -17513,35 +16829,35 @@ public final class Protos {
 
       @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -17612,14 +16928,12 @@ public final class Protos {
       private java.lang.Object username_ = "";
       /**
        * <code>required string username = 1;</code>
-       * @return Whether the username field is set.
        */
       public boolean hasUsername() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -17637,7 +16951,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -17654,8 +16967,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -17669,7 +16980,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -17679,8 +16989,6 @@ public final class Protos {
       }
       /**
        * <code>required string username = 1;</code>
-       * @param value The bytes for username to set.
-       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -17696,14 +17004,12 @@ public final class Protos {
       private java.lang.Object producerName_ = "";
       /**
        * <code>required string producerName = 2;</code>
-       * @return Whether the producerName field is set.
        */
       public boolean hasProducerName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The producerName.
        */
       public java.lang.String getProducerName() {
         java.lang.Object ref = producerName_;
@@ -17721,7 +17027,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return The bytes for producerName.
        */
       public com.google.protobuf.ByteString
           getProducerNameBytes() {
@@ -17738,8 +17043,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerName(
           java.lang.String value) {
@@ -17753,7 +17056,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProducerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -17763,8 +17065,6 @@ public final class Protos {
       }
       /**
        * <code>required string producerName = 2;</code>
-       * @param value The bytes for producerName to set.
-       * @return This builder for chaining.
        */
       public Builder setProducerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -17780,14 +17080,12 @@ public final class Protos {
       private java.lang.Object productName_ = "";
       /**
        * <code>required string productName = 3;</code>
-       * @return Whether the productName field is set.
        */
       public boolean hasProductName() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The productName.
        */
       public java.lang.String getProductName() {
         java.lang.Object ref = productName_;
@@ -17805,7 +17103,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return The bytes for productName.
        */
       public com.google.protobuf.ByteString
           getProductNameBytes() {
@@ -17822,8 +17119,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductName(
           java.lang.String value) {
@@ -17837,7 +17132,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProductName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -17847,8 +17141,6 @@ public final class Protos {
       }
       /**
        * <code>required string productName = 3;</code>
-       * @param value The bytes for productName to set.
-       * @return This builder for chaining.
        */
       public Builder setProductNameBytes(
           com.google.protobuf.ByteString value) {
@@ -18062,10 +17354,18 @@ public final class Protos {
       "\"J\n\013Unsubscribe\022\020\n\010username\030\001 \002(\t\022\024\n\014pro" +
       "ducerName\030\002 \002(\t\022\023\n\013productName\030\003 \002(\t"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+        }, assigner);
     internal_static_protos_Authentication_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_protos_Authentication_fieldAccessorTable = new

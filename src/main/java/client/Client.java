@@ -13,14 +13,18 @@ import java.nio.ByteBuffer;
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.Import;
+import protos.Protos.ImporterResponse;
 import protos.Protos.POSTNegotiation;
 import protos.Protos.Produce;
+import protos.Protos.Response;
+import protos.Protos.SaleInfo;
 import protos.Protos.ServerResponse;
 import protos.Protos.Subscribe;
 import protos.Protos.Transaction;
 import protos.Protos.Unsubscribe;
 import protos.Protos.Authentication;
 import protos.Protos.CatalogRequest;
+import protos.Protos.DealerTimeout;
 import protos.Protos.GETEntities;
 import protos.Protos.GETEntitiesResponse;
 
@@ -437,33 +441,47 @@ class SocketToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                String line = this.is.readLine();
+                byte[] header = this.is.readNBytes(4);
+                int size = ByteBuffer.wrap(header).getInt();
+                byte[] data = this.is.readNBytes(size);
 
-                String[] parts = line.split("_");
-                if (parts[0].equals("Importer")) {
-                    String producerName = parts[1];
-                    String productName = parts[2];
-                    int quantity = Integer.parseInt(parts[3]);
-                    int price = Integer.parseInt(parts[4]);
+                Response response = Response.parseFrom(data);
+                switch (response.getResCase()) {
+                case IMPORTER: {
+                    ImporterResponse ir = response.getImporter();
+                    String producerName = ir.getProducerName();
+                    String productName = ir.getProductName();
+                    int quantity = (int)ir.getQuantity();
+                    int price = (int) ir.getPrice();
 
                     outputTerminal.println("Encomenda efetuada:");
                     outputTerminal.println("\tProduto: " + quantity + " unidades de " + productName);
                     outputTerminal.println("\tPreço por unidade: " + price + "€");
                     outputTerminal.println("\tFabricante: " + producerName);
-                } else {
-                    Boolean success = Boolean.parseBoolean(parts[2]);
-                    if (success) {
-                        String productName = parts[4];
+
+                    break;
+                }
+
+                case PRODUCER: {
+                    DealerTimeout dt = response.getProducer();
+                    String productName = dt.getProductName();
+                    if (dt.getSuccess()) {
                         outputTerminal.println("Venda efetuada:");
                         outputTerminal.println("\tProduto: " + productName);
                         outputTerminal.println("\tCompradores:");
-                        for (int i = 5; i < parts.length; i += 3) {
-                            outputTerminal.println("\t\t" + parts[i] + ": " + parts[i + 1] + " unidades a "
-                                    + parts[i + 2] + "€/unidade");
+                        for (SaleInfo si : dt.getSalesList()) {
+                            outputTerminal.println("\t\t" + si.getUsername() + ": " + si.getQuantity() + " unidades a "
+                                    + si.getPrice() + "€/unidade");
                         }
                     } else {
-                        outputTerminal.println("Venda de " + parts[4] + " recusada");
+                        outputTerminal.println("Venda de " + productName  + " recusada");
                     }
+
+                    break;
+                }
+
+                default:
+                    break;
                 }
 
                 outputTerminal.println();
