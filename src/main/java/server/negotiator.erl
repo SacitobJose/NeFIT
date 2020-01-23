@@ -1,6 +1,7 @@
 -module(negotiator).
 
 -export([negotiator/1]).
+-import(server, [padding/1]).
 
 -include("protos.hrl").
 
@@ -49,7 +50,7 @@ negotiator(Sock, Importers, Producers) ->
             {ok, Importer} = maps:find(Username, ImportersProduct),
             ImporterResponse = #'ImporterResponse'{producerName = ProducerName, productName = ProductName, quantity = Quantity, price = Price},
             Oneof = protos:encode_msg(#'Response'{res = {importer, ImporterResponse}}),
-            X = binary:encode_unsigned(byte_size(Oneof)),
+            X = padding(binary:encode_unsigned(byte_size(Oneof))),
             Data = <<X/binary, Oneof/binary>>,
             Importer ! {timeout, negotiatorsHandler, Data},
             NewImporters = maps:remove(Username, ImportersProduct),

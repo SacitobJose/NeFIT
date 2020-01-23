@@ -11,16 +11,16 @@ producer(Sock, Username) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {produce, DataProduce}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _} = protos:decode_msg(DataProduce, 'Produce'),
-    Handler ! {new_producer, Username, Product, <<Length, Data/binary>>},
+    {_, Product, _, _, _, _, _} = DataProduce,
+    Handler ! {new_producer, Username, Product, <<Length/binary, Data/binary>>},
     producer(Sock, Username, Handler, 0).
 
 producer(Sock, Username, Handler, 0) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {produce, DataProduce}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _} = protos:decode_msg(DataProduce, 'Produce'),
-    Handler ! {new_producer, Username, Product, <<Length, Data/binary>>},
+    {_, Product, _, _, _, _, _} = DataProduce,
+    Handler ! {new_producer, Username, Product, <<Length/binary, Data/binary>>},
     producer(Sock, Username, Handler, 0).
 
 producer(Sock, Username, 0) ->

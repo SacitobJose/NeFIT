@@ -1,6 +1,6 @@
 -module(server).
 
--export([server/0]).
+-export([server/0, padding/1]).
 
 -import(login, [handler/1]).
 -import(client, [client/1]).
@@ -14,7 +14,7 @@ server() ->
     % Abre o socket
     {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, raw}, {reuseaddr, true}, {active, false}]),
     io:format("Server started~n", []),
-    negotiatorsConnect(LSock, [], 0).
+    negotiatorsConnect(LSock, [], 1).
 
 % Ligações ao servidor
 acceptor(LSock) ->
@@ -26,7 +26,7 @@ acceptor(LSock) ->
     client(Sock).
 
 negotiatorsConnect(LSock, Negotiators, 0) ->
-    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0) end)),
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 1) end)),
     acceptor(LSock);
 
 negotiatorsConnect(LSock, Negotiators, N) ->
@@ -59,4 +59,16 @@ negotiators(Map, Negotiators, N) ->
                     lists:nth(N, Negotiators) ! {new_importer, Username, PID, Product, Data},
                     negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end
+    end.
+
+padding(ByteArray) ->
+    case byte_size(ByteArray) of
+        1 ->
+            <<<<0, 0, 0>>/binary, ByteArray/binary>>;
+        2 ->
+            <<<<0, 0>>/binary, ByteArray/binary>>;
+        3 ->
+            <<<<0>>/binary, ByteArray/binary>>;
+        4 ->
+            ByteArray
     end.
