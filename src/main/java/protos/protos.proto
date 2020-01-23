@@ -67,6 +67,13 @@ message ImporterResponse {
   required int64 price = 4;
 }
 
+message Response {
+  oneof res {
+    ImporterResponse importer = 1;
+    DealerTimeout producer = 2;
+  }
+}
+
 message CatalogRequest {
   oneof request {
     POSTNegotiation nn = 1;
