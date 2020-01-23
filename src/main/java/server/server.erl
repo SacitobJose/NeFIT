@@ -12,7 +12,7 @@ server() ->
     register(server, self()),
     register(loginHandler, spawn(fun() -> handler(#{}) end)),
     % Abre o socket
-    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, line}, {reuseaddr, true}]),
+    {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, raw}, {reuseaddr, true}]),
     io:format("Server started~n", []),
     negotiatorsConnect(LSock, [], 1).
 

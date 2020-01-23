@@ -1,5 +1,7 @@
 compileProtos:
 	./src/main/java/protos/protoc --java_out=src/main/java src/main/java/protos/protos.proto
+	
+	./src/main/java/protos/gpb/bin/protoc-erl -I. -maps src/main/java/protos/protos.proto
 
 compileServer:
 	erlc -o src/main/java/server/ src/main/java/server/*.erl

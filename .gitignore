@@ -10,6 +10,9 @@
 *.toc
 *.out
 
+# Protocol Buffers
+/gpb
+
 # Erlang
 *.beam
 
