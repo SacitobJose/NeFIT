@@ -47,7 +47,7 @@ negotiator(Sock, Importers, Producers) ->
             {_, Username, Quantity, Price} = protos:decode_msg(SaleInfo, 'SaleInfo'),
             {ok, ImportersProduct} = maps:find(ProductName, Importers),
             {ok, Importer} = maps:find(Username, ImportersProduct),
-            ImporterResponse = protos:encode_msg(#'ImporterResponse'{producerName = ProducerName, productName = ProductName, quantity = Quantity, price = Price}),
+            ImporterResponse = #'ImporterResponse'{producerName = ProducerName, productName = ProductName, quantity = Quantity, price = Price},
             Oneof = protos:encode_msg(#'Response'{res = {importer, ImporterResponse}}),
             X = binary:encode_unsigned(byte_size(Oneof)),
             Data = <<X/binary, Oneof/binary>>,
@@ -59,10 +59,10 @@ negotiator(Sock, Importers, Producers) ->
 negotiatorSocket(Sock, Handler) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
-    {_, Success, Producer, Product, SalesInfo} = protos:decode_msg(Data, 'DealerTimeout'),
+    {Proto, Success, Producer, Product, SalesInfo} = protos:decode_msg(Data, 'DealerTimeout'),
     if
         Success == true ->
-            Handler ! {timeoutProducer, Producer, Product, Data},
+            Handler ! {timeoutProducer, Producer, Product, Proto},
             negotiatorSocket(Sock, Handler);
         Success == false ->
             getImporters(Handler, SalesInfo, Producer, Product),
