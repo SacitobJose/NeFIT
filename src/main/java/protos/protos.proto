@@ -53,11 +53,11 @@ message SaleInfo {
   required int64 price = 3;
 }
 
-message DealerTimeout {
-  required bool success = 1;
-  required string producerName = 2;
-  required string productName = 3;
-  repeated SaleInfo sales = 4;
+message Response {
+  oneof res {
+    ImporterResponse importer = 1;
+    DealerTimeout producer = 2;
+  }
 }
 
 message ImporterResponse {
@@ -67,11 +67,11 @@ message ImporterResponse {
   required int64 price = 4;
 }
 
-message Response {
-  oneof res {
-    ImporterResponse importer = 1;
-    DealerTimeout producer = 2;
-  }
+message DealerTimeout {
+  required bool success = 1;
+  required string producerName = 2;
+  required string productName = 3;
+  repeated SaleInfo sales = 4;
 }
 
 message CatalogRequest {

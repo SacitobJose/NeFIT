@@ -63,13 +63,10 @@
         }).
 -endif.
 
--ifndef('DEALERTIMEOUT_PB_H').
--define('DEALERTIMEOUT_PB_H', true).
--record('DealerTimeout',
-        {success                :: boolean() | 0 | 1, % = 1
-         producerName           :: iodata(),        % = 2
-         productName            :: iodata(),        % = 3
-         sales = []             :: [protos:'SaleInfo'()] | undefined % = 4
+-ifndef('RESPONSE_PB_H').
+-define('RESPONSE_PB_H', true).
+-record('Response',
+        {res                    :: {importer, protos:'ImporterResponse'()} | {producer, protos:'DealerTimeout'()} | undefined % oneof
         }).
 -endif.
 
@@ -80,6 +77,16 @@
          productName            :: iodata(),        % = 2
          quantity               :: integer(),       % = 3, 32 bits
          price                  :: integer()        % = 4, 32 bits
+        }).
+-endif.
+
+-ifndef('DEALERTIMEOUT_PB_H').
+-define('DEALERTIMEOUT_PB_H', true).
+-record('DealerTimeout',
+        {success                :: boolean() | 0 | 1, % = 1
+         producerName           :: iodata(),        % = 2
+         productName            :: iodata(),        % = 3
+         sales = []             :: [protos:'SaleInfo'()] | undefined % = 4
         }).
 -endif.
 

@@ -134,6 +134,7 @@ public class Dealer {
                     int maximumQuantity = (int) prod.getMaximumAmount();
                     int minimumPrice = (int) prod.getMinimumUnitaryPrice();
                     int negotiationPeriod = (int) prod.getNegotiationPeriod();
+                    
                     ArrayList<Import> arr = new ArrayList<>();
                     negotiations.put(new SimpleEntry<>(producer, product), arr);
 
