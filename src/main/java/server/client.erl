@@ -9,54 +9,60 @@
 client(Sock) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
-    Auth = protos:decode_msg(Data, 'Authentication'),
-    case maps:find(type, Auth) of
-        "LOGIN" ->
-            Username = maps:find(username, Auth),
-            Password = maps:find(password, Auth),
-            Kind = maps:find(kind, Auth),
-                Res = login(Username, Password),
-                case Res of
-                    ok ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        case Kind of
-                            <<"Producer">> ->
-                                producer(Sock, Username);
-                            <<"Importer">> ->
-                                importer(Sock, Username)
-                        end;
-                    wrong_user ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        client(Sock);
-                    already_loggedin ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        client(Sock);
-                    wrong_password ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        client(Sock)
-                end;
-        "REGISTER" ->
-            Username = maps:find(username, Auth),
-            Password = maps:find(password, Auth),
-            Kind = maps:find(kind, Auth),
-                Res = create_account(Username, Password),
-                case Res of
-                    ok ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        case Kind of
-                            <<"Producer">> ->
-                                producer(Sock, Username);
-                            <<"Importer">> ->
-                                importer(Sock, Username)
-                        end;
-                    user_exists ->
-                        ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
-                        gen_tcp:send(Sock, ServerResponse),
-                        client(Sock)
-                end
+    {_, Tipo, TipoCliente, Username, Password} = protos:decode_msg(Data, 'Authentication'),
+    case Tipo of
+        'LOGIN' ->
+            Res = login(Username, Password),
+            case Res of
+                ok ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    case TipoCliente of
+                        'PRODUCER' ->
+                            producer(Sock, Username);
+                        'IMPORTER' ->
+                            importer(Sock, Username)
+                    end;
+                wrong_user ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    client(Sock);
+                already_loggedin ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    client(Sock);
+                wrong_password ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    client(Sock)
+            end;
+        'REGISTER' ->
+            Res = create_account(Username, Password),
+            case Res of
+                ok ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = true}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    case TipoCliente of
+                        'PRODUCER' ->
+                            producer(Sock, Username);
+                        'IMPORTER' ->
+                            importer(Sock, Username)
+                    end;
+                user_exists ->
+                    ServerResponse = protos:encode_msg(#'ServerResponse'{success = false}),
+                    X = binary:encode_unsigned(byte_size(ServerResponse)),
+                    Response = <<X/binary, ServerResponse/binary>>,
+                    gen_tcp:send(Sock, Response),
+                    client(Sock)
+            end
     end.

@@ -4,7 +4,7 @@
 
 -import(login, [handler/1]).
 -import(client, [client/1]).
--import(negotiator, [negotiator/3]).
+-import(negotiator, [negotiator/1]).
 
 % Inicialização do servidor
 server() ->
@@ -14,7 +14,7 @@ server() ->
     % Abre o socket
     {ok, LSock} = gen_tcp:listen(1234, [binary, {packet, raw}, {reuseaddr, true}, {active, false}]),
     io:format("Server started~n", []),
-    negotiatorsConnect(LSock, [], 1).
+    negotiatorsConnect(LSock, [], 0).
 
 % Ligações ao servidor
 acceptor(LSock) ->
@@ -26,7 +26,7 @@ acceptor(LSock) ->
     client(Sock).
 
 negotiatorsConnect(LSock, Negotiators, 0) ->
-    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 1) end)),
+    register(negotiatorsHandler, spawn(fun() -> negotiators(#{}, Negotiators, 0) end)),
     acceptor(LSock);
 
 negotiatorsConnect(LSock, Negotiators, N) ->
@@ -35,7 +35,7 @@ negotiatorsConnect(LSock, Negotiators, N) ->
     io:format("Negotiator connected~n", []),
     PID = self(),
     spawn(fun() -> negotiatorsConnect(LSock, Negotiators ++ [PID], N-1) end),
-    negotiator(Sock, #{}, #{}).
+    negotiator(Sock).
 
 negotiators(Map, Negotiators, N) ->
     receive

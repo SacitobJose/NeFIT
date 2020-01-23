@@ -4,18 +4,31 @@
 
 -export([importer/2]).
 
+-include("protos.hrl").
+
 importer(Sock, Username) ->
-    receive 
-        {tcp, _, Data} ->
-            Message = string:split(string:trim(Data), "_", all),
-            Product = lists:nth(3, Message),
+    Handler = spawn(fun() -> importer(Sock, Username, 0) end),
+    {ok, Length} = gen_tcp:recv(Sock, 4),
+    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
+    {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
+    {_, Product, _, _, _, _} = protos:decode_msg(DataImport, 'Import'),
+    Handler ! {new_importer, Username, Product, <<Length, Data/binary>>},
+    importer(Sock, Username, Handler, 0).
+
+importer(Sock, Username, Handler, 0) ->
+    {ok, Length} = gen_tcp:recv(Sock, 4),
+    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
+    {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
+    {_, Product, _, _, _, _} = protos:decode_msg(DataImport, 'Import'),
+    Handler ! {new_importer, Username, Product, <<Length, Data/binary>>},
+    importer(Sock, Username, Handler, 0).
+
+importer(Sock, Username, 0) ->
+    receive
+        {new_importer, Username, Product, Data} ->
             negotiatorsHandler ! {new_importer, Username, self(), Product, Data},
-            importer(Sock, Username);
-        {tcp_closed, _} ->
-            logout(Username);
-        {tcp_error, _} ->
-            logout(Username);
-        {producer, negotiatorsHandler, ToSend} ->
+            importer(Sock, Username, 0);
+        {timeout, negotiatorsHandler, ToSend} ->
             gen_tcp:send(Sock, ToSend),
-            importer(Sock, Username)
+            importer(Sock, Username, 0)
     end.

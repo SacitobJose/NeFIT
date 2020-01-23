@@ -1,75 +1,76 @@
 -module(negotiator).
 
--export([negotiator/3]).
+-export([negotiator/1]).
+
+-include("protos.hrl").
+
+negotiator(Sock) ->
+	PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
+	negotiatorSocket(Sock, PID).
 
 negotiator(Sock, Importers, Producers) ->
     receive
-      {new_producer, Username, PID, ProductName, Data} ->
-		gen_tcp:send(Sock, Data),
-		case maps:find(ProductName, Producers) of
-			{ok, ProducersProduct} ->
-				NewProducersProduct = maps:put(Username, PID, ProducersProduct),
-				NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
-				negotiator(Sock, Importers, NewProducers);
-			_ ->
-				Map = maps:new(),
-				NewProducersProduct = maps:put(Username, PID, Map),
-				NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
-				negotiator(Sock, Importers, NewProducers)
-		end;
-      {new_importer, Username, PID, ProductName, Data} ->
-		gen_tcp:send(Sock, Data),
-		case maps:find(ProductName, Importers) of
-			{ok, ImportersProduct} ->
-				NewImportersProduct = maps:put(Username, PID, ImportersProduct),
-				NewImporters = maps:put(ProductName, NewImportersProduct, Importers),
-				negotiator(Sock, NewImporters, Producers);
-			_ ->
-				Map = maps:new(),
-				NewImportersProduct = maps:put(Username, PID, Map),
-				NewImporters = maps:put(ProductName, NewImportersProduct, Producers),
-				negotiator(Sock, NewImporters, Producers)
-		end;
-      {tcp, _, Data} ->
-		% decode data
-		Map_Data = decode(Data),
-		% get product name
-		{ok, ProductName} = maps:find(productName, Map_Data),
-		% send info to producer
-		{ok, ProducerName} = maps:find(producerName, Map_Data),
-		{ok, ProducersProduct} = maps:find(ProductName, Producers),
-		{ok, Producer} = maps:find(ProducerName, ProducersProduct),
-		Producer ! {timeout, negotiatorsHandler, io_lib:format("Producer_~s~n", [binary_to_list(string:trim(Data))])},
-		NewProducers = maps:remove(ProducerName, ProducersProduct),
-		% extract importers' usernames, send them the info needed
-		{ok, ImportersBuying} = maps:find(importers, Map_Data),
-		case maps:find(ProductName, Importers) of
-			{ok, ImportersProduct} ->
-				NewImporters = sendImporters(ImportersProduct, ImportersBuying, binary_to_list(ProducerName), binary_to_list(ProductName)),
-				negotiator(Sock, maps:put(ProductName, NewImporters, Importers), maps:put(ProductName, NewProducers, Producers));
-			_ ->
-				negotiator(Sock, Importers, maps:put(ProductName, NewProducers, Producers))
-		end
+        {new_producer, Username, PID, ProductName, Data} ->
+            gen_tcp:send(Sock, Data),
+            case maps:find(ProductName, Producers) of
+                {ok, ProducersProduct} ->
+                    NewProducersProduct = maps:put(Username, PID, ProducersProduct),
+                    NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
+                    negotiator(Sock, Importers, NewProducers);
+                _ ->
+                    Map = maps:new(),
+                    NewProducersProduct = maps:put(Username, PID, Map),
+                    NewProducers = maps:put(ProductName, NewProducersProduct, Producers),
+                    negotiator(Sock, Importers, NewProducers)
+            end;
+        {new_importer, Username, PID, ProductName, Data} ->
+            gen_tcp:send(Sock, Data),
+            case maps:find(ProductName, Importers) of
+                {ok, ImportersProduct} ->
+                    NewImportersProduct = maps:put(Username, PID, ImportersProduct),
+                    NewImporters = maps:put(ProductName, NewImportersProduct, Importers),
+                    negotiator(Sock, NewImporters, Producers);
+                _ ->
+                    Map = maps:new(),
+                    NewImportersProduct = maps:put(Username, PID, Map),
+                    NewImporters = maps:put(ProductName, NewImportersProduct, Producers),
+                    negotiator(Sock, NewImporters, Producers)
+            end;
+        {timeoutProducer, ProducerName, ProductName, Data} ->
+            {ok, ProducersProduct} = maps:find(ProductName, Producers),
+            {ok, Producer} = maps:find(ProducerName, ProducersProduct),
+		    Producer ! {timeout, negotiatorsHandler, Data},
+            NewProducers = maps:remove(ProducerName, ProducersProduct),
+            negotiator(Sock, Importers, maps:put(ProductName, NewProducers, Producers));
+        {timeoutImporter, ProducerName, ProductName, SaleInfo} ->
+            {_, Username, Quantity, Price} = protos:decode_msg(SaleInfo, 'SaleInfo'),
+            {ok, ImportersProduct} = maps:find(ProductName, Importers),
+            {ok, Importer} = maps:find(Username, ImportersProduct),
+            ServerResponse = protos:encode_msg(#'ImporterResponse'{producerName = ProducerName, productName = ProductName, quantity = Quantity, price = Price}),
+            X = binary:encode_unsigned(byte_size(ServerResponse)),
+            Data = <<X/binary, ServerResponse/binary>>,
+            Importer ! {timeout, negotiatorsHandler, Data},
+            NewImporters = maps:remove(Username, ImportersProduct),
+            negotiator(Sock, maps:put(ProductName, NewImporters, Importers), Producers)
+	end.
+
+negotiatorSocket(Sock, Handler) ->
+    {ok, Length} = gen_tcp:recv(Sock, 4),
+    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
+    {_, Success, Producer, Product, SalesInfo} = protos:decode_msg(Data, 'DealerTimeout'),
+    if
+        Success == true ->
+            Handler ! {timeoutProducer, Producer, Product, Data},
+            negotiatorSocket(Sock, Handler);
+        Success == false ->
+            getImporters(Handler, SalesInfo, Producer, Product),
+            negotiatorSocket(Sock, Handler)
     end.
 
-% Decode what came from the negotiator
-decode(Data) ->
-    Message = string:split(string:trim(Data), "_", all),
-    ProducerName = lists:nth(3, Message),
-    ProductName = lists:nth(4, Message),
-    Map = maps:new(),
-    Map2 = maps:put(producerName, ProducerName, Map),
-    Map3 = maps:put(productName, ProductName, Map2),
-    Importers = lists:nthtail(4, Message),
-    maps:put(importers, Importers, Map3).
 
-% Sends producer's username and product to each importer and extract them from importers' map
-sendImporters(Importers, [], _, _) -> 
-	Importers;
-sendImporters(Importers, Buying, Producer, Product) ->
-	Username = lists:nth(1,Buying),
-	Quantity = binary_to_list(lists:nth(2,Buying)),
-	Price = binary_to_list(lists:nth(3,Buying)),
-    {ok, PID} = maps:find(Username, Importers),
-    PID ! {producer, negotiatorsHandler, io_lib:format("Importer_~s_~s_~s_~s~n", [Producer, Product, Quantity, Price])},
-    sendImporters(maps:remove(Username, Importers), lists:nthtail(3, Buying), Producer, Product).
+getImporters(_, [], _, _) -> 
+	true;
+getImporters(Handler, SalesInfoList, Producer, Product) ->
+	SaleInfo = lists:nth(1, SalesInfoList),
+    Handler ! {timeoutImporter, Producer, Product, SaleInfo},
+    getImporters(Handler, lists:nthtail(1, SalesInfoList), Producer, Product).

@@ -47,6 +47,26 @@ message ServerResponse {
   required bool success = 1;
 }
 
+message SaleInfo {
+  required string username = 1;
+  required int64 quantity = 2;
+  required int64 price = 3;
+}
+
+message DealerTimeout {
+  required bool success = 1;
+  required string producerName = 2;
+  required string productName = 3;
+  repeated SaleInfo sales = 4;
+}
+
+message ImporterResponse {
+  required string producerName = 1;
+  required string productName = 2;
+  required int64 quantity = 3;
+  required int64 price = 4;
+}
+
 message CatalogRequest {
   oneof request {
     POSTNegotiation nn = 1;
