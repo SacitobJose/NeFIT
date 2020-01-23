@@ -54,9 +54,9 @@ class ClientToSocket extends Thread {
 
     Socket catalog;
 
+    /* ZeroMQ socket for subscriptions */
     ZContext ctx = new ZContext();
     org.zeromq.ZMQ.Socket subscriptions = ctx.createSocket(ZMQ.SUB);
-    this.subscriptions.connect("tcp://localhost:8888");
 
     public ClientToSocket(Socket cli, String outputPID) throws IOException {
         is = cli.getInputStream();
@@ -417,6 +417,7 @@ class ClientToSocket extends Thread {
 
             this.catalog = new Socket("localhost", 9999);
             //this.subscriptions = new Socket("localhost", 9999);
+            this.subscriptions.connect("tcp://localhost:8888");
 
             PrintWriter outputTerminal = new PrintWriter(new File("/proc/" + outputPID + "/fd/1"));
 
@@ -493,12 +494,12 @@ class SocketToClient extends Thread {
 }
 
 class SubscriptionsToClient extends Thread {
-    InputStream is;
+    org.zeromq.ZMQ.Socket subscriptions;
     PrintWriter outputTerminal;
     ZMsg message;
 
-    public SubscriptionsToClient(InputStream is, PrintWriter outputTerminal) {
-        this.is = is;
+    public SubscriptionsToClient(org.zeromq.ZMQ.Socket subscriptions, PrintWriter outputTerminal) {
+        this.subscriptions = subscriptions;
         this.outputTerminal = outputTerminal;
     }
 
