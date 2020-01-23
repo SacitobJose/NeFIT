@@ -2,6 +2,27 @@ syntax = "proto2";
 
 package protos;
 
+message Authentication {
+  enum AuthType {
+    REGISTER = 0;
+    LOGIN = 1;
+  }
+
+  enum UserType {
+    PRODUCER = 0;
+    IMPORTER = 1;
+  }
+
+  required AuthType type = 1;
+  required UserType userType = 2;
+  required string username = 3;
+  required string password = 4;
+}
+
+message ServerResponse {
+  required bool success = 1;
+}
+
 message CatalogRequest {
   oneof request {
     POSTNegotiation nn = 1;
