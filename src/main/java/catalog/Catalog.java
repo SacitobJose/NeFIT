@@ -27,13 +27,11 @@ public class Catalog {
     public static void main(String[] args) throws Exception {
         // Start the ZeroMQ server
         ZContext context = new ZContext();
-        ZMQ.Socket pubs = context.createSocket(SocketType.XPUB);
-        ZMQ.Socket subs = context.createSocket(SocketType.XSUB);
-        subs.bind("tcp://*:7777");
+        ZMQ.Socket subs = context.createSocket(ZMQ.XPUB);
         pubs.bind("tcp://*:8888");
-
-        Thread poller = new Proxy(context, pubs, subs);
-        poller.start();
+        ZMQ.Socket pubs = context.createSocket(ZMQ.XSUB);
+        subs.bind("tcp://*:7777");
+        ZMQ.proxy(subs, pubs, null);
 
         // Start the catalog server
         ServerSocket serverSocket = new ServerSocket(9999);
