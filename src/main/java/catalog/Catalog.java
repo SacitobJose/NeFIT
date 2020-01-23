@@ -16,11 +16,25 @@ import protos.Protos.Unsubscribe;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.GETProducerInfo;
 
+import org.zeromq.ZMQ;
+import org.zeromq.ZContext;
+import org.zeromq.SocketType;
+
 /**
  * Catalog
  */
 public class Catalog {
     public static void main(String[] args) throws Exception {
+        // Start the ZeroMQ server
+        ZContext context = new ZContext();
+        ZMQ.Socket pubs = context.createSocket(SocketType.XPUB);
+        ZMQ.Socket subs = context.createSocket(SocketType.XSUB);
+        subs.bind("tcp://*:7777");
+        pubs.bind("tcp://*:8888");
+
+        Thread poller = new Proxy(context, pubs, subs);
+        poller.start();
+
         // Start the catalog server
         ServerSocket serverSocket = new ServerSocket(9999);
         HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations = new HashMap<>();
