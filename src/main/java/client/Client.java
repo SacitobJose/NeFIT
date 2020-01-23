@@ -10,6 +10,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
+import org.zeromq.ZContext;
+import org.zeromq.ZMQ;
+import org.zeromq.ZMsg;
+
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.Import;
@@ -49,7 +53,10 @@ class ClientToSocket extends Thread {
     String outputPID;
 
     Socket catalog;
-    Socket subscriptions;
+
+    ZContext ctx = new ZContext();
+    org.zeromq.ZMQ.Socket subscriptions = ctx.createSocket(ZMQ.SUB);
+    this.subscriptions.connect("tcp://localhost:8888");
 
     public ClientToSocket(Socket cli, String outputPID) throws IOException {
         is = cli.getInputStream();
@@ -200,6 +207,8 @@ class ClientToSocket extends Thread {
 
                 String product1 = this.stdin.readLine();
 
+                subscriptions.subscribe(producer1 + product1);
+                /*
                 Subscribe.Builder sub = Subscribe.newBuilder();
                 sub.setUsername(username);
                 sub.setProducerName(producer1);
@@ -208,6 +217,7 @@ class ClientToSocket extends Thread {
                 CatalogRequest.Builder crsub = CatalogRequest.newBuilder();
                 crsub.setSub(sub);
                 crsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
+                */
                 break;
             case 6:
                 System.out.print("Fabricante: ");
@@ -220,6 +230,8 @@ class ClientToSocket extends Thread {
 
                 String product2 = this.stdin.readLine();
 
+                subscriptions.unsubscribe(producer2 + product2);
+                /*
                 Unsubscribe.Builder unsub = Unsubscribe.newBuilder();
                 unsub.setUsername(username);
                 unsub.setProducerName(producer2);
@@ -228,6 +240,7 @@ class ClientToSocket extends Thread {
                 CatalogRequest.Builder crunsub = CatalogRequest.newBuilder();
                 crunsub.setUnsub(unsub);
                 crunsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
+                */
                 break;
             case 7:
                 clearTerminal();
@@ -403,7 +416,7 @@ class ClientToSocket extends Thread {
             waitConfirmation();
 
             this.catalog = new Socket("localhost", 9999);
-            this.subscriptions = new Socket("localhost", 9999);
+            //this.subscriptions = new Socket("localhost", 9999);
 
             PrintWriter outputTerminal = new PrintWriter(new File("/proc/" + outputPID + "/fd/1"));
 
@@ -482,6 +495,7 @@ class SocketToClient extends Thread {
 class SubscriptionsToClient extends Thread {
     InputStream is;
     PrintWriter outputTerminal;
+    ZMsg message;
 
     public SubscriptionsToClient(InputStream is, PrintWriter outputTerminal) {
         this.is = is;
@@ -491,18 +505,10 @@ class SubscriptionsToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                POSTNegotiation pn = POSTNegotiation.parseDelimitedFrom(this.is);
+                message = ZMsg.recvMsg(subsctiptions);
 
-                outputTerminal.println("Produtor: " + pn.getProducerName());
-                outputTerminal.println("Produto: " + pn.getProductName());
-                outputTerminal.println("Quantidade máxima: " + pn.getMaximumAmount());
-                outputTerminal.println("Quantidade mínima: " + pn.getMinimumAmount());
-                outputTerminal.println("Preço mínimo: " + pn.getMinimumUnitaryPrice());
-                outputTerminal.println("Período de negociação: " + pn.getNegotiationPeriod());
-
-                outputTerminal.println();
-                outputTerminal.println("-----------------");
-                outputTerminal.println();
+                outputTerminal.print("Nova oferta disponível para o par: ");
+                outputTerminal.println(new String(message.popString()));
 
                 outputTerminal.flush();
             }
