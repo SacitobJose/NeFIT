@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
+import org.zeromq.ZContext;
+import org.zeromq.ZMQ;
+import org.zeromq.ZMsg;
+
 import protos.Protos.POSTNegotiation;
 import protos.Protos.Produce;
 import protos.Protos.SaleInfo;
@@ -96,6 +100,12 @@ public class Dealer {
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
 
+            ZContext ctx = new ZContext();
+            org.zeromq.ZMQ.Socket publisher = ctx.createSocket(ZMQ.PUB);
+            publisher.connect("tcp://localhost:7777");
+
+            ZMsg zmsg;
+
             HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>();
             ArrayList<Import> unmatchImports = new ArrayList<>();
 
@@ -169,6 +179,9 @@ public class Dealer {
                     CatalogRequest.Builder cr = CatalogRequest.newBuilder();
                     cr.setNn(pn.build());
                     cr.build().writeDelimitedTo(catalog.getOutputStream());
+
+                    zmsg.newStringMsg(producer + product);
+                    zmsg.send(publisher);
                     break;
                 }
                 default:

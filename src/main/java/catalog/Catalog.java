@@ -38,11 +38,11 @@ public class Catalog {
         HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations = new HashMap<>();
         HashSet<String> importers = new HashSet<>();
         HashSet<String> producers = new HashSet<>();
-        HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions = new HashMap<>();
+        //HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions = new HashMap<>();
         while (true) {
             Socket connectionSocket = serverSocket.accept();
 
-            Thread h = new CHandler(connectionSocket, negotiations, importers, producers, subscriptions);
+            Thread h = new CHandler(connectionSocket, negotiations, importers, producers);
             h.start();
         }
     }
@@ -56,16 +56,15 @@ class CHandler extends Thread {
     private HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations;
     private HashSet<String> importers;
     private HashSet<String> producers;
-    private HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions;
+    //private HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions;
 
     public CHandler(Socket connectionSocket, HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations,
-            HashSet<String> importers, HashSet<String> producers,
-            HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions) {
+            HashSet<String> importers, HashSet<String> producers) {
         this.connectionSocket = connectionSocket;
         this.negotiations = negotiations;
         this.importers = importers;
         this.producers = producers;
-        this.subscriptions = subscriptions;
+        //this.subscriptions = subscriptions;
     }
 
     public void run() {
@@ -81,11 +80,13 @@ class CHandler extends Thread {
                         this.producers.add(producerName1);
                     }
 
+                    /*
                     HashSet<Socket> toUpdate = subscriptions.get(new SimpleEntry<>(productName1, producerName1));
                     if (toUpdate != null) {
                         for (Socket socket : toUpdate)
                             nn.writeDelimitedTo(socket.getOutputStream());
                     }
+                    */
 
                     negotiations.put(new SimpleEntry<>(productName1, producerName1), nn);
                     break;
@@ -134,7 +135,8 @@ class CHandler extends Thread {
 
                     ger.build().writeDelimitedTo(connectionSocket.getOutputStream());
                     break;
-
+                
+                /*
                 case SUB:
                     Subscribe sub = cr.getSub();
                     synchronized (subscriptions) {
@@ -159,6 +161,7 @@ class CHandler extends Thread {
                         subSockets.remove(connectionSocket);
                     }
                     break;
+                */
 
                 default: // REQUEST_NOT_SET
                     break;
