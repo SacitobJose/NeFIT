@@ -5,15 +5,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
+import protos.Protos.Import;
 import protos.Protos.POSTNegotiation;
+import protos.Protos.Produce;
 import protos.Protos.ServerResponse;
 import protos.Protos.Subscribe;
+import protos.Protos.Transaction;
 import protos.Protos.Unsubscribe;
 import protos.Protos.Authentication;
 import protos.Protos.CatalogRequest;
@@ -37,9 +41,8 @@ public class Client {
 }
 
 class ClientToSocket extends Thread {
-    Socket socket;
-    BufferedReader is;
-    PrintWriter os;
+    InputStream is;
+    OutputStream os;
     String username;
     BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
@@ -49,9 +52,8 @@ class ClientToSocket extends Thread {
     Socket subscriptions;
 
     public ClientToSocket(Socket cli, String outputPID) throws IOException {
-        this.socket = cli;
-        is = new BufferedReader(new InputStreamReader(cli.getInputStream()));
-        os = new PrintWriter(cli.getOutputStream());
+        is = cli.getInputStream();
+        os = cli.getOutputStream();
         this.username = null;
         this.outputPID = outputPID;
     }
@@ -99,35 +101,32 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
-                StringBuilder transaction = new StringBuilder();
-                transaction.append("Import_");
-
-                transaction.append(username);
-                transaction.append("_");
+                Import.Builder imp = Import.newBuilder();
+                imp.setImporterName(username);
 
                 System.out.print("Nome do produto: ");
                 System.out.flush();
-                transaction.append(this.stdin.readLine());
-
-                transaction.append("_");
+                imp.setProductName(this.stdin.readLine());
 
                 System.out.print("Nome de fabricante: ");
                 System.out.flush();
-                transaction.append(this.stdin.readLine());
-
-                transaction.append("_");
+                imp.setProducerName(this.stdin.readLine());
 
                 System.out.print("Quantidade: ");
                 System.out.flush();
-                transaction.append(this.readInt());
-
-                transaction.append("_");
+                imp.setQuantity(this.readInt());
 
                 System.out.print("Preço por produto: ");
                 System.out.flush();
-                transaction.append(this.readInt());
+                imp.setUnitaryPrice(this.readInt());
 
-                this.os.println(transaction.toString());
+                Transaction.Builder transaction = Transaction.newBuilder();
+                transaction.setImport(imp.build());
+
+                Transaction trans = transaction.build();
+                byte[] size = ByteBuffer.allocate(4).putInt(trans.getSerializedSize()).array();
+                this.os.write(size);
+                trans.writeTo(this.os);
                 this.os.flush();
 
                 waitConfirmation();
@@ -257,42 +256,37 @@ class ClientToSocket extends Thread {
 
             switch (escolha) {
             case 1:
-                StringBuilder transaction = new StringBuilder();
-                transaction.append("Produce_");
+                Produce.Builder prod = Produce.newBuilder();
 
-                transaction.append(username);
-                transaction.append("_");
+                prod.setProducerName(username);
 
                 System.out.print("Nome do produto: ");
                 System.out.flush();
-                String productName = this.stdin.readLine();
-                transaction.append(productName);
-
-                transaction.append("_");
+                prod.setProductName(this.stdin.readLine());
 
                 System.out.print("Quantidade mínima: ");
                 System.out.flush();
-                transaction.append(this.readInt());
-
-                transaction.append("_");
+                prod.setMinimumAmount(this.readInt());
 
                 System.out.print("Quantidade máxima: ");
                 System.out.flush();
-                transaction.append(this.readInt());
-
-                transaction.append("_");
+                prod.setMaximumAmount(this.readInt());
 
                 System.out.print("Preço mínimo por produto: ");
                 System.out.flush();
-                transaction.append(this.readInt());
-
-                transaction.append("_");
+                prod.setMinimumUnitaryPrice(this.readInt());
 
                 System.out.print("Período de negociação (segundos): ");
                 System.out.flush();
-                transaction.append(this.readInt());
+                prod.setNegotiationPeriod(this.readInt());
 
-                this.os.println(transaction);
+                Transaction.Builder transaction = Transaction.newBuilder();
+                transaction.setProduce(prod.build());
+
+                Transaction trans = transaction.build();
+                byte[] size = ByteBuffer.allocate(4).putInt(trans.getSerializedSize()).array();
+                this.os.write(size);
+                trans.writeTo(this.os);
                 this.os.flush();
 
                 waitConfirmation();
@@ -381,12 +375,16 @@ class ClientToSocket extends Thread {
                 // Try to authenticate
                 Authentication authToSend = auth.build();
                 byte[] size = ByteBuffer.allocate(4).putInt(authToSend.getSerializedSize()).array();
-                this.socket.getOutputStream().write(size);
-                authToSend.writeTo(socket.getOutputStream());
-                this.socket.getOutputStream().flush();
+                this.os.write(size);
+                authToSend.writeTo(os);
+                this.os.flush();
 
                 // Receive authentication confirmation
-                ServerResponse response = ServerResponse.parseFrom(socket.getInputStream());
+                byte[] header = this.is.readNBytes(4);
+                int size1 = ByteBuffer.wrap(header).getInt();
+                byte[] data = this.is.readNBytes(size1);
+
+                ServerResponse response = ServerResponse.parseFrom(data);
                 if (!response.getSuccess()) {
                     if (method.equals("l"))
                         System.out.println("O nome de utilizador não existe ou a palavra passe está incorreta.");
@@ -428,10 +426,10 @@ class ClientToSocket extends Thread {
 }
 
 class SocketToClient extends Thread {
-    BufferedReader is;
+    InputStream is;
     PrintWriter outputTerminal;
 
-    public SocketToClient(BufferedReader is, PrintWriter outputTerminal) {
+    public SocketToClient(InputStream is, PrintWriter outputTerminal) {
         this.is = is;
         this.outputTerminal = outputTerminal;
     }
