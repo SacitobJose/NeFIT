@@ -54,6 +54,35 @@
         }).
 -endif.
 
+-ifndef('SALEINFO_PB_H').
+-define('SALEINFO_PB_H', true).
+-record('SaleInfo',
+        {username               :: iodata(),        % = 1
+         quantity               :: integer(),       % = 2, 32 bits
+         price                  :: integer()        % = 3, 32 bits
+        }).
+-endif.
+
+-ifndef('DEALERTIMEOUT_PB_H').
+-define('DEALERTIMEOUT_PB_H', true).
+-record('DealerTimeout',
+        {success                :: boolean() | 0 | 1, % = 1
+         producerName           :: iodata(),        % = 2
+         productName            :: iodata(),        % = 3
+         sales = []             :: [protos:'SaleInfo'()] | undefined % = 4
+        }).
+-endif.
+
+-ifndef('IMPORTERRESPONSE_PB_H').
+-define('IMPORTERRESPONSE_PB_H', true).
+-record('ImporterResponse',
+        {producerName           :: iodata(),        % = 1
+         productName            :: iodata(),        % = 2
+         quantity               :: integer(),       % = 3, 32 bits
+         price                  :: integer()        % = 4, 32 bits
+        }).
+-endif.
+
 -ifndef('CATALOGREQUEST_PB_H').
 -define('CATALOGREQUEST_PB_H', true).
 -record('CatalogRequest',

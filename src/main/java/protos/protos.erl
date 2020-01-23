@@ -67,6 +67,12 @@
 
 -type 'ServerResponse'() :: #'ServerResponse'{}.
 
+-type 'SaleInfo'() :: #'SaleInfo'{}.
+
+-type 'DealerTimeout'() :: #'DealerTimeout'{}.
+
+-type 'ImporterResponse'() :: #'ImporterResponse'{}.
+
 -type 'CatalogRequest'() :: #'CatalogRequest'{}.
 
 -type 'POSTNegotiation'() :: #'POSTNegotiation'{}.
@@ -85,20 +91,20 @@
 
 -type 'Unsubscribe'() :: #'Unsubscribe'{}.
 
--export_type(['Authentication'/0, 'Transaction'/0, 'Produce'/0, 'Import'/0, 'ServerResponse'/0, 'CatalogRequest'/0, 'POSTNegotiation'/0, 'DELETENegotiation'/0, 'GETEntities'/0, 'GETEntitiesResponse'/0, 'GETProducerInfo'/0, 'GETProducerInfoResponse'/0, 'Subscribe'/0, 'Unsubscribe'/0]).
+-export_type(['Authentication'/0, 'Transaction'/0, 'Produce'/0, 'Import'/0, 'ServerResponse'/0, 'SaleInfo'/0, 'DealerTimeout'/0, 'ImporterResponse'/0, 'CatalogRequest'/0, 'POSTNegotiation'/0, 'DELETENegotiation'/0, 'GETEntities'/0, 'GETEntitiesResponse'/0, 'GETProducerInfo'/0, 'GETProducerInfoResponse'/0, 'Subscribe'/0, 'Unsubscribe'/0]).
 
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'DealerTimeout'{} | #'ImporterResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}) -> binary().
 encode_msg(Msg) when tuple_size(Msg) >= 1 ->
     encode_msg(Msg, element(1, Msg), []).
 
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom() | list()) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'DealerTimeout'{} | #'ImporterResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom() | list()) -> binary().
 encode_msg(Msg, MsgName) when is_atom(MsgName) ->
     encode_msg(Msg, MsgName, []);
 encode_msg(Msg, Opts)
     when tuple_size(Msg) >= 1, is_list(Opts) ->
     encode_msg(Msg, element(1, Msg), Opts).
 
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom(), list()) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'DealerTimeout'{} | #'ImporterResponse'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom(), list()) -> binary().
 encode_msg(Msg, MsgName, Opts) ->
     case proplists:get_bool(verify, Opts) of
       true -> verify_msg(Msg, MsgName, Opts);
@@ -118,6 +124,14 @@ encode_msg(Msg, MsgName, Opts) ->
       'ServerResponse' ->
 	  encode_msg_ServerResponse(id(Msg, TrUserData),
 				    TrUserData);
+      'SaleInfo' ->
+	  encode_msg_SaleInfo(id(Msg, TrUserData), TrUserData);
+      'DealerTimeout' ->
+	  encode_msg_DealerTimeout(id(Msg, TrUserData),
+				   TrUserData);
+      'ImporterResponse' ->
+	  encode_msg_ImporterResponse(id(Msg, TrUserData),
+				      TrUserData);
       'CatalogRequest' ->
 	  encode_msg_CatalogRequest(id(Msg, TrUserData),
 				    TrUserData);
@@ -269,6 +283,80 @@ encode_msg_ServerResponse(#'ServerResponse'{success =
     begin
       TrF1 = id(F1, TrUserData),
       e_type_bool(TrF1, <<Bin/binary, 8>>, TrUserData)
+    end.
+
+encode_msg_SaleInfo(Msg, TrUserData) ->
+    encode_msg_SaleInfo(Msg, <<>>, TrUserData).
+
+
+encode_msg_SaleInfo(#'SaleInfo'{username = F1,
+				quantity = F2, price = F3},
+		    Bin, TrUserData) ->
+    B1 = begin
+	   TrF1 = id(F1, TrUserData),
+	   e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+	 end,
+    B2 = begin
+	   TrF2 = id(F2, TrUserData),
+	   e_type_int64(TrF2, <<B1/binary, 16>>, TrUserData)
+	 end,
+    begin
+      TrF3 = id(F3, TrUserData),
+      e_type_int64(TrF3, <<B2/binary, 24>>, TrUserData)
+    end.
+
+encode_msg_DealerTimeout(Msg, TrUserData) ->
+    encode_msg_DealerTimeout(Msg, <<>>, TrUserData).
+
+
+encode_msg_DealerTimeout(#'DealerTimeout'{success = F1,
+					  producerName = F2, productName = F3,
+					  sales = F4},
+			 Bin, TrUserData) ->
+    B1 = begin
+	   TrF1 = id(F1, TrUserData),
+	   e_type_bool(TrF1, <<Bin/binary, 8>>, TrUserData)
+	 end,
+    B2 = begin
+	   TrF2 = id(F2, TrUserData),
+	   e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+	 end,
+    B3 = begin
+	   TrF3 = id(F3, TrUserData),
+	   e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
+	 end,
+    begin
+      TrF4 = id(F4, TrUserData),
+      if TrF4 == [] -> B3;
+	 true ->
+	     e_field_DealerTimeout_sales(TrF4, B3, TrUserData)
+      end
+    end.
+
+encode_msg_ImporterResponse(Msg, TrUserData) ->
+    encode_msg_ImporterResponse(Msg, <<>>, TrUserData).
+
+
+encode_msg_ImporterResponse(#'ImporterResponse'{producerName
+						    = F1,
+						productName = F2, quantity = F3,
+						price = F4},
+			    Bin, TrUserData) ->
+    B1 = begin
+	   TrF1 = id(F1, TrUserData),
+	   e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+	 end,
+    B2 = begin
+	   TrF2 = id(F2, TrUserData),
+	   e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+	 end,
+    B3 = begin
+	   TrF3 = id(F3, TrUserData),
+	   e_type_int64(TrF3, <<B2/binary, 24>>, TrUserData)
+	 end,
+    begin
+      TrF4 = id(F4, TrUserData),
+      e_type_int64(TrF4, <<B3/binary, 32>>, TrUserData)
     end.
 
 encode_msg_CatalogRequest(Msg, TrUserData) ->
@@ -486,6 +574,21 @@ e_mfield_Transaction_import(Msg, Bin, TrUserData) ->
     Bin2 = e_varint(byte_size(SubBin), Bin),
     <<Bin2/binary, SubBin/binary>>.
 
+e_mfield_DealerTimeout_sales(Msg, Bin, TrUserData) ->
+    SubBin = encode_msg_SaleInfo(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_field_DealerTimeout_sales([Elem | Rest], Bin,
+			    TrUserData) ->
+    Bin2 = <<Bin/binary, 34>>,
+    Bin3 = e_mfield_DealerTimeout_sales(id(Elem,
+					   TrUserData),
+					Bin2, TrUserData),
+    e_field_DealerTimeout_sales(Rest, Bin3, TrUserData);
+e_field_DealerTimeout_sales([], Bin, _TrUserData) ->
+    Bin.
+
 e_mfield_CatalogRequest_nn(Msg, Bin, TrUserData) ->
     SubBin = encode_msg_POSTNegotiation(Msg, <<>>,
 					TrUserData),
@@ -702,6 +805,15 @@ decode_msg_2_doit('Import', Bin, TrUserData) ->
     id(decode_msg_Import(Bin, TrUserData), TrUserData);
 decode_msg_2_doit('ServerResponse', Bin, TrUserData) ->
     id(decode_msg_ServerResponse(Bin, TrUserData),
+       TrUserData);
+decode_msg_2_doit('SaleInfo', Bin, TrUserData) ->
+    id(decode_msg_SaleInfo(Bin, TrUserData), TrUserData);
+decode_msg_2_doit('DealerTimeout', Bin, TrUserData) ->
+    id(decode_msg_DealerTimeout(Bin, TrUserData),
+       TrUserData);
+decode_msg_2_doit('ImporterResponse', Bin,
+		  TrUserData) ->
+    id(decode_msg_ImporterResponse(Bin, TrUserData),
        TrUserData);
 decode_msg_2_doit('CatalogRequest', Bin, TrUserData) ->
     id(decode_msg_CatalogRequest(Bin, TrUserData),
@@ -1652,6 +1764,568 @@ skip_64_ServerResponse(<<_:64, Rest/binary>>, Z1, Z2,
 		       F@_1, TrUserData) ->
     dfp_read_field_def_ServerResponse(Rest, Z1, Z2, F@_1,
 				      TrUserData).
+
+decode_msg_SaleInfo(Bin, TrUserData) ->
+    dfp_read_field_def_SaleInfo(Bin, 0, 0,
+				id(undefined, TrUserData),
+				id(undefined, TrUserData),
+				id(undefined, TrUserData), TrUserData).
+
+dfp_read_field_def_SaleInfo(<<10, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, F@_3, TrUserData) ->
+    d_field_SaleInfo_username(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, TrUserData);
+dfp_read_field_def_SaleInfo(<<16, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, F@_3, TrUserData) ->
+    d_field_SaleInfo_quantity(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, TrUserData);
+dfp_read_field_def_SaleInfo(<<24, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, F@_3, TrUserData) ->
+    d_field_SaleInfo_price(Rest, Z1, Z2, F@_1, F@_2, F@_3,
+			   TrUserData);
+dfp_read_field_def_SaleInfo(<<>>, 0, 0, F@_1, F@_2,
+			    F@_3, _) ->
+    #'SaleInfo'{username = F@_1, quantity = F@_2,
+		price = F@_3};
+dfp_read_field_def_SaleInfo(Other, Z1, Z2, F@_1, F@_2,
+			    F@_3, TrUserData) ->
+    dg_read_field_def_SaleInfo(Other, Z1, Z2, F@_1, F@_2,
+			       F@_3, TrUserData).
+
+dg_read_field_def_SaleInfo(<<1:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_SaleInfo(Rest, N + 7, X bsl N + Acc,
+			       F@_1, F@_2, F@_3, TrUserData);
+dg_read_field_def_SaleInfo(<<0:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, F@_3, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_SaleInfo_username(Rest, 0, 0, F@_1, F@_2, F@_3,
+				    TrUserData);
+      16 ->
+	  d_field_SaleInfo_quantity(Rest, 0, 0, F@_1, F@_2, F@_3,
+				    TrUserData);
+      24 ->
+	  d_field_SaleInfo_price(Rest, 0, 0, F@_1, F@_2, F@_3,
+				 TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_SaleInfo(Rest, 0, 0, F@_1, F@_2, F@_3,
+				     TrUserData);
+	    1 ->
+		skip_64_SaleInfo(Rest, 0, 0, F@_1, F@_2, F@_3,
+				 TrUserData);
+	    2 ->
+		skip_length_delimited_SaleInfo(Rest, 0, 0, F@_1, F@_2,
+					       F@_3, TrUserData);
+	    3 ->
+		skip_group_SaleInfo(Rest, Key bsr 3, 0, F@_1, F@_2,
+				    F@_3, TrUserData);
+	    5 ->
+		skip_32_SaleInfo(Rest, 0, 0, F@_1, F@_2, F@_3,
+				 TrUserData)
+	  end
+    end;
+dg_read_field_def_SaleInfo(<<>>, 0, 0, F@_1, F@_2, F@_3,
+			   _) ->
+    #'SaleInfo'{username = F@_1, quantity = F@_2,
+		price = F@_3}.
+
+d_field_SaleInfo_username(<<1:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 57 ->
+    d_field_SaleInfo_username(Rest, N + 7, X bsl N + Acc,
+			      F@_1, F@_2, F@_3, TrUserData);
+d_field_SaleInfo_username(<<0:1, X:7, Rest/binary>>, N,
+			  Acc, _, F@_2, F@_3, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {id(unicode:characters_to_list(Utf8, unicode),
+			       TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_SaleInfo(RestF, 0, 0, NewFValue,
+				F@_2, F@_3, TrUserData).
+
+d_field_SaleInfo_quantity(<<1:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 57 ->
+    d_field_SaleInfo_quantity(Rest, N + 7, X bsl N + Acc,
+			      F@_1, F@_2, F@_3, TrUserData);
+d_field_SaleInfo_quantity(<<0:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, _, F@_3, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_SaleInfo(RestF, 0, 0, F@_1,
+				NewFValue, F@_3, TrUserData).
+
+d_field_SaleInfo_price(<<1:1, X:7, Rest/binary>>, N,
+		       Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 57 ->
+    d_field_SaleInfo_price(Rest, N + 7, X bsl N + Acc, F@_1,
+			   F@_2, F@_3, TrUserData);
+d_field_SaleInfo_price(<<0:1, X:7, Rest/binary>>, N,
+		       Acc, F@_1, F@_2, _, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_SaleInfo(RestF, 0, 0, F@_1, F@_2,
+				NewFValue, TrUserData).
+
+skip_varint_SaleInfo(<<1:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, F@_3, TrUserData) ->
+    skip_varint_SaleInfo(Rest, Z1, Z2, F@_1, F@_2, F@_3,
+			 TrUserData);
+skip_varint_SaleInfo(<<0:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, F@_3, TrUserData) ->
+    dfp_read_field_def_SaleInfo(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, TrUserData).
+
+skip_length_delimited_SaleInfo(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_SaleInfo(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
+skip_length_delimited_SaleInfo(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_SaleInfo(Rest2, 0, 0, F@_1, F@_2,
+				F@_3, TrUserData).
+
+skip_group_SaleInfo(Bin, FNum, Z2, F@_1, F@_2, F@_3,
+		    TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_SaleInfo(Rest, 0, Z2, F@_1, F@_2,
+				F@_3, TrUserData).
+
+skip_32_SaleInfo(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, F@_3, TrUserData) ->
+    dfp_read_field_def_SaleInfo(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, TrUserData).
+
+skip_64_SaleInfo(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, F@_3, TrUserData) ->
+    dfp_read_field_def_SaleInfo(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, TrUserData).
+
+decode_msg_DealerTimeout(Bin, TrUserData) ->
+    dfp_read_field_def_DealerTimeout(Bin, 0, 0,
+				     id(undefined, TrUserData),
+				     id(undefined, TrUserData),
+				     id(undefined, TrUserData),
+				     id([], TrUserData), TrUserData).
+
+dfp_read_field_def_DealerTimeout(<<8, Rest/binary>>, Z1,
+				 Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_DealerTimeout_success(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, TrUserData);
+dfp_read_field_def_DealerTimeout(<<18, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_DealerTimeout_producerName(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_DealerTimeout(<<26, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_DealerTimeout_productName(Rest, Z1, Z2, F@_1,
+				      F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_DealerTimeout(<<34, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_DealerTimeout_sales(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, TrUserData);
+dfp_read_field_def_DealerTimeout(<<>>, 0, 0, F@_1, F@_2,
+				 F@_3, R1, TrUserData) ->
+    #'DealerTimeout'{success = F@_1, producerName = F@_2,
+		     productName = F@_3,
+		     sales = lists_reverse(R1, TrUserData)};
+dfp_read_field_def_DealerTimeout(Other, Z1, Z2, F@_1,
+				 F@_2, F@_3, F@_4, TrUserData) ->
+    dg_read_field_def_DealerTimeout(Other, Z1, Z2, F@_1,
+				    F@_2, F@_3, F@_4, TrUserData).
+
+dg_read_field_def_DealerTimeout(<<1:1, X:7,
+				  Rest/binary>>,
+				N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_DealerTimeout(Rest, N + 7,
+				    X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData);
+dg_read_field_def_DealerTimeout(<<0:1, X:7,
+				  Rest/binary>>,
+				N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      8 ->
+	  d_field_DealerTimeout_success(Rest, 0, 0, F@_1, F@_2,
+					F@_3, F@_4, TrUserData);
+      18 ->
+	  d_field_DealerTimeout_producerName(Rest, 0, 0, F@_1,
+					     F@_2, F@_3, F@_4, TrUserData);
+      26 ->
+	  d_field_DealerTimeout_productName(Rest, 0, 0, F@_1,
+					    F@_2, F@_3, F@_4, TrUserData);
+      34 ->
+	  d_field_DealerTimeout_sales(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_DealerTimeout(Rest, 0, 0, F@_1, F@_2, F@_3,
+					  F@_4, TrUserData);
+	    1 ->
+		skip_64_DealerTimeout(Rest, 0, 0, F@_1, F@_2, F@_3,
+				      F@_4, TrUserData);
+	    2 ->
+		skip_length_delimited_DealerTimeout(Rest, 0, 0, F@_1,
+						    F@_2, F@_3, F@_4,
+						    TrUserData);
+	    3 ->
+		skip_group_DealerTimeout(Rest, Key bsr 3, 0, F@_1, F@_2,
+					 F@_3, F@_4, TrUserData);
+	    5 ->
+		skip_32_DealerTimeout(Rest, 0, 0, F@_1, F@_2, F@_3,
+				      F@_4, TrUserData)
+	  end
+    end;
+dg_read_field_def_DealerTimeout(<<>>, 0, 0, F@_1, F@_2,
+				F@_3, R1, TrUserData) ->
+    #'DealerTimeout'{success = F@_1, producerName = F@_2,
+		     productName = F@_3,
+		     sales = lists_reverse(R1, TrUserData)}.
+
+d_field_DealerTimeout_success(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_DealerTimeout_success(Rest, N + 7,
+				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				  TrUserData);
+d_field_DealerTimeout_success(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = {id(X bsl N + Acc =/= 0,
+			     TrUserData),
+			  Rest},
+    dfp_read_field_def_DealerTimeout(RestF, 0, 0, NewFValue,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+d_field_DealerTimeout_producerName(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_DealerTimeout_producerName(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData);
+d_field_DealerTimeout_producerName(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {id(unicode:characters_to_list(Utf8, unicode),
+			       TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_DealerTimeout(RestF, 0, 0, F@_1,
+				     NewFValue, F@_3, F@_4, TrUserData).
+
+d_field_DealerTimeout_productName(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_DealerTimeout_productName(Rest, N + 7,
+				      X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				      TrUserData);
+d_field_DealerTimeout_productName(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, _, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {id(unicode:characters_to_list(Utf8, unicode),
+			       TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_DealerTimeout(RestF, 0, 0, F@_1,
+				     F@_2, NewFValue, F@_4, TrUserData).
+
+d_field_DealerTimeout_sales(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_DealerTimeout_sales(Rest, N + 7, X bsl N + Acc,
+				F@_1, F@_2, F@_3, F@_4, TrUserData);
+d_field_DealerTimeout_sales(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, Prev, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(decode_msg_SaleInfo(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_DealerTimeout(RestF, 0, 0, F@_1,
+				     F@_2, F@_3,
+				     cons(NewFValue, Prev, TrUserData),
+				     TrUserData).
+
+skip_varint_DealerTimeout(<<1:1, _:7, Rest/binary>>, Z1,
+			  Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    skip_varint_DealerTimeout(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, F@_4, TrUserData);
+skip_varint_DealerTimeout(<<0:1, _:7, Rest/binary>>, Z1,
+			  Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_DealerTimeout(Rest, Z1, Z2, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+skip_length_delimited_DealerTimeout(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_DealerTimeout(Rest, N + 7,
+					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					TrUserData);
+skip_length_delimited_DealerTimeout(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_DealerTimeout(Rest2, 0, 0, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+skip_group_DealerTimeout(Bin, FNum, Z2, F@_1, F@_2,
+			 F@_3, F@_4, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_DealerTimeout(Rest, 0, Z2, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+skip_32_DealerTimeout(<<_:32, Rest/binary>>, Z1, Z2,
+		      F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_DealerTimeout(Rest, Z1, Z2, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+skip_64_DealerTimeout(<<_:64, Rest/binary>>, Z1, Z2,
+		      F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_DealerTimeout(Rest, Z1, Z2, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData).
+
+decode_msg_ImporterResponse(Bin, TrUserData) ->
+    dfp_read_field_def_ImporterResponse(Bin, 0, 0,
+					id(undefined, TrUserData),
+					id(undefined, TrUserData),
+					id(undefined, TrUserData),
+					id(undefined, TrUserData), TrUserData).
+
+dfp_read_field_def_ImporterResponse(<<10, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    d_field_ImporterResponse_producerName(Rest, Z1, Z2,
+					  F@_1, F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_ImporterResponse(<<18, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    d_field_ImporterResponse_productName(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_ImporterResponse(<<24, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    d_field_ImporterResponse_quantity(Rest, Z1, Z2, F@_1,
+				      F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_ImporterResponse(<<32, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    d_field_ImporterResponse_price(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, TrUserData);
+dfp_read_field_def_ImporterResponse(<<>>, 0, 0, F@_1,
+				    F@_2, F@_3, F@_4, _) ->
+    #'ImporterResponse'{producerName = F@_1,
+			productName = F@_2, quantity = F@_3, price = F@_4};
+dfp_read_field_def_ImporterResponse(Other, Z1, Z2, F@_1,
+				    F@_2, F@_3, F@_4, TrUserData) ->
+    dg_read_field_def_ImporterResponse(Other, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, TrUserData).
+
+dg_read_field_def_ImporterResponse(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ImporterResponse(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData);
+dg_read_field_def_ImporterResponse(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4,
+				   TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_ImporterResponse_producerName(Rest, 0, 0, F@_1,
+						F@_2, F@_3, F@_4, TrUserData);
+      18 ->
+	  d_field_ImporterResponse_productName(Rest, 0, 0, F@_1,
+					       F@_2, F@_3, F@_4, TrUserData);
+      24 ->
+	  d_field_ImporterResponse_quantity(Rest, 0, 0, F@_1,
+					    F@_2, F@_3, F@_4, TrUserData);
+      32 ->
+	  d_field_ImporterResponse_price(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ImporterResponse(Rest, 0, 0, F@_1, F@_2,
+					     F@_3, F@_4, TrUserData);
+	    1 ->
+		skip_64_ImporterResponse(Rest, 0, 0, F@_1, F@_2, F@_3,
+					 F@_4, TrUserData);
+	    2 ->
+		skip_length_delimited_ImporterResponse(Rest, 0, 0, F@_1,
+						       F@_2, F@_3, F@_4,
+						       TrUserData);
+	    3 ->
+		skip_group_ImporterResponse(Rest, Key bsr 3, 0, F@_1,
+					    F@_2, F@_3, F@_4, TrUserData);
+	    5 ->
+		skip_32_ImporterResponse(Rest, 0, 0, F@_1, F@_2, F@_3,
+					 F@_4, TrUserData)
+	  end
+    end;
+dg_read_field_def_ImporterResponse(<<>>, 0, 0, F@_1,
+				   F@_2, F@_3, F@_4, _) ->
+    #'ImporterResponse'{producerName = F@_1,
+			productName = F@_2, quantity = F@_3, price = F@_4}.
+
+d_field_ImporterResponse_producerName(<<1:1, X:7,
+					Rest/binary>>,
+				      N, Acc, F@_1, F@_2, F@_3, F@_4,
+				      TrUserData)
+    when N < 57 ->
+    d_field_ImporterResponse_producerName(Rest, N + 7,
+					  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					  TrUserData);
+d_field_ImporterResponse_producerName(<<0:1, X:7,
+					Rest/binary>>,
+				      N, Acc, _, F@_2, F@_3, F@_4,
+				      TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {id(unicode:characters_to_list(Utf8, unicode),
+			       TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_ImporterResponse(RestF, 0, 0,
+					NewFValue, F@_2, F@_3, F@_4,
+					TrUserData).
+
+d_field_ImporterResponse_productName(<<1:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_ImporterResponse_productName(Rest, N + 7,
+					 X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					 TrUserData);
+d_field_ImporterResponse_productName(<<0:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {id(unicode:characters_to_list(Utf8, unicode),
+			       TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_ImporterResponse(RestF, 0, 0, F@_1,
+					NewFValue, F@_3, F@_4, TrUserData).
+
+d_field_ImporterResponse_quantity(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_ImporterResponse_quantity(Rest, N + 7,
+				      X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				      TrUserData);
+d_field_ImporterResponse_quantity(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, _, F@_4, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_ImporterResponse(RestF, 0, 0, F@_1,
+					F@_2, NewFValue, F@_4, TrUserData).
+
+d_field_ImporterResponse_price(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_ImporterResponse_price(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				   TrUserData);
+d_field_ImporterResponse_price(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, _, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_ImporterResponse(RestF, 0, 0, F@_1,
+					F@_2, F@_3, NewFValue, TrUserData).
+
+skip_varint_ImporterResponse(<<1:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    skip_varint_ImporterResponse(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, TrUserData);
+skip_varint_ImporterResponse(<<0:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ImporterResponse(Rest, Z1, Z2, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
+
+skip_length_delimited_ImporterResponse(<<1:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ImporterResponse(Rest, N + 7,
+					   X bsl N + Acc, F@_1, F@_2, F@_3,
+					   F@_4, TrUserData);
+skip_length_delimited_ImporterResponse(<<0:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_ImporterResponse(Rest2, 0, 0, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
+
+skip_group_ImporterResponse(Bin, FNum, Z2, F@_1, F@_2,
+			    F@_3, F@_4, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_ImporterResponse(Rest, 0, Z2, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
+
+skip_32_ImporterResponse(<<_:32, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ImporterResponse(Rest, Z1, Z2, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
+
+skip_64_ImporterResponse(<<_:64, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ImporterResponse(Rest, Z1, Z2, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
 
 decode_msg_CatalogRequest(Bin, TrUserData) ->
     dfp_read_field_def_CatalogRequest(Bin, 0, 0,
@@ -3291,6 +3965,11 @@ merge_msgs(Prev, New, MsgName, Opts) ->
       'Import' -> merge_msg_Import(Prev, New, TrUserData);
       'ServerResponse' ->
 	  merge_msg_ServerResponse(Prev, New, TrUserData);
+      'SaleInfo' -> merge_msg_SaleInfo(Prev, New, TrUserData);
+      'DealerTimeout' ->
+	  merge_msg_DealerTimeout(Prev, New, TrUserData);
+      'ImporterResponse' ->
+	  merge_msg_ImporterResponse(Prev, New, TrUserData);
       'CatalogRequest' ->
 	  merge_msg_CatalogRequest(Prev, New, TrUserData);
       'POSTNegotiation' ->
@@ -3368,6 +4047,43 @@ merge_msg_Import(#'Import'{},
 merge_msg_ServerResponse(#'ServerResponse'{},
 			 #'ServerResponse'{success = NFsuccess}, _) ->
     #'ServerResponse'{success = NFsuccess}.
+
+-compile({nowarn_unused_function,merge_msg_SaleInfo/3}).
+merge_msg_SaleInfo(#'SaleInfo'{},
+		   #'SaleInfo'{username = NFusername,
+			       quantity = NFquantity, price = NFprice},
+		   _) ->
+    #'SaleInfo'{username = NFusername,
+		quantity = NFquantity, price = NFprice}.
+
+-compile({nowarn_unused_function,merge_msg_DealerTimeout/3}).
+merge_msg_DealerTimeout(#'DealerTimeout'{sales =
+					     PFsales},
+			#'DealerTimeout'{success = NFsuccess,
+					 producerName = NFproducerName,
+					 productName = NFproductName,
+					 sales = NFsales},
+			TrUserData) ->
+    #'DealerTimeout'{success = NFsuccess,
+		     producerName = NFproducerName,
+		     productName = NFproductName,
+		     sales =
+			 if PFsales /= undefined, NFsales /= undefined ->
+				'erlang_++'(PFsales, NFsales, TrUserData);
+			    PFsales == undefined -> NFsales;
+			    NFsales == undefined -> PFsales
+			 end}.
+
+-compile({nowarn_unused_function,merge_msg_ImporterResponse/3}).
+merge_msg_ImporterResponse(#'ImporterResponse'{},
+			   #'ImporterResponse'{producerName = NFproducerName,
+					       productName = NFproductName,
+					       quantity = NFquantity,
+					       price = NFprice},
+			   _) ->
+    #'ImporterResponse'{producerName = NFproducerName,
+			productName = NFproductName, quantity = NFquantity,
+			price = NFprice}.
 
 -compile({nowarn_unused_function,merge_msg_CatalogRequest/3}).
 merge_msg_CatalogRequest(#'CatalogRequest'{request =
@@ -3522,6 +4238,12 @@ verify_msg(Msg, MsgName, Opts) ->
       'Import' -> v_msg_Import(Msg, [MsgName], TrUserData);
       'ServerResponse' ->
 	  v_msg_ServerResponse(Msg, [MsgName], TrUserData);
+      'SaleInfo' ->
+	  v_msg_SaleInfo(Msg, [MsgName], TrUserData);
+      'DealerTimeout' ->
+	  v_msg_DealerTimeout(Msg, [MsgName], TrUserData);
+      'ImporterResponse' ->
+	  v_msg_ImporterResponse(Msg, [MsgName], TrUserData);
       'CatalogRequest' ->
 	  v_msg_CatalogRequest(Msg, [MsgName], TrUserData);
       'POSTNegotiation' ->
@@ -3619,6 +4341,55 @@ v_msg_ServerResponse(#'ServerResponse'{success = F1},
     v_type_bool(F1, [success | Path], TrUserData), ok;
 v_msg_ServerResponse(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ServerResponse'}, X,
+		  Path).
+
+-compile({nowarn_unused_function,v_msg_SaleInfo/3}).
+-dialyzer({nowarn_function,v_msg_SaleInfo/3}).
+v_msg_SaleInfo(#'SaleInfo'{username = F1, quantity = F2,
+			   price = F3},
+	       Path, TrUserData) ->
+    v_type_string(F1, [username | Path], TrUserData),
+    v_type_int64(F2, [quantity | Path], TrUserData),
+    v_type_int64(F3, [price | Path], TrUserData),
+    ok;
+v_msg_SaleInfo(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'SaleInfo'}, X, Path).
+
+-compile({nowarn_unused_function,v_msg_DealerTimeout/3}).
+-dialyzer({nowarn_function,v_msg_DealerTimeout/3}).
+v_msg_DealerTimeout(#'DealerTimeout'{success = F1,
+				     producerName = F2, productName = F3,
+				     sales = F4},
+		    Path, TrUserData) ->
+    v_type_bool(F1, [success | Path], TrUserData),
+    v_type_string(F2, [producerName | Path], TrUserData),
+    v_type_string(F3, [productName | Path], TrUserData),
+    if is_list(F4) ->
+	   _ = [v_msg_SaleInfo(Elem, [sales | Path], TrUserData)
+		|| Elem <- F4],
+	   ok;
+       true ->
+	   mk_type_error({invalid_list_of, {msg, 'SaleInfo'}}, F4,
+			 [sales | Path])
+    end,
+    ok;
+v_msg_DealerTimeout(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'DealerTimeout'}, X, Path).
+
+-compile({nowarn_unused_function,v_msg_ImporterResponse/3}).
+-dialyzer({nowarn_function,v_msg_ImporterResponse/3}).
+v_msg_ImporterResponse(#'ImporterResponse'{producerName
+					       = F1,
+					   productName = F2, quantity = F3,
+					   price = F4},
+		       Path, TrUserData) ->
+    v_type_string(F1, [producerName | Path], TrUserData),
+    v_type_string(F2, [productName | Path], TrUserData),
+    v_type_int64(F3, [quantity | Path], TrUserData),
+    v_type_int64(F4, [price | Path], TrUserData),
+    ok;
+v_msg_ImporterResponse(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ImporterResponse'}, X,
 		  Path).
 
 -compile({nowarn_unused_function,v_msg_CatalogRequest/3}).
@@ -3962,6 +4733,32 @@ get_msg_defs() ->
      {{msg, 'ServerResponse'},
       [#field{name = success, fnum = 1, rnum = 2, type = bool,
 	      occurrence = required, opts = []}]},
+     {{msg, 'SaleInfo'},
+      [#field{name = username, fnum = 1, rnum = 2,
+	      type = string, occurrence = required, opts = []},
+       #field{name = quantity, fnum = 2, rnum = 3,
+	      type = int64, occurrence = required, opts = []},
+       #field{name = price, fnum = 3, rnum = 4, type = int64,
+	      occurrence = required, opts = []}]},
+     {{msg, 'DealerTimeout'},
+      [#field{name = success, fnum = 1, rnum = 2, type = bool,
+	      occurrence = required, opts = []},
+       #field{name = producerName, fnum = 2, rnum = 3,
+	      type = string, occurrence = required, opts = []},
+       #field{name = productName, fnum = 3, rnum = 4,
+	      type = string, occurrence = required, opts = []},
+       #field{name = sales, fnum = 4, rnum = 5,
+	      type = {msg, 'SaleInfo'}, occurrence = repeated,
+	      opts = []}]},
+     {{msg, 'ImporterResponse'},
+      [#field{name = producerName, fnum = 1, rnum = 2,
+	      type = string, occurrence = required, opts = []},
+       #field{name = productName, fnum = 2, rnum = 3,
+	      type = string, occurrence = required, opts = []},
+       #field{name = quantity, fnum = 3, rnum = 4,
+	      type = int64, occurrence = required, opts = []},
+       #field{name = price, fnum = 4, rnum = 5, type = int64,
+	      occurrence = required, opts = []}]},
      {{msg, 'CatalogRequest'},
       [#gpb_oneof{name = request, rnum = 2,
 		  fields =
@@ -4035,7 +4832,8 @@ get_msg_defs() ->
 
 get_msg_names() ->
     ['Authentication', 'Transaction', 'Produce', 'Import',
-     'ServerResponse', 'CatalogRequest', 'POSTNegotiation',
+     'ServerResponse', 'SaleInfo', 'DealerTimeout',
+     'ImporterResponse', 'CatalogRequest', 'POSTNegotiation',
      'DELETENegotiation', 'GETEntities',
      'GETEntitiesResponse', 'GETProducerInfo',
      'GETProducerInfoResponse', 'Subscribe', 'Unsubscribe'].
@@ -4046,7 +4844,8 @@ get_group_names() -> [].
 
 get_msg_or_group_names() ->
     ['Authentication', 'Transaction', 'Produce', 'Import',
-     'ServerResponse', 'CatalogRequest', 'POSTNegotiation',
+     'ServerResponse', 'SaleInfo', 'DealerTimeout',
+     'ImporterResponse', 'CatalogRequest', 'POSTNegotiation',
      'DELETENegotiation', 'GETEntities',
      'GETEntitiesResponse', 'GETProducerInfo',
      'GETProducerInfoResponse', 'Subscribe', 'Unsubscribe'].
@@ -4117,6 +4916,32 @@ find_msg_def('Import') ->
 	    type = int64, occurrence = required, opts = []}];
 find_msg_def('ServerResponse') ->
     [#field{name = success, fnum = 1, rnum = 2, type = bool,
+	    occurrence = required, opts = []}];
+find_msg_def('SaleInfo') ->
+    [#field{name = username, fnum = 1, rnum = 2,
+	    type = string, occurrence = required, opts = []},
+     #field{name = quantity, fnum = 2, rnum = 3,
+	    type = int64, occurrence = required, opts = []},
+     #field{name = price, fnum = 3, rnum = 4, type = int64,
+	    occurrence = required, opts = []}];
+find_msg_def('DealerTimeout') ->
+    [#field{name = success, fnum = 1, rnum = 2, type = bool,
+	    occurrence = required, opts = []},
+     #field{name = producerName, fnum = 2, rnum = 3,
+	    type = string, occurrence = required, opts = []},
+     #field{name = productName, fnum = 3, rnum = 4,
+	    type = string, occurrence = required, opts = []},
+     #field{name = sales, fnum = 4, rnum = 5,
+	    type = {msg, 'SaleInfo'}, occurrence = repeated,
+	    opts = []}];
+find_msg_def('ImporterResponse') ->
+    [#field{name = producerName, fnum = 1, rnum = 2,
+	    type = string, occurrence = required, opts = []},
+     #field{name = productName, fnum = 2, rnum = 3,
+	    type = string, occurrence = required, opts = []},
+     #field{name = quantity, fnum = 3, rnum = 4,
+	    type = int64, occurrence = required, opts = []},
+     #field{name = price, fnum = 4, rnum = 5, type = int64,
 	    occurrence = required, opts = []}];
 find_msg_def('CatalogRequest') ->
     [#gpb_oneof{name = request, rnum = 2,
@@ -4304,6 +5129,9 @@ fqbin_to_msg_name(<<"protos.Transaction">>) -> 'Transaction';
 fqbin_to_msg_name(<<"protos.Produce">>) -> 'Produce';
 fqbin_to_msg_name(<<"protos.Import">>) -> 'Import';
 fqbin_to_msg_name(<<"protos.ServerResponse">>) -> 'ServerResponse';
+fqbin_to_msg_name(<<"protos.SaleInfo">>) -> 'SaleInfo';
+fqbin_to_msg_name(<<"protos.DealerTimeout">>) -> 'DealerTimeout';
+fqbin_to_msg_name(<<"protos.ImporterResponse">>) -> 'ImporterResponse';
 fqbin_to_msg_name(<<"protos.CatalogRequest">>) -> 'CatalogRequest';
 fqbin_to_msg_name(<<"protos.POSTNegotiation">>) -> 'POSTNegotiation';
 fqbin_to_msg_name(<<"protos.DELETENegotiation">>) -> 'DELETENegotiation';
@@ -4321,6 +5149,9 @@ msg_name_to_fqbin('Transaction') -> <<"protos.Transaction">>;
 msg_name_to_fqbin('Produce') -> <<"protos.Produce">>;
 msg_name_to_fqbin('Import') -> <<"protos.Import">>;
 msg_name_to_fqbin('ServerResponse') -> <<"protos.ServerResponse">>;
+msg_name_to_fqbin('SaleInfo') -> <<"protos.SaleInfo">>;
+msg_name_to_fqbin('DealerTimeout') -> <<"protos.DealerTimeout">>;
+msg_name_to_fqbin('ImporterResponse') -> <<"protos.ImporterResponse">>;
 msg_name_to_fqbin('CatalogRequest') -> <<"protos.CatalogRequest">>;
 msg_name_to_fqbin('POSTNegotiation') -> <<"protos.POSTNegotiation">>;
 msg_name_to_fqbin('DELETENegotiation') -> <<"protos.DELETENegotiation">>;
@@ -4380,10 +5211,11 @@ get_all_proto_names() -> ["protos"].
 
 get_msg_containment("protos") ->
     ['Authentication', 'CatalogRequest',
-     'DELETENegotiation', 'GETEntities',
+     'DELETENegotiation', 'DealerTimeout', 'GETEntities',
      'GETEntitiesResponse', 'GETProducerInfo',
-     'GETProducerInfoResponse', 'Import', 'POSTNegotiation',
-     'Produce', 'ServerResponse', 'Subscribe', 'Transaction',
+     'GETProducerInfoResponse', 'Import', 'ImporterResponse',
+     'POSTNegotiation', 'Produce', 'SaleInfo',
+     'ServerResponse', 'Subscribe', 'Transaction',
      'Unsubscribe'];
 get_msg_containment(P) ->
     error({gpb_error, {badproto, P}}).
@@ -4413,17 +5245,20 @@ get_enum_containment(P) ->
 
 get_proto_by_msg_name_as_fqbin(<<"protos.GETEntities">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Import">>) -> "protos";
+get_proto_by_msg_name_as_fqbin(<<"protos.DealerTimeout">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.CatalogRequest">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Unsubscribe">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Subscribe">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.ServerResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Produce">>) -> "protos";
+get_proto_by_msg_name_as_fqbin(<<"protos.ImporterResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.GETProducerInfoResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.GETEntitiesResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Transaction">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.POSTNegotiation">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.DELETENegotiation">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Authentication">>) -> "protos";
+get_proto_by_msg_name_as_fqbin(<<"protos.SaleInfo">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.GETProducerInfo">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(E) ->
     error({gpb_error, {badmsg, E}}).
