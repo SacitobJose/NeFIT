@@ -4,20 +4,11 @@
 -import(importer, [importer/2]).
 -import(producer, [producer/2]).
 
-client(Sock) ->
-
-
--module(client).
--export([client/1]).
--import(login, [create_account/2, cancel_register/2, login/2, logout/1]).
--import(importer, [importer/2]).
--import(producer, [producer/2]).
-
 -include("protos.hrl").
 
 client(Sock) ->
-    L = gen_tcp:recv(Sock, 4),
-    Data = gen_tcp:recv(Sock, L),
+    {ok, Length} = gen_tcp:recv(Sock, 4),
+    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     Auth = protos:decode_msg(Data, 'Authentication'),
     case maps:find(type, Auth) of
         "LOGIN" ->
@@ -68,5 +59,4 @@ client(Sock) ->
                         gen_tcp:send(Sock, ServerResponse),
                         client(Sock)
                 end
-    end
-    client(Sock, Username).
+    end.
