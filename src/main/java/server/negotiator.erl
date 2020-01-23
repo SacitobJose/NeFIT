@@ -6,8 +6,10 @@
 -include("protos.hrl").
 
 negotiator(Sock) ->
-	PID = spawn(fun() -> negotiator(Sock, #{}, #{}) end),
-	negotiatorSocket(Sock, PID).
+    PID1 = self(),
+	PID2 = spawn(fun() -> negotiatorSocket(Sock, PID1) end),
+    gen_tcp:controlling_process(Sock, PID2),
+    negotiator(Sock, #{}, #{}).
 
 negotiator(Sock, Importers, Producers) ->
     receive
@@ -69,7 +71,6 @@ negotiatorSocket(Sock, Handler) ->
             getImporters(Handler, SalesInfo, Producer, Product),
             negotiatorSocket(Sock, Handler)
     end.
-
 
 getImporters(_, [], _, _) -> 
 	true;

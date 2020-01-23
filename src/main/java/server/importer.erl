@@ -7,21 +7,18 @@
 -include("protos.hrl").
 
 importer(Sock, Username) ->
-    Handler = spawn(fun() -> importer(Sock, Username, 0) end),
-    {ok, Length} = gen_tcp:recv(Sock, 4),
-    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
-    {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _} = DataImport,
-    Handler ! {new_importer, Username, Product, <<Length/binary, Data/binary>>},
-    importer(Sock, Username, Handler, 0).
+    PID1 = self(),
+    PID2 = spawn(fun() -> importerSocket(Sock, Username, PID1) end),
+    gen_tcp:controlling_process(Sock, PID2),
+    importer(Sock, Username, 0).
 
-importer(Sock, Username, Handler, 0) ->
+importerSocket(Sock, Username, Handler) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {import, DataImport}} = protos:decode_msg(Data, 'Transaction'),
     {_, Product, _, _, _, _} = DataImport,
     Handler ! {new_importer, Username, Product, <<Length/binary, Data/binary>>},
-    importer(Sock, Username, Handler, 0).
+    importerSocket(Sock, Username, Handler).
 
 importer(Sock, Username, 0) ->
     receive

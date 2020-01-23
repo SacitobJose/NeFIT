@@ -45,7 +45,7 @@ negotiators(Map, Negotiators, N) ->
                     Value ! {new_producer, Username, PID, Product, Data},
                     negotiators(Map, Negotiators, N);
                 _ ->
-                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map), 
+                    NewMap = maps:put(Product, lists:nth(N, Negotiators), Map),
                     lists:nth(N, Negotiators) ! {new_producer, Username, PID, Product, Data},
                     negotiators(NewMap, Negotiators, (N rem length(Negotiators)) + 1)
             end;

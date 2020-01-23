@@ -7,21 +7,18 @@
 -include("protos.hrl").
 
 producer(Sock, Username) ->
-    Handler = spawn(fun() -> producer(Sock, Username, 0) end),
-    {ok, Length} = gen_tcp:recv(Sock, 4),
-    {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
-    {_, {produce, DataProduce}} = protos:decode_msg(Data, 'Transaction'),
-    {_, Product, _, _, _, _, _} = DataProduce,
-    Handler ! {new_producer, Username, Product, <<Length/binary, Data/binary>>},
-    producer(Sock, Username, Handler, 0).
+    PID1 = self(),
+    PID2 = spawn(fun() -> producerSocket(Sock, Username, PID1) end),
+    gen_tcp:controlling_process(Sock, PID2),
+    producer(Sock, Username, 0).
 
-producer(Sock, Username, Handler, 0) ->
+producerSocket(Sock, Username, Handler) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
     {_, {produce, DataProduce}} = protos:decode_msg(Data, 'Transaction'),
     {_, Product, _, _, _, _, _} = DataProduce,
     Handler ! {new_producer, Username, Product, <<Length/binary, Data/binary>>},
-    producer(Sock, Username, Handler, 0).
+    producerSocket(Sock, Username, Handler).
 
 producer(Sock, Username, 0) ->
     receive
