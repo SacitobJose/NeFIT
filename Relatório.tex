@@ -88,7 +88,9 @@
 	Um negociador é responsável por intermediar as negociações entre importadores e fabricantes, fazendo corresponder ofertas e encomendas que satisfaçam os requisitos de ambas.
 	Quando uma negociação chega ao fim do seu tempo, envia as informações de fabricante, importadores e respetivas quantidades e preços para o servidor.
 
-	Por fim, o catálogo apresenta uma interface que se assemelha a uma \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, desenvolvido pelo grupo em Java, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
+	Por fim, o catálogo apresenta uma interface que se assemelha a uma \textit{RESTful} e ainda um sistema de \textit{publish-subscribe}, utilizando o \textit{ZeroMQ}, sendo que os subscritores são importadores e são notificados quando um fabricante, que eles subscreveram, publica um oferta, sendo que esta chega pelo negociador responsável.
+	
+	As comunicações entre todas as partes intervenientes neste trabalho é feita utilizando \textit{Protocol Buffers}, o que facilita a troca de mensagens entre entidades desenvolvidas em diferentes linguagens de programação.
 
 	Por forma a facilitar a execução de todas as entidades envolvidas, é incluído, junto à implementação deste trabalho, um ficheiro \textbf{\textit{Makefile}} com todas as intruções necessárias para garantir o arranque correto do sistema.
 
@@ -135,9 +137,9 @@
 	Quando um cliente faz uma oferta ou encomenda, a mesma acaba por chegar ao ator (negociador) responsável pelo produto, fazendo-a depois chegar ao negociador propriamente dito (exterior ao servidor).
 
 	\subsection{Cliente}
-	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades da biblioteca \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google}. Posto isto, passaremos ao detalhe do funcionamento do cliente.
+	Tal como pedido nos requisitos do trabalho, a implementação do cliente foi feita em \textit{Java}. Para além de todas as classes nativas, foram ainda usadas funcionalidades da biblioteca \textit{Protocol Buffers}, um formato de serialização de dados desenvolvido pela \textit{Google} e da ferramenta \textit{ZeroMQ}, para troca assíncrona de mensagens. Posto isto, passaremos ao detalhe do funcionamento do cliente.
 	
-	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. Se o utilizador for um importador, é lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a fabricantes que o utilizador subscreveu.
+	O cliente, aquando do início da sua utilização por parte de um utilizador, começa por pedir os dados de autenticação e entra em contacto com o servidor para verificar a sua validade. Em caso afirmativo, é criada uma \textit{thread} adicional que recebe informações do servidor e o utilizador é enviado para um de dois menus: o de fornecedor ou de importador. É lançada ainda outra \textit{thread}, responsável por receber updates do catálogo quanto a fabricantes que o utilizador subscreveu.
 	
 	De seguida, após toda esta configuração inicial, é mostrado um dos seguintes menus com as operações indicadas:
 	
@@ -147,24 +149,21 @@
 			\item Oferta de encomenda;
 			\item Obter lista de importadores/fabricantes;
 			\item Efetuar/cancelar subscrições;
-			\item Obter negociações em curso;
-			\item Atualizações;
-			\item Atualizações de subscrições.
+			\item Obter negociações em curso.
 		\end{itemize}
 
 		\item \textbf{Fabricante}:
 		\begin{itemize}
 			\item Oferta de produção;
-			\item Obter lista de importadores/fabricantes;
-			\item Atualizações.
+			\item Obter lista de importadores/fabricantes.
 		\end{itemize}
 	\end{enumerate}
 
-	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor e produto, obtendo atualizações dessas subscrições na opção correspondente.
-	
-	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos), obter uma lista dos importadores/fabricantes e verificar se tem atualizações pendentes.
-	
-	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, tendo em conta que o utilizador clica na opção "Atualizações".
+	Começando pelas operações do importador, temos que este pode encomendar um produto, tendo para isso de indicar o nome do produtor/produto, o número de unidades e o preço que está disposto a pagar por unidade. Pode ainda subscrever ou cancelar a subscrição de atualizações sobre um determinado produtor e produto.
+
+	Passando ao fornecedor, este pode apenas colocar uma oferta de produção, indicando o nome do produto, quantidade mínima/máxima, preço mínimo por unidade e período de negociação (em segundos) e obter uma lista dos importadores/fabricantes.
+
+	Quanto às mensagens do servidor e do catálogo, estas são apresentadas sempre que há informações para mostrar, num terminal à parte, passado na invocação inicial do cliente.
 	
 	Em ambos os casos, é dada a opção ao utilizador para sair da interface.
 
@@ -186,21 +185,18 @@
 	Relativamente ao catálogo presente neste sistema, este é um componente onde se guarda informação útil acerca dos fabricantes e negociações em curso. Esta entidade do protótipo pode ser vista como um ficheiro de \textit{logs}, que é 
 	atualizado e acedido sempre que for necessário. Isto possibilita guardar um histórico do estado momentâneo do funcionamento da aplicação.
 
-	Para tal, foram declaradas 4 variáveis na classe deste componente por forma a armazenar toda a informação pertinente:
+	Para tal, foram declaradas 43 variáveis na classe deste componente por forma a armazenar toda a informação pertinente:
 	\begin{itemize}
 		\item \textbf{negociations}: variável com os dados das negociações vigentes;
 		\item \textbf{importers}: variável correspondente ao conjunto dos importadores;
-		\item \textbf{producers}: variável correspondente ao conjunto dos fabricantes;
-		\item \textbf{subscriptions}: variável com os dados das subscrições registadas.
+		\item \textbf{producers}: variável correspondente ao conjunto dos fabricantes.
 	\end{itemize}
 	Sobre este componente podem ser exercidos 6 tipos distintos de operações:
 	\begin{enumerate}
 		\item \textbf{POSTNegotiation}: inserção da informação relativa à iniciação de um novo periodo de negociação;
 		\item \textbf{DELETENegotiation}: remoção da informação relativa à negociação em vigor;
 		\item \textbf{GETProducerInfo}: obtenção da informação relativa ao produtor;
-		\item \textbf{GETEntities}: obtenção dos dados de todas as entidades (importador e produtor);
-		\item \textbf{Subscribe}: operação relativa à subscrição de atualizações de um produto de um produtor;
-		\item \textbf{Unsubscribe}: operação que permite cancelar uma subscrição de novas atualizações de um determinado produto de um produtor.
+		\item \textbf{GETEntities}: obtenção dos dados de todas as entidades (importador e produtor).
 	\end{enumerate}
 	Com estas operações é possível reconhecer o estado atual do funcionamento do sistema implementado, acedendo e alterando o mesmo consoante o desenrolar da execução do protótipo.
 
@@ -209,10 +205,10 @@
 
 	\begin{enumerate}
 		\item começa-se por executar o servidor, fazendo \textit{make compileServer} e executando a função \textit{server:server()};
+		
+		\item executa-se o catálogo, fazendo \textit{make runCatalog};
 	
 		\item executa-se um negociador (ou vários, tendo para isso de alterar o ficheiro do servidor), fazendo \textit{make compileJava} e \textit{make runDealer};
-	
-		\item executa-se o catálogo, fazendo \textit{make runCatalog};
 	
 		\item colocam-se os clientes a correr, ao executar \textit{make runClient}.
 	\end{enumerate}
@@ -220,9 +216,8 @@
 \chapter{Conclusão}
 Após a realização deste projeto prático, foi possível identificar e especificar as entidades principais que intervêem neste protótipo, e, ainda, as suas respetivas caraterísticas. Para cada uma destas, impôs-se um desafio 
 de implementação na medida em que as linguagens de programação adotadas são heterógeneas entre si.
-Para além disso, foi possível constatar a dificuldade de integrar diferentes linguagens com diferentes paradigmas, bem como os desafios da construção de um sistema distribuído deste tipo.
-Os elementos que compõem este grupo depararam-se com algumas adversidades na utilização da linguagem neutra \textit{Protocol Buffers} para a implementação do servidor.
-
+Para além disso, foi possível constatar a dificuldade de integrar diferentes linguagens com diferentes paradigmas, bem como os desafios da construção de um sistema distribuído deste tipo, apesar de haver ferramentas que facilitam esta integração.
+Dos requisitos do trabalho, apenas não foi utlizado o \textit{DropWizard}, sendo que o grupo, em alternativa, adotou uma interface seguindo o modelo REST, disponibilizando métodos GET, POST e DELETE.
 
 \chapter{Webgrafia}
 	\begin{itemize}
