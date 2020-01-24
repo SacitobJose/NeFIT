@@ -181,7 +181,7 @@ public class Dealer {
                     cr.setNn(pn.build());
                     cr.build().writeDelimitedTo(catalog.getOutputStream());
 
-                    zmsg.newStringMsg(producer + product);
+                    zmsg = ZMsg.newStringMsg(producer + product);
                     zmsg.send(publisher);
                     break;
                 }
