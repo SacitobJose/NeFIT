@@ -11,6 +11,7 @@ import java.util.AbstractMap.SimpleEntry;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
+import org.zeromq.SocketType;
 
 import protos.Protos.POSTNegotiation;
 import protos.Protos.Produce;
@@ -101,7 +102,7 @@ public class Dealer {
             OutputStream os = socket.getOutputStream();
 
             ZContext ctx = new ZContext();
-            org.zeromq.ZMQ.Socket publisher = ctx.createSocket(ZMQ.PUB);
+            ZMQ.Socket publisher = ctx.createSocket(SocketType.PUB);
             publisher.connect("tcp://localhost:7777");
 
             ZMsg zmsg = new ZMsg();

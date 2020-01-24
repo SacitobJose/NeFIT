@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
+import org.zeromq.SocketType;
 
 import protos.Protos.GETProducerInfo;
 import protos.Protos.GETProducerInfoResponse;
@@ -60,7 +61,7 @@ class ClientToSocket extends Thread {
 
     /* ZeroMQ socket for subscriptions */
     ZContext ctx = new ZContext();
-    org.zeromq.ZMQ.Socket subscriptions;
+    ZMQ.Socket subscriptions;
 
     public ClientToSocket(Socket cli, String outputPID) throws IOException {
         is = cli.getInputStream();
@@ -431,7 +432,7 @@ class ClientToSocket extends Thread {
                 producerMenu();
             else {
                 // Iniciar thread para ler das subscrições para o terminal
-                this.subscriptions = ctx.createSocket(ZMQ.SUB);
+                this.subscriptions = ctx.createSocket(SocketType.SUB);
                 this.subscriptions.connect("tcp://localhost:8888");
                 Thread subToC = new SubscriptionsToClient(this.subscriptions, outputTerminal);
                 subToC.start();
