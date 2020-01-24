@@ -175,23 +175,25 @@
 	
 	O negociador presente neste protótipo, ao receber pedidos do servidor, consegue processar se o mesmo corresponde a um pedido proveniente de um fabricante ou de um importador.
 	Caso este seja de um fabricante, é aberto um período limitado de negociação para determinar quais os importadores que serão escolhidos para proceder à produção de um determinado produto. O critério adotado nestas situações 
-	é escolher qual o importador que possui o maior valor total de encomenda para o artigo em questão.
-	Por outro lado, se o pedido for de um importador, é verificado se o mesmo está associado à produção de um determinado tipo de artigo. Em caso afirmativo, é atualizada, com essa informação, a variável relativa às negociações
-	em curso. Caso contrário, o importador é colocado na variável que diz respeito aos importadores que não possuem de momento nenhum conjunto de fabricantes associado. 
+	é escolher qual o importador que possui o maior valor total de encomenda para o artigo em questão. Antes de se iniciar a negociação, é verificado se os importadores que ainda não têm nenhum fabricante associado possuem ou não a informação correta para se associar ao novo pedido do fabricante em questão. Se houver conformidade, o importador que se encontra isolado é associado 
+	a este último, caso contrário é atualizada a segunda variável mencionada acima com a respetiva informação. Desta forma é dada prioridade aos importadores que ainda se encontram desassociados neste aspeto.
+	Caso o pedido seja de um importador, é, como se seria de esperar, verificado se o mesmo está associado à produção de um determinado tipo de artigo. Em caso afirmativo, é atualizada, com essa informação, a variável relativa às negociações
+	em curso. Caso contrário, procede-se de forma semelhante ao que foi dito anteriormente.
 
 	As mensagens que circulam na comunicação entre negociador e servidor encontram-se serializadas (através da linguagem \textit{Protocol Buffers}) por forma a garantir o mesmo grau de interpretabilidade dos dados em ambas as entidades.
 
 	\subsection{Catálogo}
 	Relativamente ao catálogo presente neste sistema, este é um componente onde se guarda informação útil acerca dos fabricantes e negociações em curso. Esta entidade do protótipo pode ser vista como um ficheiro de \textit{logs}, que é 
-	atualizado e acedido sempre que for necessário. Isto possibilita guardar um histórico do estado momentâneo do funcionamento da aplicação.
+	atualizado e acedido sempre que for necessário. Isto possibilita guardar um histórico do estado momentâneo do funcionamento da aplicação. Como seria de esperar, este componente foi implementado em \textit{Java} com recurso à ferramenta \textit{ZeroMQ} e à linguagem \textit{Protocol Buffers}. 
+	Quanto à troca assíncrona de mensagens, foi instanciado um \textit{broker} em \textit{ZeroMQ} que trata de receber as publicações e subscrições que circulam no sistema.  
 
-	Para tal, foram declaradas 43 variáveis na classe deste componente por forma a armazenar toda a informação pertinente:
+	Para além disso, foram declaradas 3 variáveis na classe deste componente por forma a armazenar toda a informação pertinente:
 	\begin{itemize}
 		\item \textbf{negociations}: variável com os dados das negociações vigentes;
 		\item \textbf{importers}: variável correspondente ao conjunto dos importadores;
 		\item \textbf{producers}: variável correspondente ao conjunto dos fabricantes.
 	\end{itemize}
-	Sobre este componente podem ser exercidos 6 tipos distintos de operações:
+	Sobre este componente podem ser exercidos 4 tipos distintos de operações:
 	\begin{enumerate}
 		\item \textbf{POSTNegotiation}: inserção da informação relativa à iniciação de um novo periodo de negociação;
 		\item \textbf{DELETENegotiation}: remoção da informação relativa à negociação em vigor;
