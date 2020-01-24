@@ -93,7 +93,7 @@
 -ifndef('CATALOGREQUEST_PB_H').
 -define('CATALOGREQUEST_PB_H', true).
 -record('CatalogRequest',
-        {request                :: {nn, protos:'POSTNegotiation'()} | {no, protos:'DELETENegotiation'()} | {gpi, protos:'GETProducerInfo'()} | {ge, protos:'GETEntities'()} | {sub, protos:'Subscribe'()} | {unsub, protos:'Unsubscribe'()} | undefined % oneof
+        {request                :: {nn, protos:'POSTNegotiation'()} | {no, protos:'DELETENegotiation'()} | {gpi, protos:'GETProducerInfo'()} | {ge, protos:'GETEntities'()} | undefined % oneof
         }).
 -endif.
 
@@ -143,24 +143,6 @@
 -define('GETPRODUCERINFORESPONSE_PB_H', true).
 -record('GETProducerInfoResponse',
         {negotiations = []      :: [protos:'POSTNegotiation'()] | undefined % = 1
-        }).
--endif.
-
--ifndef('SUBSCRIBE_PB_H').
--define('SUBSCRIBE_PB_H', true).
--record('Subscribe',
-        {username               :: iodata(),        % = 1
-         producerName           :: iodata(),        % = 2
-         productName            :: iodata()         % = 3
-        }).
--endif.
-
--ifndef('UNSUBSCRIBE_PB_H').
--define('UNSUBSCRIBE_PB_H', true).
--record('Unsubscribe',
-        {username               :: iodata(),        % = 1
-         producerName           :: iodata(),        % = 2
-         productName            :: iodata()         % = 3
         }).
 -endif.
 

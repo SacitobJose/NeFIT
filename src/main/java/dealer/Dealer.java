@@ -239,9 +239,7 @@ class TimeoutThread extends Thread {
             // Time is up, wrap up the sale
             ArrayList<Import> importers = this.negotiations.get(new SimpleEntry<>(this.producerName, this.productName));
 
-            /* ---------- CHOOSE THE BEST IMPORTERS TO MEET REQUIREMENTS ---------- */
-
-            // Sorted "importers" by declared comparator
+            // Sort "importers" by declared comparator
             ImportComparator ic = new ImportComparator();
             importers.sort(ic);
 

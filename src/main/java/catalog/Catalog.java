@@ -11,14 +11,11 @@ import protos.Protos.DELETENegotiation;
 import protos.Protos.GETEntities;
 import protos.Protos.GETEntitiesResponse;
 import protos.Protos.POSTNegotiation;
-import protos.Protos.Subscribe;
-import protos.Protos.Unsubscribe;
 import protos.Protos.GETProducerInfoResponse;
 import protos.Protos.GETProducerInfo;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
-import org.zeromq.SocketType;
 
 /**
  * Catalog
@@ -35,7 +32,6 @@ public class Catalog {
         HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations = new HashMap<>();
         HashSet<String> importers = new HashSet<>();
         HashSet<String> producers = new HashSet<>();
-        //HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions = new HashMap<>();
         while (true) {
             Socket connectionSocket = serverSocket.accept();
 
@@ -69,7 +65,6 @@ class CHandler extends Thread {
     private HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations;
     private HashSet<String> importers;
     private HashSet<String> producers;
-    //private HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions;
 
     public CHandler(Socket connectionSocket, HashMap<SimpleEntry<String, String>, POSTNegotiation> negotiations,
             HashSet<String> importers, HashSet<String> producers) {
@@ -77,7 +72,6 @@ class CHandler extends Thread {
         this.negotiations = negotiations;
         this.importers = importers;
         this.producers = producers;
-        //this.subscriptions = subscriptions;
     }
 
     public void run() {
@@ -92,14 +86,6 @@ class CHandler extends Thread {
                     synchronized (this.producers) {
                         this.producers.add(producerName1);
                     }
-
-                    /*
-                    HashSet<Socket> toUpdate = subscriptions.get(new SimpleEntry<>(productName1, producerName1));
-                    if (toUpdate != null) {
-                        for (Socket socket : toUpdate)
-                            nn.writeDelimitedTo(socket.getOutputStream());
-                    }
-                    */
 
                     negotiations.put(new SimpleEntry<>(productName1, producerName1), nn);
                     break;
@@ -147,36 +133,6 @@ class CHandler extends Thread {
                     }
 
                     ger.build().writeDelimitedTo(connectionSocket.getOutputStream());
-                    break;
-                
-                
-                case SUB:
-                    /*
-                    Subscribe sub = cr.getSub();
-                    synchronized (subscriptions) {
-                        HashSet<Socket> subSockets = subscriptions
-                                .get(new SimpleEntry<>(sub.getProductName(), sub.getProducerName()));
-                        if (subSockets == null) {
-                            subSockets = new HashSet<>();
-                            subscriptions.put(new SimpleEntry<>(sub.getProductName(), sub.getProducerName()),
-                                    subSockets);
-                        }
-                        subSockets.add(connectionSocket);
-                    }
-                    */
-                    break;
-
-                case UNSUB:
-                    /*
-                    Unsubscribe unsub = cr.getUnsub();
-                    synchronized (subscriptions) {
-                        HashSet<Socket> subSockets = subscriptions
-                                .get(new SimpleEntry<>(unsub.getProductName(), unsub.getProducerName()));
-                        if (subSockets == null)
-                            break;
-                        subSockets.remove(connectionSocket);
-                    }
-                    */
                     break;
 
                 default: // REQUEST_NOT_SET

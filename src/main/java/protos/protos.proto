@@ -80,8 +80,6 @@ message CatalogRequest {
     DELETENegotiation no = 2;
     GETProducerInfo gpi = 3;
     GETEntities ge = 4;
-    Subscribe sub = 5;
-    Unsubscribe unsub = 6;
   }
 }
 
@@ -118,16 +116,4 @@ message GETProducerInfo {
 
 message GETProducerInfoResponse {
   repeated POSTNegotiation negotiations = 1;
-}
-
-message Subscribe {
-  required string username = 1;
-  required string producerName = 2;
-  required string productName = 3;
-}
-
-message Unsubscribe {
-  required string username = 1;
-  required string producerName = 2;
-  required string productName = 3;
 }

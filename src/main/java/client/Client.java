@@ -24,9 +24,7 @@ import protos.Protos.Produce;
 import protos.Protos.Response;
 import protos.Protos.SaleInfo;
 import protos.Protos.ServerResponse;
-import protos.Protos.Subscribe;
 import protos.Protos.Transaction;
-import protos.Protos.Unsubscribe;
 import protos.Protos.Authentication;
 import protos.Protos.CatalogRequest;
 import protos.Protos.DealerTimeout;
@@ -213,16 +211,6 @@ class ClientToSocket extends Thread {
                 String product1 = this.stdin.readLine();
 
                 subscriptions.subscribe(producer1 + product1);
-                /*
-                Subscribe.Builder sub = Subscribe.newBuilder();
-                sub.setUsername(username);
-                sub.setProducerName(producer1);
-                sub.setProductName(product1);
-
-                CatalogRequest.Builder crsub = CatalogRequest.newBuilder();
-                crsub.setSub(sub);
-                crsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
-                */
                 break;
             case 6:
                 System.out.print("Fabricante: ");
@@ -236,16 +224,6 @@ class ClientToSocket extends Thread {
                 String product2 = this.stdin.readLine();
 
                 subscriptions.unsubscribe(producer2 + product2);
-                /*
-                Unsubscribe.Builder unsub = Unsubscribe.newBuilder();
-                unsub.setUsername(username);
-                unsub.setProducerName(producer2);
-                unsub.setProductName(product2);
-
-                CatalogRequest.Builder crunsub = CatalogRequest.newBuilder();
-                crunsub.setUnsub(unsub);
-                crunsub.build().writeDelimitedTo(this.subscriptions.getOutputStream());
-                */
                 break;
             case 7:
                 clearTerminal();
@@ -421,7 +399,6 @@ class ClientToSocket extends Thread {
             waitConfirmation();
 
             this.catalog = new Socket("localhost", 9999);
-            //this.subscriptions = new Socket("localhost", 9999);
             
             PrintWriter outputTerminal = new PrintWriter(new File("/proc/" + outputPID + "/fd/1"));
             
@@ -530,6 +507,10 @@ class SubscriptionsToClient extends Thread {
 
                 outputTerminal.print("Nova oferta disponível para o par: ");
                 outputTerminal.println(new String(message.popString()));
+
+                outputTerminal.println();
+                outputTerminal.println("-----------------");
+                outputTerminal.println();
 
                 outputTerminal.flush();
             }

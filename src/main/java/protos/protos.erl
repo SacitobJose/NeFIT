@@ -89,24 +89,20 @@
 
 -type 'GETProducerInfoResponse'() :: #'GETProducerInfoResponse'{}.
 
--type 'Subscribe'() :: #'Subscribe'{}.
+-export_type(['Authentication'/0, 'Transaction'/0, 'Produce'/0, 'Import'/0, 'ServerResponse'/0, 'SaleInfo'/0, 'Response'/0, 'ImporterResponse'/0, 'DealerTimeout'/0, 'CatalogRequest'/0, 'POSTNegotiation'/0, 'DELETENegotiation'/0, 'GETEntities'/0, 'GETEntitiesResponse'/0, 'GETProducerInfo'/0, 'GETProducerInfoResponse'/0]).
 
--type 'Unsubscribe'() :: #'Unsubscribe'{}.
-
--export_type(['Authentication'/0, 'Transaction'/0, 'Produce'/0, 'Import'/0, 'ServerResponse'/0, 'SaleInfo'/0, 'Response'/0, 'ImporterResponse'/0, 'DealerTimeout'/0, 'CatalogRequest'/0, 'POSTNegotiation'/0, 'DELETENegotiation'/0, 'GETEntities'/0, 'GETEntitiesResponse'/0, 'GETProducerInfo'/0, 'GETProducerInfoResponse'/0, 'Subscribe'/0, 'Unsubscribe'/0]).
-
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{}) -> binary().
 encode_msg(Msg) when tuple_size(Msg) >= 1 ->
     encode_msg(Msg, element(1, Msg), []).
 
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom() | list()) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{}, atom() | list()) -> binary().
 encode_msg(Msg, MsgName) when is_atom(MsgName) ->
     encode_msg(Msg, MsgName, []);
 encode_msg(Msg, Opts)
     when tuple_size(Msg) >= 1, is_list(Opts) ->
     encode_msg(Msg, element(1, Msg), Opts).
 
--spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{} | #'Subscribe'{} | #'Unsubscribe'{}, atom(), list()) -> binary().
+-spec encode_msg(#'Authentication'{} | #'Transaction'{} | #'Produce'{} | #'Import'{} | #'ServerResponse'{} | #'SaleInfo'{} | #'Response'{} | #'ImporterResponse'{} | #'DealerTimeout'{} | #'CatalogRequest'{} | #'POSTNegotiation'{} | #'DELETENegotiation'{} | #'GETEntities'{} | #'GETEntitiesResponse'{} | #'GETProducerInfo'{} | #'GETProducerInfoResponse'{}, atom(), list()) -> binary().
 encode_msg(Msg, MsgName, Opts) ->
     case proplists:get_bool(verify, Opts) of
       true -> verify_msg(Msg, MsgName, Opts);
@@ -155,11 +151,7 @@ encode_msg(Msg, MsgName, Opts) ->
 				     TrUserData);
       'GETProducerInfoResponse' ->
 	  encode_msg_GETProducerInfoResponse(id(Msg, TrUserData),
-					     TrUserData);
-      'Subscribe' ->
-	  encode_msg_Subscribe(id(Msg, TrUserData), TrUserData);
-      'Unsubscribe' ->
-	  encode_msg_Unsubscribe(id(Msg, TrUserData), TrUserData)
+					     TrUserData)
     end.
 
 
@@ -420,18 +412,6 @@ encode_msg_CatalogRequest(#'CatalogRequest'{request =
 		   TrTF1 = id(TF1, TrUserData),
 		   e_mfield_CatalogRequest_ge(TrTF1, <<Bin/binary, 34>>,
 					      TrUserData)
-		 end;
-	     {sub, TF1} ->
-		 begin
-		   TrTF1 = id(TF1, TrUserData),
-		   e_mfield_CatalogRequest_sub(TrTF1, <<Bin/binary, 42>>,
-					       TrUserData)
-		 end;
-	     {unsub, TF1} ->
-		 begin
-		   TrTF1 = id(TF1, TrUserData),
-		   e_mfield_CatalogRequest_unsub(TrTF1, <<Bin/binary, 50>>,
-						 TrUserData)
 		 end
 	   end
     end.
@@ -552,46 +532,6 @@ encode_msg_GETProducerInfoResponse(#'GETProducerInfoResponse'{negotiations
       end
     end.
 
-encode_msg_Subscribe(Msg, TrUserData) ->
-    encode_msg_Subscribe(Msg, <<>>, TrUserData).
-
-
-encode_msg_Subscribe(#'Subscribe'{username = F1,
-				  producerName = F2, productName = F3},
-		     Bin, TrUserData) ->
-    B1 = begin
-	   TrF1 = id(F1, TrUserData),
-	   e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
-	 end,
-    B2 = begin
-	   TrF2 = id(F2, TrUserData),
-	   e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
-	 end,
-    begin
-      TrF3 = id(F3, TrUserData),
-      e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
-    end.
-
-encode_msg_Unsubscribe(Msg, TrUserData) ->
-    encode_msg_Unsubscribe(Msg, <<>>, TrUserData).
-
-
-encode_msg_Unsubscribe(#'Unsubscribe'{username = F1,
-				      producerName = F2, productName = F3},
-		       Bin, TrUserData) ->
-    B1 = begin
-	   TrF1 = id(F1, TrUserData),
-	   e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
-	 end,
-    B2 = begin
-	   TrF2 = id(F2, TrUserData),
-	   e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
-	 end,
-    begin
-      TrF3 = id(F3, TrUserData),
-      e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
-    end.
-
 e_mfield_Transaction_produce(Msg, Bin, TrUserData) ->
     SubBin = encode_msg_Produce(Msg, <<>>, TrUserData),
     Bin2 = e_varint(byte_size(SubBin), Bin),
@@ -650,16 +590,6 @@ e_mfield_CatalogRequest_gpi(Msg, Bin, TrUserData) ->
 e_mfield_CatalogRequest_ge(Msg, Bin, TrUserData) ->
     Bin2 = <<Bin/binary, 2>>,
     encode_msg_GETEntities(Msg, Bin2, TrUserData).
-
-e_mfield_CatalogRequest_sub(Msg, Bin, TrUserData) ->
-    SubBin = encode_msg_Subscribe(Msg, <<>>, TrUserData),
-    Bin2 = e_varint(byte_size(SubBin), Bin),
-    <<Bin2/binary, SubBin/binary>>.
-
-e_mfield_CatalogRequest_unsub(Msg, Bin, TrUserData) ->
-    SubBin = encode_msg_Unsubscribe(Msg, <<>>, TrUserData),
-    Bin2 = e_varint(byte_size(SubBin), Bin),
-    <<Bin2/binary, SubBin/binary>>.
 
 e_field_GETEntitiesResponse_entities([Elem | Rest], Bin,
 				     TrUserData) ->
@@ -879,11 +809,7 @@ decode_msg_2_doit('GETProducerInfo', Bin, TrUserData) ->
 decode_msg_2_doit('GETProducerInfoResponse', Bin,
 		  TrUserData) ->
     id(decode_msg_GETProducerInfoResponse(Bin, TrUserData),
-       TrUserData);
-decode_msg_2_doit('Subscribe', Bin, TrUserData) ->
-    id(decode_msg_Subscribe(Bin, TrUserData), TrUserData);
-decode_msg_2_doit('Unsubscribe', Bin, TrUserData) ->
-    id(decode_msg_Unsubscribe(Bin, TrUserData), TrUserData).
+       TrUserData).
 
 
 
@@ -2530,14 +2456,6 @@ dfp_read_field_def_CatalogRequest(<<34, Rest/binary>>,
 				  Z1, Z2, F@_1, TrUserData) ->
     d_field_CatalogRequest_ge(Rest, Z1, Z2, F@_1,
 			      TrUserData);
-dfp_read_field_def_CatalogRequest(<<42, Rest/binary>>,
-				  Z1, Z2, F@_1, TrUserData) ->
-    d_field_CatalogRequest_sub(Rest, Z1, Z2, F@_1,
-			       TrUserData);
-dfp_read_field_def_CatalogRequest(<<50, Rest/binary>>,
-				  Z1, Z2, F@_1, TrUserData) ->
-    d_field_CatalogRequest_unsub(Rest, Z1, Z2, F@_1,
-				 TrUserData);
 dfp_read_field_def_CatalogRequest(<<>>, 0, 0, F@_1,
 				  _) ->
     #'CatalogRequest'{request = F@_1};
@@ -2566,12 +2484,6 @@ dg_read_field_def_CatalogRequest(<<0:1, X:7,
 				     TrUserData);
       34 ->
 	  d_field_CatalogRequest_ge(Rest, 0, 0, F@_1, TrUserData);
-      42 ->
-	  d_field_CatalogRequest_sub(Rest, 0, 0, F@_1,
-				     TrUserData);
-      50 ->
-	  d_field_CatalogRequest_unsub(Rest, 0, 0, F@_1,
-				       TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
@@ -2701,62 +2613,6 @@ d_field_CatalogRequest_ge(<<0:1, X:7, Rest/binary>>, N,
 								      TrUserData)},
 					       TrUserData);
 					_ -> id({ge, NewFValue}, TrUserData)
-				      end,
-				      TrUserData).
-
-d_field_CatalogRequest_sub(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_CatalogRequest_sub(Rest, N + 7, X bsl N + Acc,
-			       F@_1, TrUserData);
-d_field_CatalogRequest_sub(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, Prev, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(decode_msg_Subscribe(Bs, TrUserData),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_CatalogRequest(RestF, 0, 0,
-				      case Prev of
-					undefined ->
-					    id({sub, NewFValue}, TrUserData);
-					{sub, MVPrev} ->
-					    id({sub,
-						merge_msg_Subscribe(MVPrev,
-								    NewFValue,
-								    TrUserData)},
-					       TrUserData);
-					_ -> id({sub, NewFValue}, TrUserData)
-				      end,
-				      TrUserData).
-
-d_field_CatalogRequest_unsub(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_CatalogRequest_unsub(Rest, N + 7, X bsl N + Acc,
-				 F@_1, TrUserData);
-d_field_CatalogRequest_unsub(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, Prev, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(decode_msg_Unsubscribe(Bs, TrUserData),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_CatalogRequest(RestF, 0, 0,
-				      case Prev of
-					undefined ->
-					    id({unsub, NewFValue}, TrUserData);
-					{unsub, MVPrev} ->
-					    id({unsub,
-						merge_msg_Unsubscribe(MVPrev,
-								      NewFValue,
-								      TrUserData)},
-					       TrUserData);
-					_ -> id({unsub, NewFValue}, TrUserData)
 				      end,
 				      TrUserData).
 
@@ -3728,334 +3584,6 @@ skip_64_GETProducerInfoResponse(<<_:64, Rest/binary>>,
     dfp_read_field_def_GETProducerInfoResponse(Rest, Z1, Z2,
 					       F@_1, TrUserData).
 
-decode_msg_Subscribe(Bin, TrUserData) ->
-    dfp_read_field_def_Subscribe(Bin, 0, 0,
-				 id(undefined, TrUserData),
-				 id(undefined, TrUserData),
-				 id(undefined, TrUserData), TrUserData).
-
-dfp_read_field_def_Subscribe(<<10, Rest/binary>>, Z1,
-			     Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Subscribe_username(Rest, Z1, Z2, F@_1, F@_2,
-			       F@_3, TrUserData);
-dfp_read_field_def_Subscribe(<<18, Rest/binary>>, Z1,
-			     Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Subscribe_producerName(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, TrUserData);
-dfp_read_field_def_Subscribe(<<26, Rest/binary>>, Z1,
-			     Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Subscribe_productName(Rest, Z1, Z2, F@_1, F@_2,
-				  F@_3, TrUserData);
-dfp_read_field_def_Subscribe(<<>>, 0, 0, F@_1, F@_2,
-			     F@_3, _) ->
-    #'Subscribe'{username = F@_1, producerName = F@_2,
-		 productName = F@_3};
-dfp_read_field_def_Subscribe(Other, Z1, Z2, F@_1, F@_2,
-			     F@_3, TrUserData) ->
-    dg_read_field_def_Subscribe(Other, Z1, Z2, F@_1, F@_2,
-				F@_3, TrUserData).
-
-dg_read_field_def_Subscribe(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_Subscribe(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, TrUserData);
-dg_read_field_def_Subscribe(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_Subscribe_username(Rest, 0, 0, F@_1, F@_2, F@_3,
-				     TrUserData);
-      18 ->
-	  d_field_Subscribe_producerName(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, TrUserData);
-      26 ->
-	  d_field_Subscribe_productName(Rest, 0, 0, F@_1, F@_2,
-					F@_3, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_Subscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-				      TrUserData);
-	    1 ->
-		skip_64_Subscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-				  TrUserData);
-	    2 ->
-		skip_length_delimited_Subscribe(Rest, 0, 0, F@_1, F@_2,
-						F@_3, TrUserData);
-	    3 ->
-		skip_group_Subscribe(Rest, Key bsr 3, 0, F@_1, F@_2,
-				     F@_3, TrUserData);
-	    5 ->
-		skip_32_Subscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-				  TrUserData)
-	  end
-    end;
-dg_read_field_def_Subscribe(<<>>, 0, 0, F@_1, F@_2,
-			    F@_3, _) ->
-    #'Subscribe'{username = F@_1, producerName = F@_2,
-		 productName = F@_3}.
-
-d_field_Subscribe_username(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Subscribe_username(Rest, N + 7, X bsl N + Acc,
-			       F@_1, F@_2, F@_3, TrUserData);
-d_field_Subscribe_username(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, _, F@_2, F@_3, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Subscribe(RestF, 0, 0, NewFValue,
-				 F@_2, F@_3, TrUserData).
-
-d_field_Subscribe_producerName(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Subscribe_producerName(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
-d_field_Subscribe_producerName(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, _, F@_3, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Subscribe(RestF, 0, 0, F@_1,
-				 NewFValue, F@_3, TrUserData).
-
-d_field_Subscribe_productName(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Subscribe_productName(Rest, N + 7,
-				  X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
-d_field_Subscribe_productName(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Subscribe(RestF, 0, 0, F@_1, F@_2,
-				 NewFValue, TrUserData).
-
-skip_varint_Subscribe(<<1:1, _:7, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, TrUserData) ->
-    skip_varint_Subscribe(Rest, Z1, Z2, F@_1, F@_2, F@_3,
-			  TrUserData);
-skip_varint_Subscribe(<<0:1, _:7, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Subscribe(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, TrUserData).
-
-skip_length_delimited_Subscribe(<<1:1, X:7,
-				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_Subscribe(Rest, N + 7,
-				    X bsl N + Acc, F@_1, F@_2, F@_3,
-				    TrUserData);
-skip_length_delimited_Subscribe(<<0:1, X:7,
-				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_Subscribe(Rest2, 0, 0, F@_1, F@_2,
-				 F@_3, TrUserData).
-
-skip_group_Subscribe(Bin, FNum, Z2, F@_1, F@_2, F@_3,
-		     TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_Subscribe(Rest, 0, Z2, F@_1, F@_2,
-				 F@_3, TrUserData).
-
-skip_32_Subscribe(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-		  F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Subscribe(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, TrUserData).
-
-skip_64_Subscribe(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-		  F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Subscribe(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, TrUserData).
-
-decode_msg_Unsubscribe(Bin, TrUserData) ->
-    dfp_read_field_def_Unsubscribe(Bin, 0, 0,
-				   id(undefined, TrUserData),
-				   id(undefined, TrUserData),
-				   id(undefined, TrUserData), TrUserData).
-
-dfp_read_field_def_Unsubscribe(<<10, Rest/binary>>, Z1,
-			       Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Unsubscribe_username(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, TrUserData);
-dfp_read_field_def_Unsubscribe(<<18, Rest/binary>>, Z1,
-			       Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Unsubscribe_producerName(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, TrUserData);
-dfp_read_field_def_Unsubscribe(<<26, Rest/binary>>, Z1,
-			       Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_Unsubscribe_productName(Rest, Z1, Z2, F@_1,
-				    F@_2, F@_3, TrUserData);
-dfp_read_field_def_Unsubscribe(<<>>, 0, 0, F@_1, F@_2,
-			       F@_3, _) ->
-    #'Unsubscribe'{username = F@_1, producerName = F@_2,
-		   productName = F@_3};
-dfp_read_field_def_Unsubscribe(Other, Z1, Z2, F@_1,
-			       F@_2, F@_3, TrUserData) ->
-    dg_read_field_def_Unsubscribe(Other, Z1, Z2, F@_1, F@_2,
-				  F@_3, TrUserData).
-
-dg_read_field_def_Unsubscribe(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_Unsubscribe(Rest, N + 7,
-				  X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
-dg_read_field_def_Unsubscribe(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_Unsubscribe_username(Rest, 0, 0, F@_1, F@_2,
-				       F@_3, TrUserData);
-      18 ->
-	  d_field_Unsubscribe_producerName(Rest, 0, 0, F@_1, F@_2,
-					   F@_3, TrUserData);
-      26 ->
-	  d_field_Unsubscribe_productName(Rest, 0, 0, F@_1, F@_2,
-					  F@_3, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_Unsubscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-					TrUserData);
-	    1 ->
-		skip_64_Unsubscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    TrUserData);
-	    2 ->
-		skip_length_delimited_Unsubscribe(Rest, 0, 0, F@_1,
-						  F@_2, F@_3, TrUserData);
-	    3 ->
-		skip_group_Unsubscribe(Rest, Key bsr 3, 0, F@_1, F@_2,
-				       F@_3, TrUserData);
-	    5 ->
-		skip_32_Unsubscribe(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    TrUserData)
-	  end
-    end;
-dg_read_field_def_Unsubscribe(<<>>, 0, 0, F@_1, F@_2,
-			      F@_3, _) ->
-    #'Unsubscribe'{username = F@_1, producerName = F@_2,
-		   productName = F@_3}.
-
-d_field_Unsubscribe_username(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Unsubscribe_username(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, TrUserData);
-d_field_Unsubscribe_username(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, _, F@_2, F@_3, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Unsubscribe(RestF, 0, 0, NewFValue,
-				   F@_2, F@_3, TrUserData).
-
-d_field_Unsubscribe_producerName(<<1:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Unsubscribe_producerName(Rest, N + 7,
-				     X bsl N + Acc, F@_1, F@_2, F@_3,
-				     TrUserData);
-d_field_Unsubscribe_producerName(<<0:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, _, F@_3, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Unsubscribe(RestF, 0, 0, F@_1,
-				   NewFValue, F@_3, TrUserData).
-
-d_field_Unsubscribe_productName(<<1:1, X:7,
-				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_Unsubscribe_productName(Rest, N + 7,
-				    X bsl N + Acc, F@_1, F@_2, F@_3,
-				    TrUserData);
-d_field_Unsubscribe_productName(<<0:1, X:7,
-				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {id(unicode:characters_to_list(Utf8, unicode),
-			       TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_Unsubscribe(RestF, 0, 0, F@_1, F@_2,
-				   NewFValue, TrUserData).
-
-skip_varint_Unsubscribe(<<1:1, _:7, Rest/binary>>, Z1,
-			Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    skip_varint_Unsubscribe(Rest, Z1, Z2, F@_1, F@_2, F@_3,
-			    TrUserData);
-skip_varint_Unsubscribe(<<0:1, _:7, Rest/binary>>, Z1,
-			Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Unsubscribe(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, TrUserData).
-
-skip_length_delimited_Unsubscribe(<<1:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_Unsubscribe(Rest, N + 7,
-				      X bsl N + Acc, F@_1, F@_2, F@_3,
-				      TrUserData);
-skip_length_delimited_Unsubscribe(<<0:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_Unsubscribe(Rest2, 0, 0, F@_1, F@_2,
-				   F@_3, TrUserData).
-
-skip_group_Unsubscribe(Bin, FNum, Z2, F@_1, F@_2, F@_3,
-		       TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_Unsubscribe(Rest, 0, Z2, F@_1, F@_2,
-				   F@_3, TrUserData).
-
-skip_32_Unsubscribe(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-		    F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Unsubscribe(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, TrUserData).
-
-skip_64_Unsubscribe(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-		    F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_Unsubscribe(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, TrUserData).
-
 'd_enum_Authentication.AuthType'(0) -> 'REGISTER';
 'd_enum_Authentication.AuthType'(1) -> 'LOGIN';
 'd_enum_Authentication.AuthType'(V) -> V.
@@ -4167,12 +3695,7 @@ merge_msgs(Prev, New, MsgName, Opts) ->
       'GETProducerInfo' ->
 	  merge_msg_GETProducerInfo(Prev, New, TrUserData);
       'GETProducerInfoResponse' ->
-	  merge_msg_GETProducerInfoResponse(Prev, New,
-					    TrUserData);
-      'Subscribe' ->
-	  merge_msg_Subscribe(Prev, New, TrUserData);
-      'Unsubscribe' ->
-	  merge_msg_Unsubscribe(Prev, New, TrUserData)
+	  merge_msg_GETProducerInfoResponse(Prev, New, TrUserData)
     end.
 
 -compile({nowarn_unused_function,merge_msg_Authentication/3}).
@@ -4310,14 +3833,6 @@ merge_msg_CatalogRequest(#'CatalogRequest'{request =
 				{ge,
 				 merge_msg_GETEntities(OPFrequest, ONFrequest,
 						       TrUserData)};
-			    {{sub, OPFrequest}, {sub, ONFrequest}} ->
-				{sub,
-				 merge_msg_Subscribe(OPFrequest, ONFrequest,
-						     TrUserData)};
-			    {{unsub, OPFrequest}, {unsub, ONFrequest}} ->
-				{unsub,
-				 merge_msg_Unsubscribe(OPFrequest, ONFrequest,
-						       TrUserData)};
 			    {_, undefined} -> PFrequest;
 			    _ -> NFrequest
 			  end}.
@@ -4394,26 +3909,6 @@ merge_msg_GETProducerInfoResponse(#'GETProducerInfoResponse'{negotiations
 					  PFnegotiations
 				   end}.
 
--compile({nowarn_unused_function,merge_msg_Subscribe/3}).
-merge_msg_Subscribe(#'Subscribe'{},
-		    #'Subscribe'{username = NFusername,
-				 producerName = NFproducerName,
-				 productName = NFproductName},
-		    _) ->
-    #'Subscribe'{username = NFusername,
-		 producerName = NFproducerName,
-		 productName = NFproductName}.
-
--compile({nowarn_unused_function,merge_msg_Unsubscribe/3}).
-merge_msg_Unsubscribe(#'Unsubscribe'{},
-		      #'Unsubscribe'{username = NFusername,
-				     producerName = NFproducerName,
-				     productName = NFproductName},
-		      _) ->
-    #'Unsubscribe'{username = NFusername,
-		   producerName = NFproducerName,
-		   productName = NFproductName}.
-
 
 verify_msg(Msg) when tuple_size(Msg) >= 1 ->
     verify_msg(Msg, element(1, Msg), []);
@@ -4461,10 +3956,6 @@ verify_msg(Msg, MsgName, Opts) ->
       'GETProducerInfoResponse' ->
 	  v_msg_GETProducerInfoResponse(Msg, [MsgName],
 					TrUserData);
-      'Subscribe' ->
-	  v_msg_Subscribe(Msg, [MsgName], TrUserData);
-      'Unsubscribe' ->
-	  v_msg_Unsubscribe(Msg, [MsgName], TrUserData);
       _ -> mk_type_error(not_a_known_message, Msg, [])
     end.
 
@@ -4630,11 +4121,6 @@ v_msg_CatalogRequest(#'CatalogRequest'{request = F1},
       {ge, OF1} ->
 	  v_msg_GETEntities(OF1, [ge, request | Path],
 			    TrUserData);
-      {sub, OF1} ->
-	  v_msg_Subscribe(OF1, [sub, request | Path], TrUserData);
-      {unsub, OF1} ->
-	  v_msg_Unsubscribe(OF1, [unsub, request | Path],
-			    TrUserData);
       _ -> mk_type_error(invalid_oneof, F1, [request | Path])
     end,
     ok;
@@ -4736,30 +4222,6 @@ v_msg_GETProducerInfoResponse(#'GETProducerInfoResponse'{negotiations
 v_msg_GETProducerInfoResponse(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'GETProducerInfoResponse'},
 		  X, Path).
-
--compile({nowarn_unused_function,v_msg_Subscribe/3}).
--dialyzer({nowarn_function,v_msg_Subscribe/3}).
-v_msg_Subscribe(#'Subscribe'{username = F1,
-			     producerName = F2, productName = F3},
-		Path, TrUserData) ->
-    v_type_string(F1, [username | Path], TrUserData),
-    v_type_string(F2, [producerName | Path], TrUserData),
-    v_type_string(F3, [productName | Path], TrUserData),
-    ok;
-v_msg_Subscribe(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'Subscribe'}, X, Path).
-
--compile({nowarn_unused_function,v_msg_Unsubscribe/3}).
--dialyzer({nowarn_function,v_msg_Unsubscribe/3}).
-v_msg_Unsubscribe(#'Unsubscribe'{username = F1,
-				 producerName = F2, productName = F3},
-		  Path, TrUserData) ->
-    v_type_string(F1, [username | Path], TrUserData),
-    v_type_string(F2, [producerName | Path], TrUserData),
-    v_type_string(F3, [productName | Path], TrUserData),
-    ok;
-v_msg_Unsubscribe(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'Unsubscribe'}, X, Path).
 
 -compile({nowarn_unused_function,'v_enum_Authentication.AuthType'/3}).
 -dialyzer({nowarn_function,'v_enum_Authentication.AuthType'/3}).
@@ -5002,12 +4464,6 @@ get_msg_defs() ->
 			      occurrence = optional, opts = []},
 		       #field{name = ge, fnum = 4, rnum = 2,
 			      type = {msg, 'GETEntities'},
-			      occurrence = optional, opts = []},
-		       #field{name = sub, fnum = 5, rnum = 2,
-			      type = {msg, 'Subscribe'}, occurrence = optional,
-			      opts = []},
-		       #field{name = unsub, fnum = 6, rnum = 2,
-			      type = {msg, 'Unsubscribe'},
 			      occurrence = optional, opts = []}]}]},
      {{msg, 'POSTNegotiation'},
       [#field{name = productName, fnum = 1, rnum = 2,
@@ -5042,21 +4498,7 @@ get_msg_defs() ->
      {{msg, 'GETProducerInfoResponse'},
       [#field{name = negotiations, fnum = 1, rnum = 2,
 	      type = {msg, 'POSTNegotiation'}, occurrence = repeated,
-	      opts = []}]},
-     {{msg, 'Subscribe'},
-      [#field{name = username, fnum = 1, rnum = 2,
-	      type = string, occurrence = required, opts = []},
-       #field{name = producerName, fnum = 2, rnum = 3,
-	      type = string, occurrence = required, opts = []},
-       #field{name = productName, fnum = 3, rnum = 4,
-	      type = string, occurrence = required, opts = []}]},
-     {{msg, 'Unsubscribe'},
-      [#field{name = username, fnum = 1, rnum = 2,
-	      type = string, occurrence = required, opts = []},
-       #field{name = producerName, fnum = 2, rnum = 3,
-	      type = string, occurrence = required, opts = []},
-       #field{name = productName, fnum = 3, rnum = 4,
-	      type = string, occurrence = required, opts = []}]}].
+	      opts = []}]}].
 
 
 get_msg_names() ->
@@ -5065,7 +4507,7 @@ get_msg_names() ->
      'ImporterResponse', 'DealerTimeout', 'CatalogRequest',
      'POSTNegotiation', 'DELETENegotiation', 'GETEntities',
      'GETEntitiesResponse', 'GETProducerInfo',
-     'GETProducerInfoResponse', 'Subscribe', 'Unsubscribe'].
+     'GETProducerInfoResponse'].
 
 
 get_group_names() -> [].
@@ -5077,7 +4519,7 @@ get_msg_or_group_names() ->
      'ImporterResponse', 'DealerTimeout', 'CatalogRequest',
      'POSTNegotiation', 'DELETENegotiation', 'GETEntities',
      'GETEntitiesResponse', 'GETProducerInfo',
-     'GETProducerInfoResponse', 'Subscribe', 'Unsubscribe'].
+     'GETProducerInfoResponse'].
 
 
 get_enum_names() ->
@@ -5195,12 +4637,6 @@ find_msg_def('CatalogRequest') ->
 			    occurrence = optional, opts = []},
 		     #field{name = ge, fnum = 4, rnum = 2,
 			    type = {msg, 'GETEntities'}, occurrence = optional,
-			    opts = []},
-		     #field{name = sub, fnum = 5, rnum = 2,
-			    type = {msg, 'Subscribe'}, occurrence = optional,
-			    opts = []},
-		     #field{name = unsub, fnum = 6, rnum = 2,
-			    type = {msg, 'Unsubscribe'}, occurrence = optional,
 			    opts = []}]}];
 find_msg_def('POSTNegotiation') ->
     [#field{name = productName, fnum = 1, rnum = 2,
@@ -5236,20 +4672,6 @@ find_msg_def('GETProducerInfoResponse') ->
     [#field{name = negotiations, fnum = 1, rnum = 2,
 	    type = {msg, 'POSTNegotiation'}, occurrence = repeated,
 	    opts = []}];
-find_msg_def('Subscribe') ->
-    [#field{name = username, fnum = 1, rnum = 2,
-	    type = string, occurrence = required, opts = []},
-     #field{name = producerName, fnum = 2, rnum = 3,
-	    type = string, occurrence = required, opts = []},
-     #field{name = productName, fnum = 3, rnum = 4,
-	    type = string, occurrence = required, opts = []}];
-find_msg_def('Unsubscribe') ->
-    [#field{name = username, fnum = 1, rnum = 2,
-	    type = string, occurrence = required, opts = []},
-     #field{name = producerName, fnum = 2, rnum = 3,
-	    type = string, occurrence = required, opts = []},
-     #field{name = productName, fnum = 3, rnum = 4,
-	    type = string, occurrence = required, opts = []}];
 find_msg_def(_) -> error.
 
 
@@ -5378,8 +4800,6 @@ fqbin_to_msg_name(<<"protos.GETEntities">>) -> 'GETEntities';
 fqbin_to_msg_name(<<"protos.GETEntitiesResponse">>) -> 'GETEntitiesResponse';
 fqbin_to_msg_name(<<"protos.GETProducerInfo">>) -> 'GETProducerInfo';
 fqbin_to_msg_name(<<"protos.GETProducerInfoResponse">>) -> 'GETProducerInfoResponse';
-fqbin_to_msg_name(<<"protos.Subscribe">>) -> 'Subscribe';
-fqbin_to_msg_name(<<"protos.Unsubscribe">>) -> 'Unsubscribe';
 fqbin_to_msg_name(E) -> error({gpb_error, {badmsg, E}}).
 
 
@@ -5399,8 +4819,6 @@ msg_name_to_fqbin('GETEntities') -> <<"protos.GETEntities">>;
 msg_name_to_fqbin('GETEntitiesResponse') -> <<"protos.GETEntitiesResponse">>;
 msg_name_to_fqbin('GETProducerInfo') -> <<"protos.GETProducerInfo">>;
 msg_name_to_fqbin('GETProducerInfoResponse') -> <<"protos.GETProducerInfoResponse">>;
-msg_name_to_fqbin('Subscribe') -> <<"protos.Subscribe">>;
-msg_name_to_fqbin('Unsubscribe') -> <<"protos.Unsubscribe">>;
 msg_name_to_fqbin(E) -> error({gpb_error, {badmsg, E}}).
 
 
@@ -5455,8 +4873,7 @@ get_msg_containment("protos") ->
      'GETEntitiesResponse', 'GETProducerInfo',
      'GETProducerInfoResponse', 'Import', 'ImporterResponse',
      'POSTNegotiation', 'Produce', 'Response', 'SaleInfo',
-     'ServerResponse', 'Subscribe', 'Transaction',
-     'Unsubscribe'];
+     'ServerResponse', 'Transaction'];
 get_msg_containment(P) ->
     error({gpb_error, {badproto, P}}).
 
@@ -5487,8 +4904,6 @@ get_proto_by_msg_name_as_fqbin(<<"protos.GETEntities">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Import">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.DealerTimeout">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.CatalogRequest">>) -> "protos";
-get_proto_by_msg_name_as_fqbin(<<"protos.Unsubscribe">>) -> "protos";
-get_proto_by_msg_name_as_fqbin(<<"protos.Subscribe">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.ServerResponse">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Response">>) -> "protos";
 get_proto_by_msg_name_as_fqbin(<<"protos.Produce">>) -> "protos";
