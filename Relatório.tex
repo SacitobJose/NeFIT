@@ -7,6 +7,7 @@
 
 \PassOptionsToPackage{hyphens}{url}
 \usepackage{hyperref}
+\usepackage{indentfirst}
 
 % Encoding
 %--------------------------------------
@@ -63,11 +64,14 @@
 \chapter{Introdução} \label{intro} {
 	Neste trabalho prático é requerido o desenvolvimento de um protótipo de uma plataforma de negociação entre fabricantes e importadores de produtos. 
 	Este protótipo é composto por cliente, servidor de \textit{front-end}, negociador e catálogo de entidades e negociações em curso. Os clientes podem existir em elevado número, sendo que 
-	cada um deles desempenhará sempre ou o papel de fabricante ou de importador. Cada fabricante indicará a disponibilidade para produzir um determinado artigo, numa quantidade mínima e máxima, 
+	cada um deles desempenhará sempre o papel de fabricante ou de importador. Cada fabricante indicará a disponibilidade para produzir um determinado artigo, numa quantidade mínima e máxima, 
 	a um preço mínimo (unitário), bem como o período de tempo durante o qual os importadores poderão fazer ofertas de encomenda (período de negociação). Por sua vez, cada importador indica a quantidade 
 	e valor unitário a que está disposto a pagar por um determinado artigo de um fabricante. Os clientes autenticam-se no servidor de \textit{front-end}, o qual encaminha as suas ordens para um (de entre vários) 
 	negociadores. O catálogo disponibilizará uma interface \textit{RESTful}, que permitirá obter informação sobre os fabricantes, importadores, e negociações em curso. Como tal, por forma a implementar este protótipo, 
 	foi utilizada a linguagem de programação \textit{Java} (cliente, negociador e catálogo), \textit{Erlang} (servidor \textit{front-end}), e, ainda, \textit{Protocol Buffers}, \textit{ZeroMQ} e \textit{Dropwizard}.
+	
+	Através do conjunto de requisitos que é possível extrair do primeiro parágrafo, os elementos que compõem este grupo deram início à concepção e desenvolvimento do protótipo pretendido, indicando e expondo, ainda, 
+	como cada interveniente opera neste sistema.
 }
 
 \chapter{O sistema}
@@ -165,7 +169,7 @@
 	Em ambos os casos, é dada a opção ao utilizador para sair da interface.
 
 	\subsection{Negociador}
-	No que toca ao desenvolvimento do negociador, este foi implementado em \textit{Java} com recurso à linguagem neutra \textit{Protocol Buffers} para efetuar a serialização de dados envolvidos nos processos de comunicação. 
+	No que toca ao desenvolvimento do negociador, este foi implementado em \textit{Java} com recurso à linguagem neutra \textit{Protocol Buffers}, para efetuar a serialização de dados envolvidos nos processos de comunicação, e, ainda, foi utilizado a ferramenta \textit{ZeroMQ} para lidar com troca assíncrona de mensagens entre componentes de maneira a obter alto desempenho. 
 	
 	Por forma a satisfazer os requisitos impostos, foram declaradas duas variáveis relativas às negociações em curso no sistema e, ainda, aos importadores que não possuem de momento nenhum conjunto de produtores associado. 
 	De forma a instanciar o negociador em causa, foi declarado um \textit{socket} que irá comunicar com o servidor, processando vários pedidos em simultâneo.

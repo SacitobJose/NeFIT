@@ -247,8 +247,7 @@ class TimeoutThread extends Thread {
             long total = 0;
             ArrayList<Import> buyers = new ArrayList<>();
             for (Import imp : importers) {
-                if (imp.getQuantity() + total <= this.maximumAmount
-                        && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
+                if (imp.getQuantity() + total <= this.maximumAmount && imp.getUnitaryPrice() >= this.minimumUnitaryPrice) {
                     total += imp.getQuantity();
                     buyers.add(imp);
                 } else if (imp.getUnitaryPrice() < this.minimumUnitaryPrice) {
@@ -264,22 +263,16 @@ class TimeoutThread extends Thread {
 
             // Send the response to server
             DealerTimeout.Builder timeout = DealerTimeout.newBuilder();
-
             timeout.setSuccess(buyers.size() > 0);
-
             timeout.setProducerName(this.producerName);
-
             timeout.setProductName(this.productName);
 
             for (Import import1 : buyers) {
                 importers.remove(import1);
 
                 SaleInfo.Builder si = SaleInfo.newBuilder();
-
                 si.setUsername(import1.getUsername());
-
                 si.setQuantity(import1.getQuantity());
-
                 si.setPrice(import1.getUnitaryPrice());
 
                 timeout.addSales(si.build());
