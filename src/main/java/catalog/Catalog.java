@@ -25,13 +25,10 @@ import org.zeromq.SocketType;
  */
 public class Catalog {
     public static void main(String[] args) throws Exception {
+
         // Start the ZeroMQ server
-        ZContext context = new ZContext();
-        ZMQ.Socket subs = context.createSocket(ZMQ.XPUB);
-        subs.bind("tcp://*:8888");
-        ZMQ.Socket pubs = context.createSocket(ZMQ.XSUB);
-        pubs.bind("tcp://*:7777");
-        ZMQ.proxy(subs, pubs, null);
+        Thread broker = new Broker();
+        broker.start();
 
         // Start the catalog server
         ServerSocket serverSocket = new ServerSocket(9999);
@@ -40,11 +37,28 @@ public class Catalog {
         HashSet<String> producers = new HashSet<>();
         //HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions = new HashMap<>();
         while (true) {
+            System.out.println("Estou pronto para ouvir!");
             Socket connectionSocket = serverSocket.accept();
 
             Thread h = new CHandler(connectionSocket, negotiations, importers, producers);
             h.start();
         }
+    }
+}
+
+class Broker extends Thread {
+    ZMQ.Socket subs;
+    ZMQ.Socket pubs;
+    public Broker() {
+        ZContext context = new ZContext();
+        subs = context.createSocket(ZMQ.XPUB);
+        subs.bind("tcp://*:8888");
+        pubs = context.createSocket(ZMQ.XSUB);
+        pubs.bind("tcp://*:7777");
+    }
+
+    public void run() {
+        ZMQ.proxy(subs, pubs, null);
     }
 }
 
