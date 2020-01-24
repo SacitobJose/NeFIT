@@ -62,7 +62,8 @@ negotiator(Sock, Importers, Producers) ->
 negotiatorSocket(Sock, Handler) ->
     {ok, Length} = gen_tcp:recv(Sock, 4),
     {ok, Data} = gen_tcp:recv(Sock, binary:decode_unsigned(Length)),
-    {Proto, Success, Producer, Product, SalesInfo} = protos:decode_msg(Data, 'DealerTimeout'),
+    {_, Success, Producer, Product, SalesInfo} = protos:decode_msg(Data, 'DealerTimeout'),
+    Proto = #'DealerTimeout'{Success = Success, producerName = ProducerName, productName = ProductName, sales = SalesInfo},
     if
         Success == true ->
             Handler ! {timeoutProducer, Producer, Product, Proto},
