@@ -37,7 +37,6 @@ public class Catalog {
         HashSet<String> producers = new HashSet<>();
         //HashMap<SimpleEntry<String, String>, HashSet<Socket>> subscriptions = new HashMap<>();
         while (true) {
-            System.out.println("Estou pronto para ouvir!");
             Socket connectionSocket = serverSocket.accept();
 
             Thread h = new CHandler(connectionSocket, negotiations, importers, producers);
@@ -185,6 +184,7 @@ class CHandler extends Thread {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                return;
             }
         }
     }

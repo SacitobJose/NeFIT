@@ -191,6 +191,7 @@ public class Dealer {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(-1);
         }
     }
 }
