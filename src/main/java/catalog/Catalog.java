@@ -28,9 +28,9 @@ public class Catalog {
         // Start the ZeroMQ server
         ZContext context = new ZContext();
         ZMQ.Socket subs = context.createSocket(ZMQ.XPUB);
-        pubs.bind("tcp://*:8888");
+        subs.bind("tcp://*:8888");
         ZMQ.Socket pubs = context.createSocket(ZMQ.XSUB);
-        subs.bind("tcp://*:7777");
+        pubs.bind("tcp://*:7777");
         ZMQ.proxy(subs, pubs, null);
 
         // Start the catalog server
@@ -136,8 +136,9 @@ class CHandler extends Thread {
                     ger.build().writeDelimitedTo(connectionSocket.getOutputStream());
                     break;
                 
-                /*
+                
                 case SUB:
+                    /*
                     Subscribe sub = cr.getSub();
                     synchronized (subscriptions) {
                         HashSet<Socket> subSockets = subscriptions
@@ -149,9 +150,11 @@ class CHandler extends Thread {
                         }
                         subSockets.add(connectionSocket);
                     }
+                    */
                     break;
 
                 case UNSUB:
+                    /*
                     Unsubscribe unsub = cr.getUnsub();
                     synchronized (subscriptions) {
                         HashSet<Socket> subSockets = subscriptions
@@ -160,8 +163,8 @@ class CHandler extends Thread {
                             break;
                         subSockets.remove(connectionSocket);
                     }
+                    */
                     break;
-                */
 
                 default: // REQUEST_NOT_SET
                     break;

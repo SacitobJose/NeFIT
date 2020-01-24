@@ -66,9 +66,10 @@ negotiatorSocket(Sock, Handler) ->
     if
         Success == true ->
             Handler ! {timeoutProducer, Producer, Product, Proto},
+            getImporters(Handler, SalesInfo, Producer, Product),
             negotiatorSocket(Sock, Handler);
         Success == false ->
-            getImporters(Handler, SalesInfo, Producer, Product),
+            Handler ! {timeoutProducer, Producer, Product, Proto},
             negotiatorSocket(Sock, Handler)
     end.
 

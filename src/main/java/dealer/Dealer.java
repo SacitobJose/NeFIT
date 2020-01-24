@@ -104,7 +104,7 @@ public class Dealer {
             org.zeromq.ZMQ.Socket publisher = ctx.createSocket(ZMQ.PUB);
             publisher.connect("tcp://localhost:7777");
 
-            ZMsg zmsg;
+            ZMsg zmsg = new ZMsg();
 
             HashMap<SimpleEntry<String, String>, ArrayList<Import>> negotiations = new HashMap<>();
             ArrayList<Import> unmatchImports = new ArrayList<>();

@@ -60,7 +60,7 @@ class ClientToSocket extends Thread {
 
     /* ZeroMQ socket for subscriptions */
     ZContext ctx = new ZContext();
-    org.zeromq.ZMQ.Socket subscriptions = ctx.createSocket(ZMQ.SUB);
+    org.zeromq.ZMQ.Socket subscriptions;
 
     public ClientToSocket(Socket cli, String outputPID) throws IOException {
         is = cli.getInputStream();
@@ -421,10 +421,9 @@ class ClientToSocket extends Thread {
 
             this.catalog = new Socket("localhost", 9999);
             //this.subscriptions = new Socket("localhost", 9999);
-            this.subscriptions.connect("tcp://localhost:8888");
-
+            
             PrintWriter outputTerminal = new PrintWriter(new File("/proc/" + outputPID + "/fd/1"));
-
+            
             // Iniciar thread para ler do socket para o terminal
             Thread stc = new SocketToClient(is, outputTerminal);
             stc.start();
@@ -432,7 +431,9 @@ class ClientToSocket extends Thread {
                 producerMenu();
             else {
                 // Iniciar thread para ler das subscrições para o terminal
-                Thread subToC = new SubscriptionsToClient(this.subscriptions.getInputStream(), outputTerminal);
+                this.subscriptions = ctx.createSocket(ZMQ.SUB);
+                this.subscriptions.connect("tcp://localhost:8888");
+                Thread subToC = new SubscriptionsToClient(this.subscriptions, outputTerminal);
                 subToC.start();
 
                 importerMenu();
@@ -514,7 +515,7 @@ class SocketToClient extends Thread {
 class SubscriptionsToClient extends Thread {
     org.zeromq.ZMQ.Socket subscriptions;
     PrintWriter outputTerminal;
-    ZMsg message;
+    ZMsg message = new ZMsg();
 
     public SubscriptionsToClient(org.zeromq.ZMQ.Socket subscriptions, PrintWriter outputTerminal) {
         this.subscriptions = subscriptions;
@@ -524,7 +525,7 @@ class SubscriptionsToClient extends Thread {
     public void run() {
         try {
             while (true) {
-                message = ZMsg.recvMsg(subsctiptions);
+                message = ZMsg.recvMsg(this.subscriptions);
 
                 outputTerminal.print("Nova oferta disponível para o par: ");
                 outputTerminal.println(new String(message.popString()));
