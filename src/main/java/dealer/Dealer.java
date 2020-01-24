@@ -180,7 +180,7 @@ public class Dealer {
                     cr.setNn(pn.build());
                     cr.build().writeDelimitedTo(catalog.getOutputStream());
 
-                    zmsg.newStringMsg(producer + product);
+                    ZMsg.newStringMsg(producer + product);
                     zmsg.send(publisher);
                     break;
                 }
@@ -266,20 +266,15 @@ class TimeoutThread extends Thread {
             DealerTimeout.Builder timeout = DealerTimeout.newBuilder();
 
             timeout.setSuccess(buyers.size() > 0);
-
             timeout.setProducerName(this.producerName);
-
             timeout.setProductName(this.productName);
 
             for (Import import1 : buyers) {
                 importers.remove(import1);
 
                 SaleInfo.Builder si = SaleInfo.newBuilder();
-
                 si.setUsername(import1.getUsername());
-
                 si.setQuantity(import1.getQuantity());
-
                 si.setPrice(import1.getUnitaryPrice());
 
                 timeout.addSales(si.build());
